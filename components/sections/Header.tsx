@@ -1,9 +1,71 @@
+'use client'
+
+import { useEffect, useRef } from 'react';
 import Link from 'next/link'
 
 // Template Elements
 import ImageLogo from '../elements/ImageLogo';
 
 export default function Header() {
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const setupMobileMenu = () => {
+      if (!mobileMenuRef.current || !backdropRef.current) return;
+
+      // Duplicate main menu content to mobile menu
+      const mainMenu = document.querySelector('.menu-area .main-menu');
+      const mobileMenuOuter = mobileMenuRef.current.querySelector('.menu-outer');
+      if (mainMenu && mobileMenuOuter) {
+        mobileMenuOuter.innerHTML = mainMenu.innerHTML;
+      }
+
+      // Append dropdown buttons
+      const menuItemsWithChildren = mobileMenuRef.current.querySelectorAll('.menu-item-has-children');
+      menuItemsWithChildren.forEach(item => {
+        const dropdownBtn = document.createElement('div');
+        dropdownBtn.className = 'dropdown-btn';
+        dropdownBtn.innerHTML = '<span class="fas fa-angle-down"></span>';
+        item.appendChild(dropdownBtn);
+
+        dropdownBtn.addEventListener('click', function(this: HTMLElement) {
+          this.classList.toggle('open');
+          const submenu = item.querySelector('ul');
+          if (submenu) {
+            if (this.classList.contains('open')) {
+              submenu.style.maxHeight = `${submenu.scrollHeight}px`;
+              submenu.style.opacity = '1';
+            } else {
+              submenu.style.maxHeight = '0px';
+              submenu.style.opacity = '0';
+            }
+          }
+        });
+      });
+
+      // Toggle mobile menu visibility
+      const toggleMobileMenu = (isVisible: boolean) => {
+        document.body.classList.toggle('mobile-menu-visible', isVisible);
+      };
+
+      // Add click listeners
+      const mobileNavToggler = document.querySelector('.mobile-nav-toggler');
+      if (mobileNavToggler) {
+        mobileNavToggler.addEventListener('click', () => toggleMobileMenu(true));
+      }
+
+      backdropRef.current.addEventListener('click', () => toggleMobileMenu(false));
+
+      const closeBtn = mobileMenuRef.current.querySelector('.close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => toggleMobileMenu(false));
+      }
+    };
+
+    setupMobileMenu();
+  }, []);
+
   return (
     <header>
       <div id="sticky-header" className="menu-area transparent-header">
@@ -62,7 +124,7 @@ export default function Header() {
               </div>
 
               {/* Mobile Menu */}
-              <div className="mobile-menu">
+              <div ref={mobileMenuRef} className="mobile-menu">
                 <div className="close-btn"><i className="fas fa-times"></i></div>
 
                 <nav className="menu-box">
@@ -83,7 +145,7 @@ export default function Header() {
                   </div>
                 </nav>
               </div>
-              <div className="menu-backdrop"></div>
+              <div ref={backdropRef} className="menu-backdrop"></div>
               {/* End Mobile Menu */}
 
               {/* Modal Search */}

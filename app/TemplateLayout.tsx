@@ -109,10 +109,6 @@ export default function TemplateLayout({
     setupScrollToTarget();
 
     window.addEventListener('scroll', handleStickyHeader);
-
-    return () => {
-      window.removeEventListener('scroll', handleStickyHeader);
-    };
   }, []);
 
   // Effect to scrollY position
