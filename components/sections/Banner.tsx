@@ -7,9 +7,9 @@ export default function Banner() {
         <div className="row">
           <div className="col-xl-6 col-lg-8">
             <div className="banner-content">
-              <h6 className="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">Movflx</h6>
-              <h2 className="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
-              <div className="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+              <h6 className="sub-title" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1800">Movflx</h6>
+              <h2 className="title" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1800">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
+              <div className="banner-meta" data-aos="fade-up" data-aos-delay="600" data-aos-duration="1800">
                 <ul>
                   <li className="quality">
                     <span>Pg 18</span>
@@ -25,7 +25,7 @@ export default function Banner() {
                   </li>
                 </ul>
               </div>
-              <Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i className="fas fa-play"></i> Watch Now</Link>
+              <Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="banner-btn btn popup-video" data-aos="fade-up" data-aos-delay="800" data-aos-duration="1800"><i className="fas fa-play"></i> Watch Now</Link>
             </div>
           </div>
         </div>

@@ -6,7 +6,6 @@ import 'aos/dist/aos.css';
 
 // Template Styles
 import "../assets/css/bootstrap.min.css";
-import "../assets/css/animate.min.css";
 import "../assets/css/magnific-popup.css";
 import "../assets/css/fontawesome-all.min.css";
 import "../assets/css/owl.carousel.min.css";

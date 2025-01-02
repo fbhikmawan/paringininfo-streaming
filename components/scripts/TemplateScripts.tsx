@@ -14,7 +14,6 @@ export default function TemplateScripts() {
       <Script src="../../assets/js/jquery.appear.js" />
       <Script src="../../assets/js/slick.min.js" />
       <Script src="../../assets/js/ajax-form.js" />
-      <Script src="../../assets/js/wow.min.js" />
       <Script src="../../assets/js/plugins.js" />
       {/* <Script src="../../assets/js/main.js" /> */}
     </>
