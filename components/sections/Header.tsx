@@ -82,25 +82,25 @@ export default function Header() {
                     <ul className="navigation">
                       <li className="active menu-item-has-children"><Link href="#">Home</Link>
                         <ul className="submenu">
-                          <li className="active"><Link href="index-2.html">Home One</Link></li>
-                          <li><Link href="index-3.html">Home Two</Link></li>
+                          <li className="active"><Link href="index-2">Home One</Link></li>
+                          <li><Link href="index-3">Home Two</Link></li>
                         </ul>
                       </li>
                       <li className="menu-item-has-children"><Link href="#">Movie</Link>
                         <ul className="submenu">
-                          <li><Link href="movie.html">Movie</Link></li>
-                          <li><Link href="movie-details.html">Movie Details</Link></li>
+                          <li><Link href="movie">Movie</Link></li>
+                          <li><Link href="movie-details">Movie Details</Link></li>
                         </ul>
                       </li>
-                      <li><Link href="tv-show.html">tv show</Link></li>
-                      <li><Link href="pricing.html">Pricing</Link></li>
+                      <li><Link href="tv-show">tv show</Link></li>
+                      <li><Link href="pricing">Pricing</Link></li>
                       <li className="menu-item-has-children"><Link href="#">blog</Link>
                         <ul className="submenu">
-                          <li><Link href="blog.html">Our Blog</Link></li>
-                          <li><Link href="blog-details.html">Blog Details</Link></li>
+                          <li><Link href="blog">Our Blog</Link></li>
+                          <li><Link href="blog-details">Blog Details</Link></li>
                         </ul>
                       </li>
-                      <li><Link href="contact.html">contacts</Link></li>
+                      <li><Link href="contact">contacts</Link></li>
                     </ul>
                   </div>
                   <div className="header-action d-none d-md-block">
