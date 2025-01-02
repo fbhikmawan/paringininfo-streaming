@@ -26,7 +26,7 @@ export default function ButtonScrollToTop() {
 
   return (
     <button
-      className={`${styles.scrollToTop} ${isVisible ? styles.scrollToTopOpen : ''}`}
+      className={`${styles.scrollToTop} ${isVisible ? styles.scrollToTopOpen : ''} scroll-top`}
       onClick={handleClick}
       aria-label="Scroll to Top"
     >
