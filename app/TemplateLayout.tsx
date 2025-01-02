@@ -48,7 +48,11 @@ export default function TemplateLayout({
       <Preloader />
       <ButtonScrollToTop />
       <Header />
-      {children}
+
+      <main>
+        {children}
+      </main>
+
       <Footer />
       <TemplateScripts />
     </>
