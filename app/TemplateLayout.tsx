@@ -18,6 +18,7 @@ import "../assets/css/style.css";
 import "../assets/css/responsive.css";
 
 // Template Sections
+import Header from '../components/sections/Header';
 import Footer from '../components/sections/Footer';
 
 // Template Elements
@@ -46,6 +47,7 @@ export default function TemplateLayout({
     <>
       <Preloader />
       <ButtonScrollToTop />
+      <Header />
       {children}
       <Footer />
       <TemplateScripts />
