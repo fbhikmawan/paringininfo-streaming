@@ -17,6 +17,9 @@ import "../assets/css/default.css";
 import "../assets/css/style.css";
 import "../assets/css/responsive.css";
 
+// Template Sections
+import Footer from '../components/sections/Footer';
+
 // Template Elements
 import ButtonScrollToTop from '../components/elements/ButtonScrollToTop';
 import Preloader from '../components/elements/Preloader';
@@ -44,6 +47,7 @@ export default function TemplateLayout({
       <Preloader />
       <ButtonScrollToTop />
       {children}
+      <Footer />
       <TemplateScripts />
     </>
   );
