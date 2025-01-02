@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -29,10 +29,11 @@ import Preloader from '../components/elements/Preloader';
 import TemplateScripts from '../components/scripts/TemplateScripts';
 
 export default function TemplateLayout({
-    children,
-  }: Readonly<{
-    children: React.ReactNode;
-  }>) {
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
     AOS.init({
@@ -41,7 +42,95 @@ export default function TemplateLayout({
       once: true,
       disable: 'mobile',
     });
+  
+    // Function to set background images
+    const setBackgroundImages = () => {
+      const elements = document.querySelectorAll<HTMLElement>('[data-background]');
+      elements.forEach((element) => {
+        if (element instanceof HTMLElement) {
+          const backgroundUrl = element.getAttribute('data-background');
+          if (backgroundUrl) {
+            element.style.backgroundImage = `url(${backgroundUrl})`;
+          }
+        }
+      });
+    };
+  
+    // Function to handle scroll-to-target behavior
+    const setupScrollToTarget = () => {
+      const scrollToTargetElements = document.querySelectorAll<HTMLElement>('.scroll-to-target');
+      
+      scrollToTargetElements.forEach((element) => {
+        if (element instanceof HTMLElement) {
+          element.addEventListener('click', (event) => {
+            event.preventDefault();
+            
+            const targetSelector = element.getAttribute('data-target');
+            if (targetSelector) {
+              let targetElement: Element | null = null;
+    
+              // Check whther it is an ID, class, tag name, or CSS selector
+              if (targetSelector.startsWith('#')) {
+                targetElement = document.getElementById(targetSelector.slice(1));
+              }
+              else if (targetSelector.startsWith('.')) {
+                targetElement = document.querySelector(targetSelector);
+              }
+              else if (/^[a-z]+$/i.test(targetSelector)) {
+                targetElement = document.getElementsByTagName(targetSelector)[0];
+              }
+              else {
+                targetElement = document.querySelector(targetSelector);
+              }
+    
+              if (targetElement) {
+                const duration = 1000;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({
+                  top: targetPosition,
+                  behavior: 'smooth'
+                });
+                setTimeout(() => {
+                }, duration);
+              }
+            }
+          });
+        }
+      });
+    };
+
+    // Function to scrollY position
+    const handleStickyHeader = () => {
+      const scrollPosition = window.scrollY;
+      setIsSticky(scrollPosition >= 245);
+    };
+  
+    // Run the functions immediately
+    setBackgroundImages();
+    setupScrollToTarget();
+
+    window.addEventListener('scroll', handleStickyHeader);
+
+    return () => {
+      window.removeEventListener('scroll', handleStickyHeader);
+    };
   }, []);
+
+  // Effect to scrollY position
+  useEffect(() => {
+    const stickyHeader = document.getElementById('sticky-header');
+    const scrollToTargetElements = document.querySelectorAll('.scroll-to-target');
+
+    if (stickyHeader) {
+      if (isSticky) {
+        stickyHeader.classList.add('sticky-menu');
+        scrollToTargetElements.forEach(element => element.classList.add('open'));
+      } else {
+        stickyHeader.classList.remove('sticky-menu');
+        scrollToTargetElements.forEach(element => element.classList.remove('open'));
+      }
+    }
+  }, [isSticky]);
 
   return (
     <>

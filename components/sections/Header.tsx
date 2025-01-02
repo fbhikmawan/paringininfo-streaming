@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
-import pictLogo from '../../assets/img/logo/logo.png'
+// Template Elements
+import ImageLogo from '../elements/ImageLogo';
 
 export default function Header() {
   return (
@@ -14,9 +14,7 @@ export default function Header() {
               <div className="menu-wrap">
                 <nav className="menu-nav show">
                   <div className="logo">
-                    <Link href="index-2.html">
-                      <Image src={pictLogo} alt="Logo" />
-                    </Link>
+                    <ImageLogo />
                   </div>
                   <div className="navbar-wrap main-menu d-none d-lg-flex">
                     <ul className="navigation">
@@ -69,9 +67,7 @@ export default function Header() {
 
                 <nav className="menu-box">
                   <div className="nav-logo">
-                    <Link href="index-2.html">
-                      <Image src={pictLogo} alt="Logo" />
-                    </Link>
+                    <ImageLogo />
                   </div>
                   <div className="menu-outer">
                     {/* Menu will come automatically via JavaScript */}

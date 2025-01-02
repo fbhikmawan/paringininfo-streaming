@@ -1,28 +1,10 @@
 (function ($) {
     "use strict";
 
-/*=============================================
-	=    		 Preloader			      =
-=============================================*/
-function preloader() {
-	$('#preloader').delay(0).fadeOut();
-	console.log("preloader executed");
-};
-
 $(window).on('load', function () {
-	preloader();
 	mainSlider();
-	aosAnimation();
 	wowAnimation();
 });
-
-
-/*=============================================
-	=          Data Background               =
-=============================================*/
-$("[data-background]").each(function () {
-	$(this).css("background-image", "url(" + $(this).attr("data-background") + ")")
-})
 
 
 /*=============================================
@@ -52,37 +34,6 @@ if ($('.mobile-menu').length) {
 	$('.menu-backdrop, .mobile-menu .close-btn').on('click', function () {
 		$('body').removeClass('mobile-menu-visible');
 	});
-}
-
-
-/*=============================================
-	=     Menu sticky & Scroll to top      =
-=============================================*/
-$(window).on('scroll', function () {
-	var scroll = $(window).scrollTop();
-	if (scroll < 245) {
-		$("#sticky-header").removeClass("sticky-menu");
-		$('.scroll-to-target').removeClass('open');
-
-	} else {
-		$("#sticky-header").addClass("sticky-menu");
-		$('.scroll-to-target').addClass('open');
-	}
-});
-
-
-/*=============================================
-	=    		 Scroll Up  	         =
-=============================================*/
-if ($('.scroll-to-target').length) {
-  $(".scroll-to-target").on('click', function () {
-    var target = $(this).attr('data-target');
-    // animate
-    $('html, body').animate({
-      scrollTop: $(target).offset().top
-    }, 1000);
-
-  });
 }
 
 
@@ -379,19 +330,6 @@ $('.tr-movie-menu-active button').on('click', function (event) {
 	$(this).addClass('active');
 	event.preventDefault();
 });
-
-
-/*=============================================
-	=    		 Aos Active  	         =
-=============================================*/
-function aosAnimation() {
-	AOS.init({
-		duration: 1000,
-		mirror: true,
-		once: true,
-		disable: 'mobile',
-	});
-}
 
 
 /*=============================================

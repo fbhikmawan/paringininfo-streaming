@@ -1,7 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import pictLogo from '../../assets/img/logo/logo.png'
+
+// Template Elements
+import ImageLogo from '../elements/ImageLogo';
+
 import pictPayment from '../../assets/img/images/card_img.png'
 
 export default function Footer() {
@@ -13,9 +16,7 @@ export default function Footer() {
             <div className="row align-items-center">
               <div className="col-lg-3">
                 <div className="footer-logo">
-                  <Link href="/">
-                    <Image src={pictLogo} alt="Logo" />
-                  </Link>
+                  <ImageLogo />
                 </div>
               </div>
               <div className="col-lg-9">
