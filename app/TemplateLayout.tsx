@@ -7,11 +7,10 @@ import 'aos/dist/aos.css';
 
 // Template Styles
 import "../assets/css/bootstrap.min.css";
+import "../assets/css/animate.min.css";
 import "../assets/css/magnific-popup.css";
 import "../assets/css/fontawesome-all.min.css";
 import "../assets/css/flaticon.css";
-import "../assets/css/odometer.css";
-import "../assets/css/slick.css";
 import "../assets/css/default.css";
 import "../assets/css/style.css";
 import "../assets/css/responsive.css";
@@ -32,7 +31,7 @@ export default function TemplateLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isSticky, setIsSticky] = useState(false);
+  const [isYtriggered, setisYtriggered] = useState(false);
   const pathname = usePathname();
   
   // Function to set background images
@@ -92,9 +91,9 @@ export default function TemplateLayout({
   };
 
   // Function to scrollY position
-  const handleStickyHeader = () => {
+  const triggerYposition = () => {
     const scrollPosition = window.scrollY;
-    setIsSticky(scrollPosition >= 245);
+    setisYtriggered(scrollPosition >= 245);
   };
 
   useEffect(() => {
@@ -116,10 +115,10 @@ export default function TemplateLayout({
   useEffect(() => {
     setBackgroundImages();
     setupScrollToTarget();
-    window.addEventListener('scroll', handleStickyHeader);
+    window.addEventListener('scroll', triggerYposition);
 
     return () => {
-      window.removeEventListener('scroll', handleStickyHeader);
+      window.removeEventListener('scroll', triggerYposition);
     };
   }, []);
 
@@ -129,7 +128,7 @@ export default function TemplateLayout({
     const scrollToTargetElements = document.querySelectorAll('.scroll-to-target');
 
     if (stickyHeader) {
-      if (isSticky) {
+      if (isYtriggered) {
         stickyHeader.classList.add('sticky-menu');
         scrollToTargetElements.forEach(element => element.classList.add('open'));
       } else {
@@ -137,7 +136,7 @@ export default function TemplateLayout({
         scrollToTargetElements.forEach(element => element.classList.remove('open'));
       }
     }
-  }, [isSticky]);
+  }, [isYtriggered]);
 
   return (
     <>

@@ -71,11 +71,11 @@ export default function TopRatedMovie() {
           {filteredMovies.map((movie, index) => (
             <div key={index} className={`col-xl-3 col-lg-4 col-sm-6 movie-item mb-60 ${movie.category.join(' ')}`}>
               <div className="movie-poster">
-                <Link href={`/movie-details/${movie.title.toLowerCase().replace(/\s+/g, '-')}`}><Image src={movie.poster} alt={movie.title} width={300} height={450} /></Link>
+                <Link href={`/movie-details`}><Image src={movie.poster} alt={movie.title} width={300} height={450} /></Link>
               </div>
               <div className="movie-content">
                 <div className="top">
-                  <h5 className="title"><Link href={`/movie-details/${movie.title.toLowerCase().replace(/\s+/g, '-')}`}>{movie.title}</Link> </h5>
+                  <h5 className="title"><Link href={`/movie-details`}>{movie.title}</Link> </h5>
                   <span className="date">{movie.year}</span>
                 </div>
                 <div className="bottom">
