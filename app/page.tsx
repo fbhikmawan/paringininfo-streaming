@@ -3,7 +3,7 @@ import Banner from '../components/sections/Banner';
 import UpComing from '../components/sections/UpComing';
 import TopRatedMovie from '../components/sections/TopRatedMovie';
 import LiveArea from '../components/sections/LiveArea';
-import TvSeriesArea from '../components/sections/TvSeriesArea';
+import SeriesArea from '../components/sections/SeriesArea';
 import Newsletter from '../components/sections/Newsletter';
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
       <UpComing />
       <TopRatedMovie />
       <LiveArea />
-      <TvSeriesArea />
+      <SeriesArea />
       <Newsletter />
     </>
   );

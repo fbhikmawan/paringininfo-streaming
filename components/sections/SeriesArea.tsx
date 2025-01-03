@@ -6,15 +6,15 @@ import imgPoster04 from '../../assets/img/poster/ucm_poster04.jpg'
 import imgPoster09 from '../../assets/img/poster/ucm_poster09.jpg'
 import imgPoster10 from '../../assets/img/poster/ucm_poster10.jpg'
 
-export default function TvSeriesArea() {
+export default function SeriesArea() {
   return (
     <section className="tv-series-area tv-series-bg" data-background="/assets/img/bg/tv_series_bg.jpg">
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <div className="section-title text-center mb-50">
-              <span className="sub-title">Best TV Series</span>
-              <h2 className="title">World Best TV Series</h2>
+              <span className="sub-title">Best Series</span>
+              <h2 className="title">World Best Series</h2>
             </div>
           </div>
         </div>
