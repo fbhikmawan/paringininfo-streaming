@@ -80,27 +80,11 @@ export default function Header() {
                   </div>
                   <div className="navbar-wrap main-menu d-none d-lg-flex">
                     <ul className="navigation">
-                      <li className="active menu-item-has-children"><Link href="#">Home</Link>
-                        <ul className="submenu">
-                          <li className="active"><Link href="index-2">Home One</Link></li>
-                          <li><Link href="index-3">Home Two</Link></li>
-                        </ul>
-                      </li>
-                      <li className="menu-item-has-children"><Link href="#">Movie</Link>
-                        <ul className="submenu">
-                          <li><Link href="movie">Movie</Link></li>
-                          <li><Link href="movie-details">Movie Details</Link></li>
-                        </ul>
-                      </li>
-                      <li><Link href="tv-show">tv show</Link></li>
-                      <li><Link href="pricing">Pricing</Link></li>
-                      <li className="menu-item-has-children"><Link href="#">blog</Link>
-                        <ul className="submenu">
-                          <li><Link href="blog">Our Blog</Link></li>
-                          <li><Link href="blog-details">Blog Details</Link></li>
-                        </ul>
-                      </li>
-                      <li><Link href="contact">contacts</Link></li>
+                      <li><Link href="/">Home</Link></li>
+                      <li><Link href="/movies">Movies</Link></li>
+                      <li><Link href="/series">Series</Link></li>
+                      <li><Link href="/live">Live</Link></li>
+                      <li><Link href="https://paringininfo.com/contactus">Contacts</Link></li>
                     </ul>
                   </div>
                   <div className="header-action d-none d-md-block">

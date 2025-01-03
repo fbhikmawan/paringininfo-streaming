@@ -1,11 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
-
 
 // Template Elements
 import ImageLogo from '../elements/ImageLogo';
-
-import pictPayment from '../../assets/img/images/card_img.png'
 
 export default function Footer() {
   return (
@@ -24,10 +20,9 @@ export default function Footer() {
                   <nav>
                     <ul className="navigation">
                       <li><Link href="/">Home</Link></li>
-                      <li><Link href="/movie">Movie</Link></li>
-                      <li><Link href="/tv-show">TV Show</Link></li>
-                      <li><Link href="/pages">Pages</Link></li>
-                      <li><Link href="/pricing">Pricing</Link></li>
+                      <li><Link href="/movies">Movies</Link></li>
+                      <li><Link href="/series">Series</Link></li>
+                      <li><Link href="/live">Live</Link></li>
                     </ul>
                     <div className="footer-search">
                       <form action="#">
@@ -71,12 +66,7 @@ export default function Footer() {
           <div className="row">
             <div className="col-lg-6 col-md-6">
               <div className="copyright-text">
-                <p>Copyright &copy; {new Date().getFullYear()}. All Rights Reserved By <Link href="/">Movflx</Link></p>
-              </div>
-            </div>
-            <div className="col-lg-6 col-md-6">
-              <div className="payment-method-img text-center text-md-right">
-                <Image src={pictPayment} alt="Payment Methods" />
+                <p>Copyright &copy; {new Date().getFullYear()}. All Rights Reserved By <Link href="/">ParinginInfo</Link></p>
               </div>
             </div>
           </div>

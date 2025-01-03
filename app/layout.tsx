@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import TemplateLayout from './TemplateLayout'
 
 export const metadata: Metadata = {
-  title: "Movflx - Online Movies & TV Shows Template",
-  description: "Description for Movflx - Online Movies & TV Shows Template",
+  title: "ParinginInfo | Online Movies, Series & Live",
+  description: "Description for ParinginInfo | Online Movies, Series & Live",
 };
 
 export default function RootLayout({

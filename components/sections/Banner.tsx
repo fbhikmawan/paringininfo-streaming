@@ -7,8 +7,8 @@ export default function Banner() {
         <div className="row">
           <div className="col-xl-6 col-lg-8">
             <div className="banner-content">
-              <h6 className="sub-title" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1800">Movflx</h6>
-              <h2 className="title" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1800">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
+              <h6 className="sub-title" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1800">ParinginInfo</h6>
+              <h2 className="title" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1800">Unlimited <span>Movie</span>, Series, & More.</h2>
               <div className="banner-meta" data-aos="fade-up" data-aos-delay="600" data-aos-duration="1800">
                 <ul>
                   <li className="quality">

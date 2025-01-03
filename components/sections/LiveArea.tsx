@@ -11,7 +11,7 @@ export default function LiveArea() {
                 <div className="col-xl-5 col-lg-6">
                     <div className="section-title title-style-two mb-25">
                         <span className="sub-title">ONLINE STREAMING</span>
-                        <h2 className="title">Live Movie & TV Shows For Friends & Family</h2>
+                        <h2 className="title">Movies, Series & Live For Friends & Family</h2>
                     </div>
                     <div className="live-movie-content">
                         <p>Lorem ipsum dolor sit amet, consecetur adipiscing elseddo eiusmod There are many variations of passages of lorem Ipsum
