@@ -8,7 +8,6 @@ import 'aos/dist/aos.css';
 import "../assets/css/bootstrap.min.css";
 import "../assets/css/magnific-popup.css";
 import "../assets/css/fontawesome-all.min.css";
-import "../assets/css/owl.carousel.min.css";
 import "../assets/css/flaticon.css";
 import "../assets/css/odometer.css";
 import "../assets/css/slick.css";
