@@ -5,7 +5,7 @@ import imgLive from '../../assets/img/images/live_img.png'
 
 export default function LiveArea() {
   return (
-    <section className="live-area live-bg fix" data-background="img/bg/live_bg.jpg">
+    <section className="live-area live-bg fix" data-background="/assets/img/bg/live_bg.jpg">
         <div className="container">
             <div className="row align-items-center">
                 <div className="col-xl-5 col-lg-6">
