@@ -89,19 +89,7 @@ export default function Header() {
                   </div>
                   <div className="header-action d-none d-md-block">
                     <ul>
-                      <li className="header-search"><Link href="#" data-toggle="modal" data-target="#search-modal"><i className="fas fa-search"></i></Link></li>
-                      <li className="header-lang">
-                        <form action="#">
-                          <div className="icon"><i className="flaticon-globe"></i></div>
-                          <select id="lang-dropdown">
-                            <option value="">En</option>
-                            <option value="">Au</option>
-                            <option value="">AR</option>
-                            <option value="">TU</option>
-                          </select>
-                        </form>
-                      </li>
-                      <li className="header-btn"><Link href="#" className="btn">Sign In</Link></li>
+                      <li className="header-btn"><Link href="https://paringininfo.com/web/login" className="btn">Sign In</Link></li>
                     </ul>
                   </div>
                 </nav>
