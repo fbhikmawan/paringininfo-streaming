@@ -82,9 +82,20 @@ export default function Header() {
                     <ul className="navigation">
                       <li><Link href="/">Home</Link></li>
                       <li><Link href="/movies">Movies</Link></li>
-                      <li><Link href="/series">Series</Link></li>
-                      <li><Link href="/sports">Sports</Link></li>
-                      <li><Link href="/live">Live</Link></li>
+                      <li className="menu-item-has-children"><Link href="#">Others</Link>
+                        <ul className="submenu">
+                        <li><Link href="/series">Series</Link></li>
+                        <li><Link href="/sports">Sports</Link></li>
+                        <li><Link href="/live">Live</Link></li>
+                        </ul>
+                      </li>
+                      <li><Link href="pricing">Pricing</Link></li>
+                      <li className="menu-item-has-children"><Link href="#">Blog</Link>
+                        <ul className="submenu">
+                          <li><Link href="blog">Our Blog</Link></li>
+                          <li><Link href="blog-details">Blog Details</Link></li>
+                        </ul>
+                      </li>
                       <li><Link href="https://paringininfo.com/contactus">Contacts</Link></li>
                     </ul>
                   </div>

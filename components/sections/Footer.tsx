@@ -1,7 +1,10 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 // Template Elements
 import ImageLogo from '../elements/ImageLogo';
+
+import pictPayment from '../../assets/img/images/card_img.png'
 
 export default function Footer() {
   return (
@@ -69,6 +72,11 @@ export default function Footer() {
                 <p>Copyright &copy; {new Date().getFullYear()}. All Rights Reserved By <Link href="/">ParinginInfo</Link></p>
               </div>
             </div>
+              <div className="col-lg-6 col-md-6">
+                <div className="payment-method-img text-center text-md-right">
+                  <Image src={pictPayment} alt="Payment Methods" />
+                </div>
+              </div>
           </div>
         </div>
       </div>
