@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link'
+import { usePathname } from 'next/navigation';
 
 // Template Elements
 import ImageLogo from '../elements/ImageLogo';
@@ -9,6 +10,7 @@ import ImageLogo from '../elements/ImageLogo';
 export default function Header() {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const setupMobileMenu = () => {
@@ -65,6 +67,10 @@ export default function Header() {
 
     setupMobileMenu();
   }, []);
+  
+  const isActiveRoute = (path: string): boolean => {
+    return pathname === path;
+  };
 
   return (
     <header>
@@ -80,23 +86,23 @@ export default function Header() {
                   </div>
                   <div className="navbar-wrap main-menu d-none d-lg-flex">
                     <ul className="navigation">
-                      <li><Link href="/">Home</Link></li>
-                      <li><Link href="/movies">Movies</Link></li>
-                      <li className="menu-item-has-children"><Link href="#">Others</Link>
+                      <li className={isActiveRoute('/') ? 'active' : ''}><Link href="/">Home</Link></li>
+                      <li className={isActiveRoute('/movies') ? 'active' : ''}><Link href="/movies">Movies</Link></li>
+                      <li className={`menu-item-has-children ${isActiveRoute('/others') ? 'active' : ''}`}><Link href="#">Others</Link>
                         <ul className="submenu">
-                        <li><Link href="/series">Series</Link></li>
-                        <li><Link href="/sports">Sports</Link></li>
-                        <li><Link href="/live">Live</Link></li>
+                          <li className={isActiveRoute('/series') ? 'active' : ''}><Link href="/series">Series</Link></li>
+                          <li className={isActiveRoute('/sports') ? 'active' : ''}><Link href="/sports">Sports</Link></li>
+                          <li className={isActiveRoute('/live') ? 'active' : ''}><Link href="/live">Live</Link></li>
                         </ul>
                       </li>
-                      <li><Link href="pricing">Pricing</Link></li>
-                      <li className="menu-item-has-children"><Link href="#">Blog</Link>
+                      <li className={isActiveRoute('/pricing') ? 'active' : ''}><Link href="pricing">Pricing</Link></li>
+                      <li className={`menu-item-has-children ${isActiveRoute('/blog') ? 'active' : ''}`}><Link href="#">Blog</Link>
                         <ul className="submenu">
-                          <li><Link href="blog">Our Blog</Link></li>
-                          <li><Link href="blog-details">Blog Details</Link></li>
+                          <li className={isActiveRoute('/blog') ? 'active' : ''}><Link href="blog">Our Blog</Link></li>
+                          <li className={isActiveRoute('/blog-details') ? 'active' : ''}><Link href="blog-details">Blog Details</Link></li>
                         </ul>
                       </li>
-                      <li><Link href="https://paringininfo.com/contactus">Contacts</Link></li>
+                      <li className={isActiveRoute('/contactus') ? 'active' : ''}><Link href="https://paringininfo.com/contactus">Contacts</Link></li>
                     </ul>
                   </div>
                   <div className="header-action d-none d-md-block">
