@@ -1132,7 +1132,6 @@ label {
     align-items: center;
     justify-content: flex-end;
     flex-wrap: wrap;
-    margin-right: 102px;
 }
 .movie-bg .tr-movie-menu-active {
     display: flex;

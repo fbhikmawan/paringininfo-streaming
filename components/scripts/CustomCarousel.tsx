@@ -1,14 +1,31 @@
 'use client'
 
-import React from 'react';
+import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import Image from 'next/image';
+import Link from 'next/link';
 
-export default function CustomCarousel({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+interface CarouselItem {
+  title: string;
+  poster: string;
+  quality: string;
+  duration: number;
+  rating: number;
+  year: number;
+}
+
+interface CustomCarouselProps {
+  items: CarouselItem[];
+}
+
+export default function CustomCarousel({ items }: CustomCarouselProps) {
+  const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([]);
+
+  useEffect(() => {
+    setCarouselItems(items);
+  }, [items]);
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1200 },
@@ -38,19 +55,40 @@ export default function CustomCarousel({
       draggable={false}
       showDots={false}
       responsive={responsive}
-      ssr={true}
-      infinite={true}
+      ssr={false}
+      infinite={false}
       autoPlay={false}
       autoPlaySpeed={1000}
       keyBoardControl={true}
       customTransition="transform 300ms ease-in-out"
       transitionDuration={300}
       containerClass="ucm-active owl-carousel"
-      itemClass="carousel-item-padding-40-px"
+      itemClass="carousel-item-padding-40-px mr-2"
       arrows={true}
     >
-      {React.Children.map(children, child => (
-        <div style={{ margin: '0 30px 0 0' }}>{child}</div>
+      {carouselItems.map((item, index) => (
+        <div key={index} className="movie-item mb-50">
+          <div className="movie-poster">
+            <Link href="movie-details">
+              <Image src={item.poster} alt={item.title} width={300} height={450} />
+            </Link> 
+          </div>
+          <div className="movie-content">
+            <div className="top">
+              <h5 className="title"><Link href="movie-details">{item.title}</Link> </h5>
+              <span className="date">{item.year}</span>
+            </div>
+            <div className="bottom">
+              <ul>
+                <li><span className="quality">{item.quality}</span></li>
+                <li>
+                  <span className="duration"><i className="far fa-clock"></i> {item.duration} min</span>
+                  <span className="rating"><i className="fas fa-thumbs-up"></i> {item.rating}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       ))}
     </Carousel>
   );

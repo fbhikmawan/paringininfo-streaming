@@ -1,9 +1,10 @@
 'use client'
 
-import Image from 'next/image'
+import { useState } from 'react';
 import Link from 'next/link'
 
 // Template Scripts
+import Fade from '../scripts/Fade';
 import CustomCarousel from '../scripts/CustomCarousel';
 
 import imgPoster01 from '../../assets/img/poster/ucm_poster01.jpg'
@@ -15,7 +16,66 @@ import imgPoster06 from '../../assets/img/poster/ucm_poster06.jpg'
 import imgPoster07 from '../../assets/img/poster/ucm_poster07.jpg'
 import imgPoster08 from '../../assets/img/poster/ucm_poster08.jpg'
 
-export default function UpComing() {
+interface CarouselItem {
+  title: string;
+  poster: string;
+  quality: string;
+  duration: number;
+  rating: number;
+  year: number;
+}
+
+const tvShowItems: CarouselItem[] = [
+  { title: "Women's Day", poster: imgPoster01.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Perfect Match", poster: imgPoster02.src, quality: "4k", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Dog Woof", poster: imgPoster03.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Easy Reach", poster: imgPoster04.src, quality: "8k", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Cooking", poster: imgPoster05.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
+];
+
+const movieItems: CarouselItem[] = [
+  { title: "The Cooking", poster: imgPoster05.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Hikers", poster: imgPoster06.src, quality: "4k", duration: 128, rating: 3.5, year: 2021 },
+  { title: "Life Quotes", poster: imgPoster07.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Beachball", poster: imgPoster08.src, quality: "4k", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Dog Woof", poster: imgPoster03.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
+];
+
+const animeItems: CarouselItem[] = [
+  { title: "Women's Day", poster: imgPoster01.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Perfect Match", poster: imgPoster02.src, quality: "4k", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Dog Woof", poster: imgPoster03.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Easy Reach", poster: imgPoster04.src, quality: "8k", duration: 128, rating: 3.5, year: 2021 },
+  { title: "The Cooking", poster: imgPoster05.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
+];
+
+const FADE_TIMEOUT = 300;
+
+export default function UpComing() {  
+  const [activeTab, setActiveTab] = useState<'tvShow' | 'movies' | 'anime'>('tvShow');
+  const [fadeState, setFadeState] = useState(true);
+
+  const handleTabClick = (tab: 'tvShow' | 'movies' | 'anime') => {
+    setFadeState(false);
+    setTimeout(() => {
+      setActiveTab(tab);
+      setFadeState(true);
+    }, FADE_TIMEOUT);
+  };
+
+  const getActiveItems = (): CarouselItem[] => {
+    switch(activeTab) {
+      case 'tvShow':
+        return tvShowItems;
+      case 'movies':
+        return movieItems;
+      case 'anime':
+        return animeItems;
+      default:
+        return [];
+    }
+  };
+
   return (
     <section className="ucm-area ucm-bg" data-background="/assets/img/bg/ucm_bg.jpg">
       <div className="ucm-bg-shape" data-background="/assets/img/bg/ucm_bg_shape.png"></div>
@@ -31,330 +91,59 @@ export default function UpComing() {
             <div className="ucm-nav-wrap">
               <ul className="nav nav-tabs" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
-                  <Link className="nav-link active" id="tvShow-tab" data-toggle="tab" href="#tvShow" role="tab" aria-controls="tvShow" aria-selected="true">TV Shows</Link> 
+                  <Link 
+                    href="#tvShow"
+                    className={`nav-link ${activeTab === 'tvShow' ? 'active' : ''}`} 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleTabClick('tvShow');
+                    }}
+                    role="tab" 
+                    aria-controls="tvShow" 
+                    aria-selected={activeTab === 'tvShow'}
+                  >
+                    TV Shows
+                  </Link>
                 </li>
                 <li className="nav-item" role="presentation">
-                  <Link className="nav-link" id="movies-tab" data-toggle="tab" href="#movies" role="tab" aria-controls="movies" aria-selected="false">Movies</Link> 
+                  <Link 
+                    href="#movies"
+                    className={`nav-link ${activeTab === 'movies' ? 'active' : ''}`} 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleTabClick('movies');
+                    }}
+                    role="tab" 
+                    aria-controls="movies" 
+                    aria-selected={activeTab === 'movies'}
+                  >
+                    Movies
+                  </Link>
                 </li>
                 <li className="nav-item" role="presentation">
-                  <Link className="nav-link" id="anime-tab" data-toggle="tab" href="#anime" role="tab" aria-controls="anime" aria-selected="false">Anime</Link> 
+                  <Link 
+                    href="#anime"
+                    className={`nav-link ${activeTab === 'anime' ? 'active' : ''}`} 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleTabClick('anime');
+                    }}
+                    role="tab" 
+                    aria-controls="anime" 
+                    aria-selected={activeTab === 'anime'}
+                  >
+                    Anime
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
         </div>
         <div className="tab-content" id="myTabContent">
-          <div className="tab-pane fade show active" id="tvShow" role="tabpanel" aria-labelledby="tvShow-tab">
-            <CustomCarousel>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster01} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">Women&apos;s Day</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">hd</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster02} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Perfect Match</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">4k</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster03} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Dog Woof</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">hd</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster04} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Easy Reach</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">8k</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster05} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Cooking</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">hd</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CustomCarousel>
-          </div>
-          <div className="tab-pane fade" id="movies" role="tabpanel" aria-labelledby="movies-tab">
-            <CustomCarousel>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster05} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Cooking</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">hd</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster06} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Hikers</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">4k</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster07} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">Life Quotes</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">hd</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster08} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Beachball</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">4k</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster03} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Dog Woof</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">hd</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CustomCarousel>
-          </div>
-          <div className="tab-pane fade" id="anime" role="tabpanel" aria-labelledby="anime-tab">
-            <CustomCarousel>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster01} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">Women&apos;s Day</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">hd</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster02} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Perfect Match</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">4k</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster03} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Dog Woof</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">hd</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster04} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Easy Reach</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">8k</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="movie-item mb-50">
-                <div className="movie-poster">
-                  <Link href="movie-details"><Image src={imgPoster05} alt="" /></Link> 
-                </div>
-                <div className="movie-content">
-                  <div className="top">
-                    <h5 className="title"><Link href="movie-details">The Cooking</Link> </h5>
-                    <span className="date">2021</span>
-                  </div>
-                  <div className="bottom">
-                    <ul>
-                      <li><span className="quality">hd</span></li>
-                      <li>
-                        <span className="duration"><i className="far fa-clock"></i> 128 min</span>
-                        <span className="rating"><i className="fas fa-thumbs-up"></i> 3.5</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CustomCarousel>
+          <div className="tab-pane fade show active" id="activeTab" role="tabpanel" aria-labelledby="activeTab-tab">
+            <Fade in={fadeState} timeout={FADE_TIMEOUT}>
+              <CustomCarousel items={getActiveItems()} />
+            </Fade>
           </div>
         </div>
       </div>
