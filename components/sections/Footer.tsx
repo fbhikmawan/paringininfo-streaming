@@ -24,6 +24,12 @@ export default function Footer() {
                       <li><Link href="/series">Series</Link></li>
                       <li><Link href="/live">Live</Link></li>
                     </ul>
+                    <div className="footer-search">
+                      <form action="#">
+                        <input type="text" placeholder="Find Favorite Movie" />
+                        <button type="submit"><i className="fas fa-search"></i></button>
+                      </form>
+                    </div>
                   </nav>
                 </div>
               </div>
@@ -60,7 +66,7 @@ export default function Footer() {
           <div className="row">
             <div className="col-lg-6 col-md-6">
               <div className="copyright-text">
-                <p>Copyright &copy; {new Date().getFullYear()}. All Rights Reserved By <Link href="https://paringininfo.com" target='_blank'>ParinginInfo</Link></p>
+                <p>Copyright &copy; {new Date().getFullYear()}. All Rights Reserved By <Link href="/">ParinginInfo</Link></p>
               </div>
             </div>
           </div>
