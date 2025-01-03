@@ -83,6 +83,7 @@ export default function Header() {
                       <li><Link href="/">Home</Link></li>
                       <li><Link href="/movies">Movies</Link></li>
                       <li><Link href="/series">Series</Link></li>
+                      <li><Link href="/sports">Sports</Link></li>
                       <li><Link href="/live">Live</Link></li>
                       <li><Link href="https://paringininfo.com/contactus">Contacts</Link></li>
                     </ul>
