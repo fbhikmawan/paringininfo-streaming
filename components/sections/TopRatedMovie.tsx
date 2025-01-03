@@ -36,11 +36,11 @@ export default function TopRatedMovie() {
                 <div className="col-xl-3 col-lg-4 col-sm-6 grid-item grid-sizer cat-two">
                     <div className="movie-item mb-60">
                         <div className="movie-poster">
-                            <Link href="movie-details.html"><Image src={ imgPoster01 } alt="" /></Link> 
+                            <Link href="movie-details"><Image src={ imgPoster01 } alt="" /></Link> 
                         </div>
                         <div className="movie-content">
                             <div className="top">
-                                <h5 className="title"><Link href="movie-details.html">Women&apos;s Day</Link> </h5>
+                                <h5 className="title"><Link href="movie-details">Women&apos;s Day</Link> </h5>
                                 <span className="date">2021</span>
                             </div>
                             <div className="bottom">
@@ -58,11 +58,11 @@ export default function TopRatedMovie() {
                 <div className="col-xl-3 col-lg-4 col-sm-6 grid-item grid-sizer cat-one cat-three">
                     <div className="movie-item mb-60">
                         <div className="movie-poster">
-                            <Link href="movie-details.html"><Image src={ imgPoster02 } alt="" /></Link> 
+                            <Link href="movie-details"><Image src={ imgPoster02 } alt="" /></Link> 
                         </div>
                         <div className="movie-content">
                             <div className="top">
-                                <h5 className="title"><Link href="movie-details.html">The Perfect Match</Link> </h5>
+                                <h5 className="title"><Link href="movie-details">The Perfect Match</Link> </h5>
                                 <span className="date">2021</span>
                             </div>
                             <div className="bottom">
@@ -80,11 +80,11 @@ export default function TopRatedMovie() {
                 <div className="col-xl-3 col-lg-4 col-sm-6 grid-item grid-sizer cat-two">
                     <div className="movie-item mb-60">
                         <div className="movie-poster">
-                            <Link href="movie-details.html"><Image src={ imgPoster03 } alt="" /></Link> 
+                            <Link href="movie-details"><Image src={ imgPoster03 } alt="" /></Link> 
                         </div>
                         <div className="movie-content">
                             <div className="top">
-                                <h5 className="title"><Link href="movie-details.html">The Dog Woof</Link> </h5>
+                                <h5 className="title"><Link href="movie-details">The Dog Woof</Link> </h5>
                                 <span className="date">2021</span>
                             </div>
                             <div className="bottom">
@@ -102,11 +102,11 @@ export default function TopRatedMovie() {
                 <div className="col-xl-3 col-lg-4 col-sm-6 grid-item grid-sizer cat-one cat-three">
                     <div className="movie-item mb-60">
                         <div className="movie-poster">
-                            <Link href="movie-details.html"><Image src={ imgPoster04 } alt="" /></Link> 
+                            <Link href="movie-details"><Image src={ imgPoster04 } alt="" /></Link> 
                         </div>
                         <div className="movie-content">
                             <div className="top">
-                                <h5 className="title"><Link href="movie-details.html">The Easy Reach</Link> </h5>
+                                <h5 className="title"><Link href="movie-details">The Easy Reach</Link> </h5>
                                 <span className="date">2021</span>
                             </div>
                             <div className="bottom">
@@ -124,11 +124,11 @@ export default function TopRatedMovie() {
                 <div className="col-xl-3 col-lg-4 col-sm-6 grid-item grid-sizer cat-two">
                     <div className="movie-item mb-60">
                         <div className="movie-poster">
-                            <Link href="movie-details.html"><Image src={ imgPoster05 } alt="" /></Link> 
+                            <Link href="movie-details"><Image src={ imgPoster05 } alt="" /></Link> 
                         </div>
                         <div className="movie-content">
                             <div className="top">
-                                <h5 className="title"><Link href="movie-details.html">The Cooking</Link> </h5>
+                                <h5 className="title"><Link href="movie-details">The Cooking</Link> </h5>
                                 <span className="date">2021</span>
                             </div>
                             <div className="bottom">
@@ -146,11 +146,11 @@ export default function TopRatedMovie() {
                 <div className="col-xl-3 col-lg-4 col-sm-6 grid-item grid-sizer cat-one cat-three">
                     <div className="movie-item mb-60">
                         <div className="movie-poster">
-                            <Link href="movie-details.html"><Image src={ imgPoster06 } alt="" /></Link> 
+                            <Link href="movie-details"><Image src={ imgPoster06 } alt="" /></Link> 
                         </div>
                         <div className="movie-content">
                             <div className="top">
-                                <h5 className="title"><Link href="movie-details.html">The Hikaru</Link> </h5>
+                                <h5 className="title"><Link href="movie-details">The Hikaru</Link> </h5>
                                 <span className="date">2021</span>
                             </div>
                             <div className="bottom">
@@ -168,11 +168,11 @@ export default function TopRatedMovie() {
                 <div className="col-xl-3 col-lg-4 col-sm-6 grid-item grid-sizer cat-two">
                     <div className="movie-item mb-60">
                         <div className="movie-poster">
-                            <Link href="movie-details.html"><Image src={ imgPoster07 } alt="" /></Link> 
+                            <Link href="movie-details"><Image src={ imgPoster07 } alt="" /></Link> 
                         </div>
                         <div className="movie-content">
                             <div className="top">
-                                <h5 className="title"><Link href="movie-details.html">Life Quotes</Link> </h5>
+                                <h5 className="title"><Link href="movie-details">Life Quotes</Link> </h5>
                                 <span className="date">2021</span>
                             </div>
                             <div className="bottom">
@@ -190,11 +190,11 @@ export default function TopRatedMovie() {
                 <div className="col-xl-3 col-lg-4 col-sm-6 grid-item grid-sizer cat-one cat-three">
                     <div className="movie-item mb-60">
                         <div className="movie-poster">
-                            <Link href="movie-details.html"><Image src={ imgPoster08 } alt="" /></Link> 
+                            <Link href="movie-details"><Image src={ imgPoster08 } alt="" /></Link> 
                         </div>
                         <div className="movie-content">
                             <div className="top">
-                                <h5 className="title"><Link href="movie-details.html">The Beachball</Link> </h5>
+                                <h5 className="title"><Link href="movie-details">The Beachball</Link> </h5>
                                 <span className="date">2021</span>
                             </div>
                             <div className="bottom">
