@@ -16,11 +16,11 @@ export default function BlogArea() {
           <div className="col-lg-8">
             <div className="blog-post-item">
               <div className="blog-post-thumb">
-                <Link href="blog-details.html"><Image src={ imgBlogThumb01 } alt="" /></Link>
+                <Link href="blog-details"><Image src={ imgBlogThumb01 } alt="" /></Link>
               </div>
               <div className="blog-post-content">
                 <span className="date"><i className="far fa-clock"></i> 10 Mar 2021</span>
-                <h2 className="title"><Link href="blog-details.html">Your Free Movie Streaming Purposes</Link></h2>
+                <h2 className="title"><Link href="blog-details">Your Free Movie Streaming Purposes</Link></h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun
                   labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip exesa
@@ -33,18 +33,18 @@ export default function BlogArea() {
                     <li><i className="far fa-comments"></i><Link href="#">12 Comments</Link></li>
                   </ul>
                   <div className="read-more">
-                    <Link href="blog-details.html">Read More <i className="fas fa-angle-double-right"></i></Link>
+                    <Link href="blog-details">Read More <i className="fas fa-angle-double-right"></i></Link>
                   </div>
                 </div>
               </div>
             </div>
             <div className="blog-post-item">
               <div className="blog-post-thumb">
-                <Link href="blog-details.html"><Image src={ imgBlogThumb02 } alt="" /></Link>
+                <Link href="blog-details"><Image src={ imgBlogThumb02 } alt="" /></Link>
               </div>
               <div className="blog-post-content">
                 <span className="date"><i className="far fa-clock"></i> 10 Mar 2021</span>
-                <h2 className="title"><Link href="blog-details.html">Where watch English movies free?</Link></h2>
+                <h2 className="title"><Link href="blog-details">Where watch English movies free?</Link></h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun
                   labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip exesa
@@ -57,18 +57,18 @@ export default function BlogArea() {
                     <li><i className="far fa-comments"></i><Link href="#">12 Comments</Link></li>
                   </ul>
                   <div className="read-more">
-                    <Link href="blog-details.html">Read More <i className="fas fa-angle-double-right"></i></Link>
+                    <Link href="blog-details">Read More <i className="fas fa-angle-double-right"></i></Link>
                   </div>
                 </div>
               </div>
             </div>
             <div className="blog-post-item">
               <div className="blog-post-thumb">
-                <Link href="blog-details.html"><Image src={ imgBlogThumb03 } alt="" /></Link>
+                <Link href="blog-details"><Image src={ imgBlogThumb03 } alt="" /></Link>
               </div>
               <div className="blog-post-content">
                 <span className="date"><i className="far fa-clock"></i> 10 Mar 2021</span>
-                <h2 className="title"><Link href="blog-details.html">House movie to is streaming website?</Link></h2>
+                <h2 className="title"><Link href="blog-details">House movie to is streaming website?</Link></h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun
                   labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip exesa
@@ -81,7 +81,7 @@ export default function BlogArea() {
                     <li><i className="far fa-comments"></i><Link href="#">12 Comments</Link></li>
                   </ul>
                   <div className="read-more">
-                    <Link href="blog-details.html">Read More <i className="fas fa-angle-double-right"></i></Link>
+                    <Link href="blog-details">Read More <i className="fas fa-angle-double-right"></i></Link>
                   </div>
                 </div>
               </div>
@@ -121,28 +121,28 @@ export default function BlogArea() {
                   <ul>
                     <li className="rc-post-item">
                       <div className="thumb">
-                        <Link href="blog-details.html"><Image src={ imgRcPostThumb01 } alt="" /></Link>
+                        <Link href="blog-details"><Image src={ imgRcPostThumb01 } alt="" /></Link>
                       </div>
                       <div className="content">
-                        <h5 className="title"><Link href="blog-details.html">Express Management Effective</Link></h5>
+                        <h5 className="title"><Link href="blog-details">Express Management Effective</Link></h5>
                         <span className="date"><i className="far fa-clock"></i> 10 Mar 2021</span>
                       </div>
                     </li>
                     <li className="rc-post-item">
                       <div className="thumb">
-                        <Link href="blog-details.html"><Image src={ imgRcPostThumb02 } alt="" /></Link>
+                        <Link href="blog-details"><Image src={ imgRcPostThumb02 } alt="" /></Link>
                       </div>
                       <div className="content">
-                        <h5 className="title"><Link href="blog-details.html">Where watch English movies free?</Link></h5>
+                        <h5 className="title"><Link href="blog-details">Where watch English movies free?</Link></h5>
                         <span className="date"><i className="far fa-clock"></i> 10 Mar 2021</span>
                       </div>
                     </li>
                     <li className="rc-post-item">
                       <div className="thumb">
-                        <Link href="blog-details.html"><Image src={ imgRcPostThumb03 } alt="" /></Link>
+                        <Link href="blog-details"><Image src={ imgRcPostThumb03 } alt="" /></Link>
                       </div>
                       <div className="content">
-                        <h5 className="title"><Link href="blog-details.html">House movie streaming website</Link></h5>
+                        <h5 className="title"><Link href="blog-details">House movie streaming website</Link></h5>
                         <span className="date"><i className="far fa-clock"></i> 10 Mar 2021</span>
                       </div>
                     </li>
