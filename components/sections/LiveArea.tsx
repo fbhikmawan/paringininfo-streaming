@@ -91,7 +91,7 @@ export default function LiveArea() {
                   <p>Active Customer</p>
                 </div>
               </div>
-              <Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="btn popup-video"><i className="fas fa-play"></i> Watch Now</Link>
+              <Link href="/movies" className="btn"><i className="fas fa-play"></i> Watch Now</Link>
             </div>
           </div>
           <div className="col-xl-7 col-lg-6">

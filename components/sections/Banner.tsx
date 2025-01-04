@@ -25,7 +25,7 @@ export default function Banner() {
                   </li>
                 </ul>
               </div>
-              <Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="banner-btn btn popup-video" data-aos="fade-up" data-aos-delay="800" data-aos-duration="1800"><i className="fas fa-play"></i> Watch Now</Link>
+              <Link href="/movies" className="banner-btn btn" data-aos="fade-up" data-aos-delay="800" data-aos-duration="1800"><i className="fas fa-play"></i> Watch Now</Link>
             </div>
           </div>
         </div>
