@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 
+interface Props {
+  title: string;
+}
+
 // Import poster images
 import imgPoster01 from '../../assets/img/poster/ucm_poster01.jpg'
 import imgPoster02 from '../../assets/img/poster/ucm_poster02.jpg'
@@ -35,7 +39,7 @@ const movies: MovieItem[] = [
   { title: "The Beachball", year: 2021, quality: "hd", duration: 128, rating: 4.5, category: ["action", "romantic"], poster: imgPoster08 },
 ];
 
-export default function MoviesArea() {
+export default function ContentsArea({ title }: Props) {
   const [filter, setFilter] = useState<string>('*');
   const [filteredMovies, setFilteredMovies] = useState<MovieItem[]>(movies);
 
@@ -53,7 +57,7 @@ export default function MoviesArea() {
           <div className="col-lg-6">
             <div className="section-title text-center text-lg-left">
               <span className="sub-title">ONLINE STREAMING</span>
-              <h2 className="title">New Release Movies</h2>
+              <h2 className="title">{title}</h2>
             </div>
           </div>
           <div className="col-lg-6">

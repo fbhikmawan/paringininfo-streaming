@@ -1,16 +1,16 @@
 // Template Sections
 import BannerPage from '../../components/sections/BannerPage';
-import MoviesArea from '../../components/sections/MoviesArea';
+import ContentsArea from '../../components/sections/ContentsArea';
 
 export default function Sports() {
   return (
     <>
       <BannerPage
         backgroundUrl="/assets/img/bg/breadcrumb_bg.jpg"
-        titleParts={['Our', 'Sport Video']}
-        activeBreadcrumb="Sport Video"
+        titleParts={['Our', 'Sport Videos']}
+        activeBreadcrumb="Sport Videos"
       />
-      <MoviesArea />
+      <ContentsArea title="Latest Sport Highlights" />
     </>
   );
 }

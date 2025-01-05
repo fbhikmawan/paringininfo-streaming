@@ -1,6 +1,6 @@
 // Template Sections
 import BannerPage from '../../components/sections/BannerPage';
-import MoviesArea from '../../components/sections/MoviesArea';
+import ContentsArea from '../../components/sections/ContentsArea';
 
 export default function Live() {
   return (
@@ -10,7 +10,7 @@ export default function Live() {
         titleParts={['Our', 'Live Streaming']}
         activeBreadcrumb="Live Streaming"
       />
-      <MoviesArea />
+      <ContentsArea title="Live Events" />
     </>
   );
 }

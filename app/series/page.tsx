@@ -1,6 +1,6 @@
 // Template Sections
 import BannerPage from '../../components/sections/BannerPage';
-import MoviesArea from '../../components/sections/MoviesArea';
+import ContentsArea from '../../components/sections/ContentsArea';
 
 export default function Series() {
   return (
@@ -10,7 +10,7 @@ export default function Series() {
         titleParts={['Our', 'Series']}
         activeBreadcrumb="Series"
       />
-      <MoviesArea />
+      <ContentsArea title="Popular Series" />
     </>
   );
 }
