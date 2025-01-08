@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "videos",
+  "info": {
+    "singularName": "video",
+    "pluralName": "videos",
+    "displayName": "Video",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "releaseYear": {
+      "type": "integer",
+      "required": true
+    },
+    "duration": {
+      "type": "integer",
+      "required": true
+    },
+    "poster": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "videoUrl": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "blocks",
+      "required": false
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category.category"
+    },
+    "ratings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::rating.rating"
+    },
+    "quality": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::quality.quality"
+    }
+  }
+}
