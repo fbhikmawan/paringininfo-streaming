@@ -57,6 +57,12 @@
       "relation": "manyToOne",
       "target": "api::quality.quality",
       "inversedBy": "videos"
+    },
+    "type": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::type.type",
+      "inversedBy": "videos"
     }
   }
 }

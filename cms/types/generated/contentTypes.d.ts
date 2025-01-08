@@ -559,6 +559,33 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiTypeType extends Struct.CollectionTypeSchema {
+  collectionName: 'types';
+  info: {
+    description: '';
+    displayName: 'Type';
+    pluralName: 'types';
+    singularName: 'type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::type.type'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    videos: Schema.Attribute.Relation<'oneToMany', 'api::video.video'>;
+    videoType: Schema.Attribute.String;
+  };
+}
+
 export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
   collectionName: 'videos';
   info: {
@@ -589,6 +616,7 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     quality: Schema.Attribute.Relation<'manyToOne', 'api::quality.quality'>;
     ratings: Schema.Attribute.Relation<'oneToMany', 'api::rating.rating'>;
     releaseYear: Schema.Attribute.Integer & Schema.Attribute.Required;
+    type: Schema.Attribute.Relation<'manyToOne', 'api::type.type'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1111,6 +1139,7 @@ declare module '@strapi/strapi' {
       'api::member.member': ApiMemberMember;
       'api::quality.quality': ApiQualityQuality;
       'api::rating.rating': ApiRatingRating;
+      'api::type.type': ApiTypeType;
       'api::video.video': ApiVideoVideo;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
