@@ -19,13 +19,15 @@
     },
     "member": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::member.member"
+      "relation": "manyToOne",
+      "target": "api::member.member",
+      "inversedBy": "ratings"
     },
     "video": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::video.video"
+      "relation": "manyToOne",
+      "target": "api::video.video",
+      "inversedBy": "ratings"
     }
   }
 }

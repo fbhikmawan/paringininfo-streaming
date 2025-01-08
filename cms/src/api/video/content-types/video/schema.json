@@ -43,17 +43,20 @@
     "categories": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::category.category"
+      "target": "api::category.category",
+      "mappedBy": "video"
     },
     "ratings": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::rating.rating"
+      "target": "api::rating.rating",
+      "mappedBy": "video"
     },
     "quality": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::quality.quality"
+      "relation": "manyToOne",
+      "target": "api::quality.quality",
+      "inversedBy": "videos"
     }
   }
 }

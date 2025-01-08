@@ -18,7 +18,8 @@
     "videos": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::video.video"
+      "target": "api::video.video",
+      "mappedBy": "quality"
     }
   }
 }

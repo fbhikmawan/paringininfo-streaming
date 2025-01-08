@@ -16,10 +16,11 @@
       "type": "string",
       "required": true
     },
-    "videos": {
+    "video": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::video.video"
+      "relation": "manyToOne",
+      "target": "api::video.video",
+      "inversedBy": "categories"
     }
   }
 }

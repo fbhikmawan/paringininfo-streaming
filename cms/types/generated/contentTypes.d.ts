@@ -424,7 +424,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    videos: Schema.Attribute.Relation<'oneToMany', 'api::video.video'>;
+    video: Schema.Attribute.Relation<'manyToOne', 'api::video.video'>;
   };
 }
 
@@ -483,6 +483,7 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    ratings: Schema.Attribute.Relation<'oneToMany', 'api::rating.rating'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -541,7 +542,7 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
       'api::rating.rating'
     > &
       Schema.Attribute.Private;
-    member: Schema.Attribute.Relation<'oneToOne', 'api::member.member'>;
+    member: Schema.Attribute.Relation<'manyToOne', 'api::member.member'>;
     publishedAt: Schema.Attribute.DateTime;
     score: Schema.Attribute.Decimal &
       Schema.Attribute.SetMinMax<
@@ -554,7 +555,7 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    video: Schema.Attribute.Relation<'oneToOne', 'api::video.video'>;
+    video: Schema.Attribute.Relation<'manyToOne', 'api::video.video'>;
   };
 }
 
@@ -585,7 +586,7 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     poster: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    quality: Schema.Attribute.Relation<'oneToOne', 'api::quality.quality'>;
+    quality: Schema.Attribute.Relation<'manyToOne', 'api::quality.quality'>;
     ratings: Schema.Attribute.Relation<'oneToMany', 'api::rating.rating'>;
     releaseYear: Schema.Attribute.Integer & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
