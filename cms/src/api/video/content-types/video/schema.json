@@ -63,6 +63,9 @@
       "relation": "manyToOne",
       "target": "api::type.type",
       "inversedBy": "videos"
+    },
+    "trailerUrl": {
+      "type": "string"
     }
   }
 }

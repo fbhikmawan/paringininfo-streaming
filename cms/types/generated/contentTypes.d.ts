@@ -616,6 +616,7 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     quality: Schema.Attribute.Relation<'manyToOne', 'api::quality.quality'>;
     ratings: Schema.Attribute.Relation<'oneToMany', 'api::rating.rating'>;
     releaseYear: Schema.Attribute.Integer & Schema.Attribute.Required;
+    trailerUrl: Schema.Attribute.String;
     type: Schema.Attribute.Relation<'manyToOne', 'api::type.type'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
