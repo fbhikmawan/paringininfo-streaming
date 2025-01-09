@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { Toaster } from "react-hot-toast";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -150,6 +151,7 @@ export default function TemplateLayout({
 
       <Footer />
       <TemplateScripts />
+      <Toaster />
     </>
   );
 }
