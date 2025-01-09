@@ -1,0 +1,112 @@
+{
+  "data": [
+    {
+      "id": 6,
+      "documentId": "qysjqqv68wmvlmfktjle0fyj",
+      "name": "Thaghut",
+      "releaseYear": 2024,
+      "duration": 102,
+      "videoUrl": null,
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "A female student named Ainun, who admires the figure of Abah Mulya, the owner of the Padepokan in Bumi Suwung village who is famous for his supernatural powers in curing various diseases. One day, surprising news came. Abah Mulya was found dead, which made Ainun sad. However, the fact that surprised him more was the fact that Abah Mulya was Ainun's biological father. Armed with the desire to see his father's funeral process for the last time, Ainun together with two of his friends, Bagas and Rini, were determined to go to Padepokan. The three of them managed to arrive safely. However, there were many irregularities that occurred. One of them is about Abah Mulya's will which wants Ainun to be his successor. Ainun was also caught in heretical teachings. So, how do Bagas and Rini save Ainun so she returns to the right path?"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2025-01-08T17:28:32.496Z",
+      "updatedAt": "2025-01-09T14:29:18.098Z",
+      "publishedAt": "2025-01-09T14:29:18.117Z",
+      "trailerUrl": "https://www.youtube.com/watch?v=0zmLouvxfsM",
+      "poster": {
+        "id": 12,
+        "documentId": "qsvw5xi7pez7jn68nltfv7cv",
+        "name": "IMG_0008.JPG",
+        "alternativeText": null,
+        "caption": null,
+        "width": 405,
+        "height": 594,
+        "formats": {
+          "thumbnail": {
+            "name": "thumbnail_IMG_0008.JPG",
+            "hash": "thumbnail_IMG_0008_d150621da0",
+            "ext": ".JPG",
+            "mime": "image/jpeg",
+            "path": null,
+            "width": 106,
+            "height": 156,
+            "size": 5.62,
+            "sizeInBytes": 5621,
+            "url": "/uploads/thumbnail_IMG_0008_d150621da0.JPG"
+          },
+          "small": {
+            "name": "small_IMG_0008.JPG",
+            "hash": "small_IMG_0008_d150621da0",
+            "ext": ".JPG",
+            "mime": "image/jpeg",
+            "path": null,
+            "width": 341,
+            "height": 500,
+            "size": 43.03,
+            "sizeInBytes": 43034,
+            "url": "/uploads/small_IMG_0008_d150621da0.JPG"
+          }
+        },
+        "hash": "IMG_0008_d150621da0",
+        "ext": ".JPG",
+        "mime": "image/jpeg",
+        "size": 60.7,
+        "url": "/uploads/IMG_0008_d150621da0.JPG",
+        "previewUrl": null,
+        "provider": "local",
+        "provider_metadata": null,
+        "createdAt": "2025-01-08T17:27:36.998Z",
+        "updatedAt": "2025-01-08T17:27:36.998Z",
+        "publishedAt": "2025-01-08T17:27:36.998Z"
+      },
+      "categories": [
+        {
+          "id": 7,
+          "documentId": "dj47im7gg1ytf630dr07sind",
+          "categoryType": "Horror",
+          "createdAt": "2025-01-08T17:23:52.858Z",
+          "updatedAt": "2025-01-08T17:23:52.858Z",
+          "publishedAt": "2025-01-08T17:23:52.862Z"
+        }
+      ],
+      "ratings": [
+        {
+          "id": 2,
+          "documentId": "xnxwxalzz64z0eughc8g6ney",
+          "score": 3,
+          "createdAt": "2025-01-09T15:37:43.539Z",
+          "updatedAt": "2025-01-09T15:37:43.539Z",
+          "publishedAt": "2025-01-09T15:37:43.547Z"
+        }
+      ],
+      "quality": {
+        "id": 4,
+        "documentId": "jan23vltm1lp4ycqmas9pb6f",
+        "qualityType": "SD",
+        "createdAt": "2025-01-08T17:19:14.154Z",
+        "updatedAt": "2025-01-08T17:22:21.409Z",
+        "publishedAt": "2025-01-08T17:22:21.412Z"
+      },
+      "type": {
+        "id": 6,
+        "documentId": "n5owggt6qj7mv14xh41rp8e7",
+        "videoType": "movies",
+        "createdAt": "2025-01-08T19:15:02.089Z",
+        "updatedAt": "2025-01-08T19:15:39.633Z",
+        "publishedAt": "2025-01-08T19:15:39.641Z"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": { "page": 1, "pageSize": 25, "pageCount": 1, "total": 1 }
+  }
+}
