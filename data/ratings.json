@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "id": 2,
+      "documentId": "xnxwxalzz64z0eughc8g6ney",
+      "score": 3,
+      "createdAt": "2025-01-09T15:37:43.539Z",
+      "updatedAt": "2025-01-09T15:37:43.539Z",
+      "publishedAt": "2025-01-09T15:37:43.547Z",
+      "member": null,
+      "video": {
+        "id": 6,
+        "documentId": "qysjqqv68wmvlmfktjle0fyj",
+        "name": "Thaghut",
+        "releaseYear": 2024,
+        "duration": 102,
+        "videoUrl": null,
+        "description": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "text",
+                "text": "A female student named Ainun, who admires the figure of Abah Mulya, the owner of the Padepokan in Bumi Suwung village who is famous for his supernatural powers in curing various diseases. One day, surprising news came. Abah Mulya was found dead, which made Ainun sad. However, the fact that surprised him more was the fact that Abah Mulya was Ainun's biological father. Armed with the desire to see his father's funeral process for the last time, Ainun together with two of his friends, Bagas and Rini, were determined to go to Padepokan. The three of them managed to arrive safely. However, there were many irregularities that occurred. One of them is about Abah Mulya's will which wants Ainun to be his successor. Ainun was also caught in heretical teachings. So, how do Bagas and Rini save Ainun so she returns to the right path?"
+              }
+            ]
+          }
+        ],
+        "createdAt": "2025-01-08T17:28:32.496Z",
+        "updatedAt": "2025-01-09T14:29:18.098Z",
+        "publishedAt": "2025-01-09T14:29:18.117Z",
+        "trailerUrl": "https://www.youtube.com/watch?v=0zmLouvxfsM"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": { "page": 1, "pageSize": 25, "pageCount": 1, "total": 1 }
+  }
+}
