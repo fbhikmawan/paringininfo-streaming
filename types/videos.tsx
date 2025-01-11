@@ -23,6 +23,7 @@ export interface Poster extends BaseFields {
     small: ImageFormat;
   };
   size: number;
+  url: string;
   previewUrl?: string | null;
   provider: string;
   provider_metadata?: string | null;
