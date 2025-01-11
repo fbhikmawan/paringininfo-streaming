@@ -10,7 +10,7 @@ export default function Movies() {
         titleParts={['Our', 'Movies']}
         activeBreadcrumb="Movies"
       />
-      <ContentsArea title="New Release Movies" />
+      <ContentsArea title="Timeless Movies Library" />
     </>
   );
 }
