@@ -1,12 +1,5 @@
-// types.tsx
-
-export interface BaseFields {
-  id: number;
-  documentId: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-}
+import { BaseFields } from './bases'
+import { Member } from './members'
 
 export interface ImageFormat {
   name: string;
@@ -33,13 +26,6 @@ export interface Poster extends BaseFields {
   previewUrl?: string | null;
   provider: string;
   provider_metadata?: string | null;
-}
-
-export interface Member extends BaseFields {
-  username: string;
-  email: string;
-  provider: string;
-  ratings: Rating[];
 }
 
 export interface Category extends BaseFields {
