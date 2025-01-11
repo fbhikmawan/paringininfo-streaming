@@ -31,6 +31,7 @@ export interface Poster extends BaseFields {
 
 export interface Category extends BaseFields {
   categoryType: string;
+  videoType: VideoType;
   video?: Video;
 }
 
@@ -47,11 +48,13 @@ export interface Rating extends BaseFields {
 
 export interface VideoType extends BaseFields {
   videoType: string;
+  videoTypeSlug?: string;
   videos?: Video[];
 }
 
 export interface Video extends BaseFields {
   name: string;
+  nameSlug?: string;
   releaseYear: number;
   duration: number;
   videoUrl?: string | null;
