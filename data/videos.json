@@ -1,112 +1,259 @@
-{
-  "data": [
-    {
-      "id": 6,
-      "documentId": "qysjqqv68wmvlmfktjle0fyj",
-      "name": "Thaghut",
-      "releaseYear": 2024,
-      "duration": 102,
-      "videoUrl": null,
-      "description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "A female student named Ainun, who admires the figure of Abah Mulya, the owner of the Padepokan in Bumi Suwung village who is famous for his supernatural powers in curing various diseases. One day, surprising news came. Abah Mulya was found dead, which made Ainun sad. However, the fact that surprised him more was the fact that Abah Mulya was Ainun's biological father. Armed with the desire to see his father's funeral process for the last time, Ainun together with two of his friends, Bagas and Rini, were determined to go to Padepokan. The three of them managed to arrive safely. However, there were many irregularities that occurred. One of them is about Abah Mulya's will which wants Ainun to be his successor. Ainun was also caught in heretical teachings. So, how do Bagas and Rini save Ainun so she returns to the right path?"
-            }
-          ]
-        }
-      ],
-      "createdAt": "2025-01-08T17:28:32.496Z",
-      "updatedAt": "2025-01-09T14:29:18.098Z",
-      "publishedAt": "2025-01-09T14:29:18.117Z",
-      "trailerUrl": "https://www.youtube.com/watch?v=0zmLouvxfsM",
-      "poster": {
-        "id": 12,
-        "documentId": "qsvw5xi7pez7jn68nltfv7cv",
-        "name": "IMG_0008.JPG",
-        "alternativeText": null,
-        "caption": null,
-        "width": 405,
-        "height": 594,
-        "formats": {
-          "thumbnail": {
-            "name": "thumbnail_IMG_0008.JPG",
-            "hash": "thumbnail_IMG_0008_d150621da0",
-            "ext": ".JPG",
-            "mime": "image/jpeg",
-            "path": null,
-            "width": 106,
-            "height": 156,
-            "size": 5.62,
-            "sizeInBytes": 5621,
-            "url": "/uploads/thumbnail_IMG_0008_d150621da0.JPG"
-          },
-          "small": {
-            "name": "small_IMG_0008.JPG",
-            "hash": "small_IMG_0008_d150621da0",
-            "ext": ".JPG",
-            "mime": "image/jpeg",
-            "path": null,
-            "width": 341,
-            "height": 500,
-            "size": 43.03,
-            "sizeInBytes": 43034,
-            "url": "/uploads/small_IMG_0008_d150621da0.JPG"
+[
+  {
+    "id": 1,
+    "documentId": "video_001",
+    "createdAt": "2025-01-12T00:00:00Z",
+    "updatedAt": "2025-01-12T00:00:00Z",
+    "publishedAt": "2025-01-12T00:00:00Z",
+    "name": "Dosen Ghaib: Sudah Malam Atau Sudah Tahu",
+    "nameSlug": "dosen-ghaib-sudah-malam-atau-sudah-tahu",
+    "releaseYear": 2024,
+    "duration": 94,
+    "videoUrl": null,
+    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/dosen-gaib-2024/trailer/trailer.m3u8",
+    "description": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "Pak Bakti is a killer lecturer who is very feared by all students on campus. Their credibility and good name are at stake when Amelia, Emir, Maya, and Fattah, are declared to have failed their courses. They are required to take remedial classes to improve their grades. Unfortunately, the remedial class turned into such a horrible experience that they wanted to leave the class."
           }
-        },
-        "hash": "IMG_0008_d150621da0",
-        "ext": ".JPG",
-        "mime": "image/jpeg",
-        "size": 60.7,
-        "url": "/uploads/IMG_0008_d150621da0.JPG",
-        "previewUrl": null,
-        "provider": "local",
-        "provider_metadata": null,
-        "createdAt": "2025-01-08T17:27:36.998Z",
-        "updatedAt": "2025-01-08T17:27:36.998Z",
-        "publishedAt": "2025-01-08T17:27:36.998Z"
-      },
-      "categories": [
-        {
-          "id": 7,
-          "documentId": "dj47im7gg1ytf630dr07sind",
-          "categoryType": "Horror",
-          "createdAt": "2025-01-08T17:23:52.858Z",
-          "updatedAt": "2025-01-08T17:23:52.858Z",
-          "publishedAt": "2025-01-08T17:23:52.862Z"
-        }
-      ],
-      "ratings": [
-        {
-          "id": 2,
-          "documentId": "xnxwxalzz64z0eughc8g6ney",
-          "score": 3,
-          "createdAt": "2025-01-09T15:37:43.539Z",
-          "updatedAt": "2025-01-09T15:37:43.539Z",
-          "publishedAt": "2025-01-09T15:37:43.547Z"
-        }
-      ],
-      "quality": {
-        "id": 4,
-        "documentId": "jan23vltm1lp4ycqmas9pb6f",
-        "qualityType": "SD",
-        "createdAt": "2025-01-08T17:19:14.154Z",
-        "updatedAt": "2025-01-08T17:22:21.409Z",
-        "publishedAt": "2025-01-08T17:22:21.412Z"
-      },
-      "type": {
-        "id": 6,
-        "documentId": "n5owggt6qj7mv14xh41rp8e7",
-        "videoType": "movies",
-        "createdAt": "2025-01-08T19:15:02.089Z",
-        "updatedAt": "2025-01-08T19:15:39.633Z",
-        "publishedAt": "2025-01-08T19:15:39.641Z"
+        ]
       }
+    ],
+    "poster": {
+      "documentId": "poster_001"
+    },
+    "categories": [
+      {
+        "documentId": "category_001"
+      }
+    ],
+    "ratings": [
+      {
+        "documentId": "rating_001"
+      }
+    ],
+    "quality": {
+      "documentId": "quality_001"
+    },
+    "type": {
+      "documentId": "type_001"
     }
-  ],
-  "meta": {
-    "pagination": { "page": 1, "pageSize": 25, "pageCount": 1, "total": 1 }
+  },
+  {
+    "id": 2,
+    "documentId": "video_002",
+    "createdAt": "2023-05-02T00:00:00Z",
+    "updatedAt": "2023-05-02T00:00:00Z",
+    "publishedAt": "2023-05-02T00:00:00Z",
+    "name": "Exhuma",
+    "nameSlug": "exhuma",
+    "releaseYear": 2024,
+    "duration": 134,
+    "videoUrl": "https://dev-s3-api.paringininfo.com/videos/exhuma/Exhuma.m3u8",
+    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/exhuma/trailer/Exhuma.m3u8",
+    "description": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "The process of excavating an ominous grave unleashes dreadful consequences buried underneath."
+          }
+        ]
+      }
+    ],
+    "poster": {
+      "documentId": "poster_002"
+    },
+    "categories": [
+      {
+        "documentId": "category_001"
+      }
+    ],
+    "ratings": [
+      {
+        "documentId": "rating_002"
+      }
+    ],
+    "quality": {
+      "documentId": "quality_001"
+    },
+    "type": {
+      "documentId": "type_001"
+    }
+  },
+  {
+    "id": 3,
+    "documentId": "video_003",
+    "createdAt": "2023-05-03T00:00:00Z",
+    "updatedAt": "2023-05-03T00:00:00Z",
+    "publishedAt": "2023-05-03T00:00:00Z",
+    "name": "Kang Mak from Pee Mak",
+    "nameSlug": "kang-mak-from-pee-mak",
+    "releaseYear": 2024,
+    "duration": 122,
+    "videoUrl": null,
+    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/kang-mak-from-pee-mak-2024/trailer/trailer.m3u8",
+    "description": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "Makmur is an Indonesian soldier who has to leave his wife, Sari, who is heavily pregnant, to go to war somewhere, defending the integrity of the Republic of Indonesia. Makmur fought together with other soldiers, Supra, Fajrul, Jaka, and Solah. His strong desire to meet Sari again made Makmur and his friends survive the battlefield. They promised to be friends for life and death. When he returned home, Makmur reunited with Sari who had given birth to their child, Cipluk. Makmur's friends were also happy and a little jealous, seeing Makmur's affection for his extraordinary beautiful wife. However, the situation became uncomfortable when there were rumors that Sari had actually died. Sari, who lives with them, is a wandering spirit."
+          }
+        ]
+      }
+    ],
+    "poster": {
+      "documentId": "poster_003"
+    },
+    "categories": [
+      {
+        "documentId": "category_001"
+      }
+    ],
+    "ratings": [
+      {
+        "documentId": "rating_003"
+      }
+    ],
+    "quality": {
+      "documentId": "quality_001"
+    },
+    "type": {
+      "documentId": "type_001"
+    }
+  },
+  {
+    "id": 4,
+    "documentId": "video_004",
+    "createdAt": "2023-05-04T00:00:00Z",
+    "updatedAt": "2023-05-04T00:00:00Z",
+    "publishedAt": "2023-05-04T00:00:00Z",
+    "name": "Parasite",
+    "nameSlug": "parasite",
+    "releaseYear": 2019,
+    "duration": 132,
+    "videoUrl": "https://dev-s3-api.paringininfo.com/videos/parasite/parasite.m3u8",
+    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/parasite/trailer/parasite.m3u8",
+    "description": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "The Kims - mother and father Chung-sook and Ki-taek, and their young adult offspring, son Ki-woo and daughter Ki-jung - are a poor family living in a shabby and cramped half basement apartment in a busy lower working class commercial district of Seoul. Ki-woo is the one who has dreams of getting out of poverty by one day going to university. Despite not having that university education, Ki-woo is chosen by his university student friend Min, who is leaving to go to school, to take over his tutoring job to Park Da-hye, who Min plans to date once he returns to Seoul and she herself is in university. The Parks are a wealthy family who for four years have lived in their modernistic house designed by and the former residence of famed architect Namgoong. While Mr. and Mrs. Park are all about status, Mrs. Park has a flighty, simpleminded mentality and temperament, which Min tells Ki-woo to feel comfortable in lying to her about his education to get the job. In getting the job, Ki-woo further learns that Mrs. Park is looking for an art therapist for the Parks' adolescent son, Da-song, Ki-woo quickly recommending his professional art therapist friend \"Jessica\", really Ki-jung who he knows can pull off the scam in being the easiest liar of the four Kims. In Ki-woo also falling for Da-hye, he begins to envision himself in that house, and thus the Kims as a collective start a plan for all the Kims, like Ki-jung using assumed names, to replace existing servants in the Parks' employ in orchestrating reasons for them to be fired. The most difficult to get rid of may be Moon-gwang, the Parks' housekeeper who literally came with the house - she Namgoong's housekeeper when he lived there - and thus knows all the little nooks and crannies of it better than the Parks themselves. The question then becomes how far the Kims can take this scam in their quest to become their version of the Parks."
+          }
+        ]
+      }
+    ],
+    "poster": {
+      "documentId": "poster_004"
+    },
+    "categories": [
+      {
+        "documentId": "category_001"
+      }
+    ],
+    "ratings": [
+      {
+        "documentId": "rating_004"
+      }
+    ],
+    "quality": {
+      "documentId": "quality_001"
+    },
+    "type": {
+      "documentId": "type_001"
+    }
+  },
+  {
+    "id": 5,
+    "documentId": "video_005",
+    "createdAt": "2023-05-05T00:00:00Z",
+    "updatedAt": "2023-05-05T00:00:00Z",
+    "publishedAt": "2023-05-05T00:00:00Z",
+    "name": "Rumah Dinas Bapak",
+    "releaseYear": 2024,
+    "duration": 93,
+    "videoUrl": null,
+    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/rumah-dinas-bapak-2024/trailer/trailer.m3u8",
+    "description": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "Dodit, Mother, Mbak Lis, and Mas Dewo had to accompany Father to move to his new official residence in the middle of a teak forest. There, there is a prison which is said to be used to punish blandong (wood thieves). Strangely, every Friday night in Kliwon terrible things happen. Dodit, Mother, Mbak Lis, and Mas Dewo were all terrorized. Including two of Father's subordinates, Sugeng and Kasno."
+          }
+        ]
+      }
+    ],
+    "poster": {
+      "documentId": "poster_005"
+    },
+    "categories": [
+      {
+        "documentId": "category_001"
+      }
+    ],
+    "ratings": [
+      {
+        "documentId": "rating_005"
+      }
+    ],
+    "quality": {
+      "documentId": "quality_001"
+    },
+    "type": {
+      "documentId": "type_001"
+    }
+  },
+  {
+    "id": 6,
+    "documentId": "video_006",
+    "createdAt": "2023-05-06T00:00:00Z",
+    "updatedAt": "2023-05-06T00:00:00Z",
+    "publishedAt": "2023-05-06T00:00:00Z",
+    "name": "Thaghut",
+    "nameSlug": "thaghut",
+    "releaseYear": 2024,
+    "duration": 102,
+    "videoUrl": "https://dev-s3-api.paringininfo.com/videos/thaghut/Thaghut.m3u8",
+    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/thaghut/Thaghut.m3u8",
+    "description": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "A female student named Ainun, who admires the figure of Abah Mulya, the owner of the Padepokan in Bumi Suwung village who is famous for his supernatural powers in curing various diseases. One day, surprising news came. Abah Mulya was found dead, which made Ainun sad. However, the fact that surprised him more was the fact that Abah Mulya was Ainun's biological father. Armed with the desire to see his father's funeral process for the last time, Ainun together with two of his friends, Bagas and Rini, were determined to go to Padepokan. The three of them managed to arrive safely. However, there were many irregularities that occurred. One of them is about Abah Mulya's will which wants Ainun to be his successor. Ainun was also caught in heretical teachings. So, how do Bagas and Rini save Ainun so she returns to the right path?"
+          }
+        ]
+      }
+    ],
+    "poster": {
+      "documentId": "poster_006"
+    },
+    "categories": [
+      {
+        "documentId": "category_001"
+      }
+    ],
+    "ratings": [
+      {
+        "documentId": "rating_006"
+      }
+    ],
+    "quality": {
+      "documentId": "quality_001"
+    },
+    "type": {
+      "documentId": "type_001"
+    }
   }
-}
+]

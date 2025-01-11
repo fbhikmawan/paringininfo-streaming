@@ -1,56 +1,46 @@
-{
-  "data": [
-    {
-      "id": 5,
-      "documentId": "umtoa5yf1udj7dmxqpz0dyt8",
-      "categoryType": "Animation",
-      "createdAt": "2025-01-08T17:22:42.910Z",
-      "updatedAt": "2025-01-08T17:23:29.403Z",
-      "publishedAt": "2025-01-08T17:23:29.412Z",
-      "video": null
-    },
-    {
-      "id": 7,
-      "documentId": "dj47im7gg1ytf630dr07sind",
-      "categoryType": "Horror",
-      "createdAt": "2025-01-08T17:23:52.858Z",
-      "updatedAt": "2025-01-08T17:23:52.858Z",
-      "publishedAt": "2025-01-08T17:23:52.862Z",
-      "video": {
-        "id": 6,
-        "documentId": "qysjqqv68wmvlmfktjle0fyj",
-        "name": "Thaghut",
-        "releaseYear": 2024,
-        "duration": 102,
-        "videoUrl": null,
-        "description": [
-          {
-            "type": "paragraph",
-            "children": [
-              {
-                "type": "text",
-                "text": "A female student named Ainun, who admires the figure of Abah Mulya, the owner of the Padepokan in Bumi Suwung village who is famous for his supernatural powers in curing various diseases. One day, surprising news came. Abah Mulya was found dead, which made Ainun sad. However, the fact that surprised him more was the fact that Abah Mulya was Ainun's biological father. Armed with the desire to see his father's funeral process for the last time, Ainun together with two of his friends, Bagas and Rini, were determined to go to Padepokan. The three of them managed to arrive safely. However, there were many irregularities that occurred. One of them is about Abah Mulya's will which wants Ainun to be his successor. Ainun was also caught in heretical teachings. So, how do Bagas and Rini save Ainun so she returns to the right path?"
-              }
-            ]
-          }
-        ],
-        "createdAt": "2025-01-08T17:28:32.496Z",
-        "updatedAt": "2025-01-09T14:29:18.098Z",
-        "publishedAt": "2025-01-09T14:29:18.117Z",
-        "trailerUrl": "https://www.youtube.com/watch?v=0zmLouvxfsM"
-      }
-    },
-    {
-      "id": 9,
-      "documentId": "jhsk7vkituvei10b0ar3sjqn",
-      "categoryType": "Action",
-      "createdAt": "2025-01-08T17:24:08.775Z",
-      "updatedAt": "2025-01-08T17:24:08.775Z",
-      "publishedAt": "2025-01-08T17:24:08.779Z",
-      "video": null
+[
+  {
+    "id": 201,
+    "documentId": "category_001",
+    "createdAt": "2025-01-12T00:00:00Z",
+    "updatedAt": "2025-01-12T00:00:00Z",
+    "publishedAt": "2025-01-12T00:00:00Z",
+    "categoryType": "Horror",
+    "type": {
+      "documentId": "type_001"
     }
-  ],
-  "meta": {
-    "pagination": { "page": 1, "pageSize": 25, "pageCount": 1, "total": 3 }
+  },
+  {
+    "id": 202,
+    "documentId": "category_002",
+    "createdAt": "2023-05-02T00:00:00Z",
+    "updatedAt": "2023-05-02T00:00:00Z",
+    "publishedAt": "2023-05-02T00:00:00Z",
+    "categoryType": "Comedy",
+    "type": {
+      "documentId": "type_001"
+    }
+  },
+  {
+    "id": 203,
+    "documentId": "category_003",
+    "createdAt": "2023-05-03T00:00:00Z",
+    "updatedAt": "2023-05-03T00:00:00Z",
+    "publishedAt": "2023-05-03T00:00:00Z",
+    "categoryType": "Action",
+    "type": {
+      "documentId": "type_001"
+    }
+  },
+  {
+    "id": 204,
+    "documentId": "category_004",
+    "createdAt": "2023-05-04T00:00:00Z",
+    "updatedAt": "2023-05-04T00:00:00Z",
+    "publishedAt": "2023-05-04T00:00:00Z",
+    "categoryType": "Animation",
+    "type": {
+      "documentId": "type_001"
+    }
   }
-}
+]
