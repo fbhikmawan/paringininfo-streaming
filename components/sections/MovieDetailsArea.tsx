@@ -1,11 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import VideoPlayerModal from '../modals/VideoPlayerModal';
+
 import imgMovieDetails from '../../assets/img/poster/movie_details_img.jpg'
 import imgDownload from '../../assets/fonts/download.svg'
 import imgPlayIcon from '../../assets/img/images/play_icon.png'
 
 export default function MovieDetailsArea() {
+  const videoUrl = 'https://dev-s3-api.paringininfo.com/videos/parasite/parasite.m3u8';
+  const posterUrl = 'https://dev-s3-api.paringininfo.com/videos/parasite/thumbnail.webp';
+
   return (
     <section className="movie-details-area" data-background="/assets/img/bg/movie_details_bg.jpg">
       <div className="container">
@@ -46,7 +51,15 @@ export default function MovieDetailsArea() {
                     <h6>Prime Video</h6>
                     <span>Streaming Channels</span>
                   </li>
-                  <li className="watch"><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="btn popup-video"><i className="fas fa-play"></i> Watch Now</Link></li>
+                  <li className="watch">
+                    <VideoPlayerModal 
+                      modalId="videoPlayerModal"
+                      videoSrc={videoUrl}
+                      posterSrc={posterUrl}
+                    >
+                      <i className="fas fa-play"></i> Watch Now
+                    </VideoPlayerModal>
+                  </li>
                 </ul>
               </div>
             </div>

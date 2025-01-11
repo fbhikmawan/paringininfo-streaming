@@ -1,0 +1,72 @@
+'use client';
+
+import React, { useRef, useEffect, useState } from 'react';
+import VideoPlayer from '../elements/VideoPlayer';
+
+interface VideoPlayerModalProps {
+  modalId: string;
+  videoSrc: string;
+  posterSrc: string;
+  children: React.ReactNode;
+}
+
+export default function VideoPlayerModal({ modalId, videoSrc, posterSrc, children }: VideoPlayerModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [shouldPlay, setShouldPlay] = useState(false);
+
+  useEffect(() => {
+    if (!modalRef.current) return;
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class'
+        ) {
+          if (modalRef.current?.classList.contains('show')) {
+            setShouldPlay(true);
+          } else {
+            setShouldPlay(false);
+          }
+        }
+      });
+    });
+
+    observer.observe(modalRef.current, { attributes: true, attributeFilter: ['class'] });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [modalId]);
+
+  return (
+    <>
+      <div
+        className="modal fade"
+        id={modalId}
+        tabIndex={-1}
+        aria-labelledby={`${modalId}Label`}
+        ref={modalRef}
+      >
+        <div className="modal-dialog modal-dialog-centered modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+              <VideoPlayer 
+                src={videoSrc} 
+                poster={posterSrc}
+                shouldPlay={shouldPlay}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <a
+        className="btn"
+        data-toggle="modal"
+        data-target={`#${modalId}`}
+      >
+        {children}
+      </a>
+    </>
+  );
+}
