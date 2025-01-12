@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { Toaster } from "react-hot-toast";
+import Script from 'next/script'
+
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -16,22 +17,7 @@ import "../assets/css/default.css";
 import "../assets/css/style.css";
 import "../assets/css/responsive.css";
 
-// Template Sections
-import Header from '../components/sections/Header';
-import Footer from '../components/sections/Footer';
-
-// Template Elements
-import ButtonScrollToTop from '../components/elements/ButtonScrollToTop';
-import Preloader from '../components/elements/Preloader';
-
-// Template Scripts
-import TemplateScripts from '../components/scripts/TemplateScripts';
-
-export default function TemplateLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function TemplateScripts() {
   const [isYtriggered, setisYtriggered] = useState(false);
   const pathname = usePathname();
   
@@ -140,18 +126,11 @@ export default function TemplateLayout({
   }, [isYtriggered]);
 
   return (
-    <>
-      <Preloader />
-      <ButtonScrollToTop />
-      <Header />
-
-      <main>
-        {children}
-      </main>
-
-      <Footer />
-      <TemplateScripts />
-      <Toaster />
+    <>        
+      <Script src="../../assets/js/vendor/jquery-3.6.0.min.js" />
+      <Script src="../../assets/js/popper.min.js" />
+      <Script src="../../assets/js/bootstrap.min.js" />
     </>
   );
 }
+

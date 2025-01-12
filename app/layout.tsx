@@ -1,7 +1,17 @@
 import type { Metadata } from "next";
 
-// Template layout
-import TemplateLayout from './TemplateLayout'
+import { Toaster } from "react-hot-toast";
+
+// Template Sections
+import Header from '../components/sections/Header';
+import Footer from '../components/sections/Footer';
+
+// Template Elements
+import ButtonScrollToTop from '../components/elements/ButtonScrollToTop';
+import Preloader from '../components/elements/Preloader';
+
+// Template Scripts
+import TemplateScripts from './TemplateScripts';
 
 export const metadata: Metadata = {
   title: "ParinginInfo | Online Movies, Series & Live",
@@ -16,9 +26,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <TemplateLayout>
+        <Preloader />
+        <ButtonScrollToTop />
+        <Header/>
+
+        <main>
           {children}
-        </TemplateLayout>
+        </main>
+
+        <Footer />
+        <TemplateScripts />
+        <Toaster />
       </body>
     </html>
   );
