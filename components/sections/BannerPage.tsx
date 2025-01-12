@@ -17,7 +17,7 @@ export default function BannerPage({
         <div className="row">
           <div className="col-12">
             <div className="breadcrumb-content">
-              <h2 className="title">{titleParts[0]} <span>{titleParts[1]}</span></h2>
+              <h2 className="title fs-60">{titleParts[0]} <span>{titleParts[1]}</span></h2>
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item"><Link href="/">Home</Link></li>
