@@ -6,7 +6,9 @@
     "updatedAt": "2025-01-12T00:00:00Z",
     "publishedAt": "2025-01-12T00:00:00Z",
     "videoType": "Movies",
-    "videoTypeSlug": "movies"
+    "videoTypeSlug": "movies",
+    "bannerPageTitle": "Movies",
+    "contentsAreaTitle": "Timeless Movies Library"
   },
   {
     "id": 502,
@@ -15,7 +17,9 @@
     "updatedAt": "2023-05-02T00:00:00Z",
     "publishedAt": "2023-05-02T00:00:00Z",
     "videoType": "Series",
-    "videoTypeSlug": "series"
+    "videoTypeSlug": "series",
+    "bannerPageTitle": "Series",
+    "contentsAreaTitle": "Popular Series"
   },
   {
     "id": 503,
@@ -24,7 +28,9 @@
     "updatedAt": "2023-05-03T00:00:00Z",
     "publishedAt": "2023-05-03T00:00:00Z",
     "videoType": "Sports",
-    "videoTypeSlug": "sports"
+    "videoTypeSlug": "sports",
+    "bannerPageTitle": "Sport Videos",
+    "contentsAreaTitle": "Latest Sport Highlights"
   },
   {
     "id": 504,
@@ -33,6 +39,8 @@
     "updatedAt": "2023-05-04T00:00:00Z",
     "publishedAt": "2023-05-04T00:00:00Z",
     "videoType": "Live",
-    "videoTypeSlug": "live"
+    "videoTypeSlug": "live",
+    "bannerPageTitle": "Live Streaming",
+    "contentsAreaTitle": "Live Events"
   }
 ]

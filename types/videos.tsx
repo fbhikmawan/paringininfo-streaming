@@ -48,7 +48,9 @@ export interface Rating extends BaseFields {
 
 export interface VideoType extends BaseFields {
   videoType: string;
-  videoTypeSlug?: string;
+  videoTypeSlug: string;
+  bannerPageTitle: string;
+  contentsAreaTitle: string;
   videos?: Video[];
 }
 
