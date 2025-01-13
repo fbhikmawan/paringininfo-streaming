@@ -25,7 +25,7 @@ export default async function VideoTypePage({
         titleParts={['Our', videoType.bannerPageTitle]}
         activeBreadcrumb={videoType.bannerPageTitle}
       />
-      <ContentsArea title={videoType.contentsAreaTitle} />
+      <ContentsArea title={videoType.contentsAreaTitle} videoType={videoType} />
     </>
   );
 }
