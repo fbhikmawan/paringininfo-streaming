@@ -27,6 +27,7 @@ export default function ContentsArea({ title, videoType }: Props) {
   const videosOnVideoType = videosData.filter((video: Video) => 
     video.type?.documentId === videoType.documentId
   )
+  
   const categoriesOnVideoType = categoriesData.filter((category:Category) => 
     category.videoType?.documentId === videoType.documentId
   )
@@ -87,44 +88,46 @@ export default function ContentsArea({ title, videoType }: Props) {
         <div className="row tr-movie-active">
           {filteredVideos.map((movie) => (
             <div key={movie.id} className={`col-xl-3 col-lg-4 col-sm-6 movie-item movie-item-three mb-50 ${movie.categories.map(cat => cat.categoryType).join(' ')}`}>
-              <div className="movie-poster">
-                {movie.poster && (
-                  <Image 
-                    src={movie.poster.url} 
-                    alt={movie.name} 
-                    width={movie.poster.width} 
-                    height={movie.poster.height} 
-                  />
-                )}
-                <ul className="overlay-btn">
-                  <li className="rating">
-                    {[...Array(Math.floor(movie.ratings[0]?.score || 0)).keys()].map(() => (
-                      <i key={Math.random()} className="fas fa-star"></i>
-                    ))}
-                  </li>
-                  <li><Link href="#" className="popup-video btn">Watch Now</Link></li>
-                  <li><Link href={`/movie-details/${movie.id}`} className="btn">Details</Link></li>
-                </ul>
-              </div>
-              <div className="movie-content">
-                <div className="top">
-                  <h5 className="title"><Link href={`/movie-details/${movie.id}`}>{movie.name}</Link></h5>
-                  <span className="date">{movie.releaseYear}</span>
-                </div>
-                <div className="bottom">
-                  <ul>
-                    <li><span className={`quality ${movie.quality?.qualityType.toLowerCase()}`}>{movie.quality?.qualityType.toUpperCase()}</span></li>
-                    <li>
-                      <span className="duration"><i className="far fa-clock"></i> {movie.duration} min</span>
-                      <span className="rating"><i className="fas fa-thumbs-up"></i> {(movie.ratings[0]?.score || 0).toFixed(1)}</span>
+              <div className="d-flex flex-column h-100">
+                <div className="movie-poster">
+                  {movie.poster && (
+                    <Image 
+                      src={movie.poster.url} 
+                      alt={movie.name} 
+                      width={movie.poster.width} 
+                      height={movie.poster.height} 
+                    />
+                  )}
+                  <ul className="overlay-btn">
+                    <li className="rating">
+                      {[...Array(Math.floor(movie.ratings[0]?.score || 0)).keys()].map(() => (
+                        <i key={Math.random()} className="fas fa-star"></i>
+                      ))}
                     </li>
+                    <li><Link href="#" className="popup-video btn">Watch Now</Link></li>
+                    <li><Link href={`/${movie.type.videoTypeSlug}/${movie.nameSlug}`} className="btn">Details</Link></li>
                   </ul>
+                </div>
+                <div className="movie-content">
+                  <div className="top">
+                    <h5 className="title"><Link href={`/movie-details/${movie.id}`}>{movie.name}</Link></h5>
+                    <span className="date">{movie.releaseYear}</span>
+                  </div>
+                  <div className="bottom">
+                    <ul>
+                      <li><span className={`quality ${movie.quality?.qualityType.toLowerCase()}`}>{movie.quality?.qualityType.toUpperCase()}</span></li>
+                      <li>
+                        <span className="duration"><i className="far fa-clock"></i> {movie.duration} min</span>
+                        <span className="rating"><i className="fas fa-thumbs-up"></i> {(movie.ratings[0]?.score || 0).toFixed(1)}</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-12">
             <div className="pagination-wrap mt-30">
               <nav>
@@ -138,7 +141,7 @@ export default function ContentsArea({ title, videoType }: Props) {
               </nav>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   )

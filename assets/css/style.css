@@ -1178,10 +1178,14 @@ label {
     box-shadow: none;
 }
 .movie-poster img {
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
     max-width: 100%;
     border-radius: 5px;
 }
 .movie-poster {
+    flex-grow: 1;
     margin-bottom: 23px;
     position: relative;
 }
