@@ -2,14 +2,14 @@
   {
     "id": 301,
     "documentId": "rating_001",
-    "createdAt": "2025-01-12T00:00:00Z",
-    "updatedAt": "2025-01-12T00:00:00Z",
-    "publishedAt": "2025-01-12T00:00:00Z",
     "score": 3,
     "member": null,
     "video": {
       "documentId": "video_001"
-    }
+    },
+    "createdAt": "2025-01-12T00:00:00Z",
+    "updatedAt": "2025-01-12T00:00:00Z",
+    "publishedAt": "2025-01-12T00:00:00Z"
   },
   {
     "id": 302,

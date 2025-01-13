@@ -2,13 +2,13 @@
   {
     "id": 201,
     "documentId": "category_001",
+    "categoryType": "Horror",
+    "videoType": {
+      "documentId": "type_001"
+    },
     "createdAt": "2025-01-12T00:00:00Z",
     "updatedAt": "2025-01-12T00:00:00Z",
-    "publishedAt": "2025-01-12T00:00:00Z",
-    "categoryType": "Horror",
-    "type": {
-      "documentId": "type_001"
-    }
+    "publishedAt": "2025-01-12T00:00:00Z"
   },
   {
     "id": 202,
@@ -17,7 +17,7 @@
     "updatedAt": "2023-05-02T00:00:00Z",
     "publishedAt": "2023-05-02T00:00:00Z",
     "categoryType": "Comedy",
-    "type": {
+    "videoType": {
       "documentId": "type_001"
     }
   },
@@ -28,7 +28,7 @@
     "updatedAt": "2023-05-03T00:00:00Z",
     "publishedAt": "2023-05-03T00:00:00Z",
     "categoryType": "Action",
-    "type": {
+    "videoType": {
       "documentId": "type_001"
     }
   },
@@ -39,7 +39,7 @@
     "updatedAt": "2023-05-04T00:00:00Z",
     "publishedAt": "2023-05-04T00:00:00Z",
     "categoryType": "Animation",
-    "type": {
+    "videoType": {
       "documentId": "type_001"
     }
   }
