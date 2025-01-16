@@ -3,60 +3,34 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Video, VideoDetail, VideoType, Category, Poster, Quality, Rating } from '../../types/videos'
-import rawVideosData from '../../data/videos.json'
-import rawCategoriesData from '../../data/categories.json'
-import rawQualitiesData from '../../data/qualities.json'
-import rawRatingsData from '../../data/ratings.json'
-import rawPostersData from '../../data/posters.json'
-import rawVideoTypesData from '../../data/types.json'
+import { Video, VideoDetail, VideoType, Category } from '../../types/videos';
+import { DataMap } from '../../types/dataMaps';
+import { fetchData } from '../../lib/videoDataFetcher';
 
 interface Props {
   title: string;
   videoType: VideoType;
 }
 
-const videosData: Video[] = rawVideosData.map(video => ({ ...video }))
-const categoriesData: Category[] = rawCategoriesData.map(category => ({ ...category }))
-const qualitiesData: Quality[] = rawQualitiesData.map(quality => ({ ...quality }))
-const ratingsData: Rating[] = rawRatingsData.map(rating => ({ ...rating }))
-const postersData: Poster[] = rawPostersData.map(poster => ({ ...poster }))
-const videoTypesData: VideoType[] = rawVideoTypesData.map(videoType => ({ ...videoType }))
-
 export default function ContentsArea({ title, videoType }: Props) {
-  const videosOnVideoType = videosData.filter((video: Video) => 
-    video.type?.documentId === videoType.documentId
-  )
-  
-  const categoriesOnVideoType = categoriesData.filter((category:Category) => 
-    category.videoType?.documentId === videoType.documentId
-  )
+  const data: DataMap = fetchData(['videosDetail', 'categories'], { videoTypeId: videoType.documentId });
 
-  const videosDetailData: VideoDetail[] = videosOnVideoType.map(video => ({
-    ...video,
-    poster: postersData.find((poster: Poster) => poster.documentId === video.poster.documentId) as Poster,
-    categories: video.categories.map(category =>  categoriesOnVideoType.find((cat: Category) => cat.documentId === category.documentId)) as Category[],
-    ratings: video.ratings.map(videoRating => ratingsData.find(rate => rate.documentId === videoRating.documentId)) as Rating[],
-    quality: qualitiesData.find(quality => quality.documentId === video.quality.documentId) as Quality,
-    type: videoTypesData.find(type => type.documentId === video.type.documentId) as VideoType,
-  }));
-
-  const [filter, setFilter] = useState<string>('*')
-  const [filteredVideos, setFilteredMovies] = useState<VideoDetail[]>(videosDetailData)
+  const [filter, setFilter] = useState<string>('*');
+  const [filteredVideos, setFilteredMovies] = useState<VideoDetail[]>(data.videosDetail || []);
 
   useEffect(() => {
     if (filter === '*') {
-      setFilteredMovies(videosDetailData);
+      setFilteredMovies(data.videosDetail || []);
     } else {
-      const filtered = videosDetailData.filter(movie => {
-        const movieCategories = categoriesOnVideoType.filter(cat => 
-          movie.categories.some(mc => mc.documentId === cat.documentId)
+      const filtered = (data.videosDetail || []).filter((video: Video) => {
+        const movieCategories = (data.categories || []).filter((cat: Category) => 
+          video.categories.some(mc => mc.documentId === cat.documentId)
         );
-        return movieCategories.some(cat => cat.categoryType === filter);
+        return movieCategories.some((cat: Category) => cat.categoryType === filter);
       });
       setFilteredMovies(filtered);
     }
-  }, [filter])
+  }, [filter]);
 
   return (
     <section className="movie-area movie-bg" data-background="/assets/img/bg/movie_bg.jpg">
@@ -72,7 +46,7 @@ export default function ContentsArea({ title, videoType }: Props) {
             <div className="movie-page-meta">
               <div className="tr-movie-menu-active text-center">
                 <button onClick={() => setFilter('*')} className={`me-3 ${filter === '*' ? 'active' : ''}`}>All</button>
-                {categoriesOnVideoType.map((category) => (
+                {(data.categories || []).map((category: Category) => (
                   <button 
                     key={category.documentId}
                     onClick={() => setFilter(category.categoryType)}
