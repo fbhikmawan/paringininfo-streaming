@@ -8,6 +8,8 @@ import Link from 'next/link';
 
 interface CarouselItem {
   title: string;
+  titleSlug: string;
+  videoTypeSlug: string;
   poster: string;
   quality: string;
   duration: number;
@@ -69,13 +71,13 @@ export default function CustomCarousel({ items }: CustomCarouselProps) {
       {carouselItems.map((item, index) => (
         <div key={index} className="movie-item mb-50">
           <div className="movie-poster">
-            <Link href="movie-details">
+            <Link href={`/${item.videoTypeSlug}/${item.titleSlug}`}>
               <Image src={item.poster} alt={item.title} width={300} height={450} />
             </Link> 
           </div>
           <div className="movie-content">
             <div className="top">
-              <h5 className="title"><Link href="movie-details">{item.title}</Link> </h5>
+              <h5 className="title"><Link href={`/${item.videoTypeSlug}/${item.titleSlug}`}>{item.title}</Link> </h5>
               <span className="date">{item.year}</span>
             </div>
             <div className="bottom">
