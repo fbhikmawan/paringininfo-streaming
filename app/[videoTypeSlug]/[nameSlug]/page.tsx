@@ -54,7 +54,7 @@ export default async function MovieDetails({
   const { videoTypeSlug, nameSlug } = (await params);
   const data: DataMap = fetchData(['videosDetail'], { videoTypeSlug, videoNameSlug: nameSlug });
 
-  if (!data.videoTypes || data.videoTypes.length < 1 || !data.videosDetail || data.videosDetail.length < 1) {
+  if (!data.videosDetail || data.videosDetail.length < 1) {
     notFound();
   }
 
