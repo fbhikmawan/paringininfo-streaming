@@ -93,6 +93,10 @@ button:focus,input:focus,input:focus,textarea,textarea:focus{outline: 0}
 .capitalize {
 	text-transform: capitalize;
 }
+a[data-disabled="true"] {
+    pointer-events: none;
+    cursor: not-allowed;
+}
 h1,
 h2,
 h3,
@@ -271,6 +275,12 @@ label {
 }
 .btn > i {
     margin-right: 7px;
+}
+.btn.disabled {
+    pointer-events: none;
+    color: gray;
+    border-color: gray;
+    cursor: not-allowed;
 }
 .header-action .header-btn .btn:hover,
 .btn:hover {
@@ -1839,6 +1849,8 @@ label {
     z-index: 1;
 }
 .movie-details-img img {
+    width: 100%;
+    object-fit: contain;
     border-radius: 5px;
 }
 .movie-details-content {

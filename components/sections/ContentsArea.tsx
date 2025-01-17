@@ -78,13 +78,12 @@ export default function ContentsArea({ title, videoType }: Props) {
                         <i key={Math.random()} className="fas fa-star"></i>
                       ))}
                     </li>
-                    <li><Link href="#" className="popup-video btn">Watch Now</Link></li>
                     <li><Link href={`/${movie.type.videoTypeSlug}/${movie.nameSlug}`} className="btn">Details</Link></li>
                   </ul>
                 </div>
                 <div className="movie-content">
                   <div className="top">
-                    <h5 className="title"><Link href={`/movie-details/${movie.id}`}>{movie.name}</Link></h5>
+                    <h5 className="title"><Link href={`/${movie.type.videoTypeSlug}/${movie.nameSlug}`}>{movie.name}</Link></h5>
                     <span className="date">{movie.releaseYear}</span>
                   </div>
                   <div className="bottom">

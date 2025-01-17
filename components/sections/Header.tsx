@@ -69,7 +69,10 @@ export default function Header() {
   }, []);
   
   const isActiveRoute = (path: string): boolean => {
-    return pathname === path;
+    if (path === '/') {
+      return pathname === path;
+    }
+    return pathname.startsWith(path);
   };
 
   return (
@@ -91,7 +94,7 @@ export default function Header() {
                       <li className={isActiveRoute('/series') ? 'active' : ''}><Link href="/series">Series</Link></li>
                       <li className={isActiveRoute('/sports') ? 'active' : ''}><Link href="/sports">Sports</Link></li>
                       <li className={isActiveRoute('/live') ? 'active' : ''}><Link href="/live">Live</Link></li>
-                      <li className={isActiveRoute('/contactus') ? 'active' : ''}><Link href="https://paringininfo.com/contactus">Contacts</Link></li>
+                      <li><Link href="https://paringininfo.com/contactus">Contacts</Link></li>
                     </ul>
                   </div>
                   <div className="header-action d-none d-md-block">

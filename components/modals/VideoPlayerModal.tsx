@@ -60,13 +60,7 @@ export default function VideoPlayerModal({ modalId, videoSrc, posterSrc, childre
           </div>
         </div>
       </div>
-      <a
-        className="btn"
-        data-toggle="modal"
-        data-target={`#${modalId}`}
-      >
-        {children}
-      </a>
+      {children}
     </>
   );
 }

@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation'
 // Template Sections
 import BannerPage from '../../components/sections/BannerPage';
 import ContentsArea from '../../components/sections/ContentsArea';
-import { VideoType } from '../../types/videos';
-import videoTypesData from '../../data/types.json';
+import { DataMap } from '../../types/dataMaps';
+import { fetchData } from '../../lib/videoDataFetcher';
 
 export default async function VideoTypePage({
   params,
@@ -12,9 +12,9 @@ export default async function VideoTypePage({
   params: Promise<{ videoTypeSlug: string }>
 }) {
   const videoTypeSlug = (await params).videoTypeSlug
-  const videoType = videoTypesData.find((type: VideoType) => type.videoTypeSlug === videoTypeSlug);
-
-  if (!videoType) {
+  const data: DataMap = fetchData(['videoTypes'], { videoTypeSlug: videoTypeSlug });
+  
+  if (!data.videoTypes || data.videoTypes.length < 1) {
     notFound();
   }
 
@@ -22,10 +22,10 @@ export default async function VideoTypePage({
     <>
       <BannerPage
         backgroundUrl="/assets/img/bg/breadcrumb_bg.jpg"
-        titleParts={['Our', videoType.bannerPageTitle]}
-        activeBreadcrumb={videoType.bannerPageTitle}
+        titleParts={['Our', data.videoTypes[0].bannerPageTitle]}
+        activeBreadcrumb={data.videoTypes[0].bannerPageTitle}
       />
-      <ContentsArea title={videoType.contentsAreaTitle} videoType={videoType} />
+      <ContentsArea title={data.videoTypes[0].contentsAreaTitle} videoType={data.videoTypes[0]} />
     </>
   );
 }

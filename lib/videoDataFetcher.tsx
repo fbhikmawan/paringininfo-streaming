@@ -11,31 +11,66 @@ type DataType = 'videos' | 'videosDetail' | 'categories' | 'qualities' | 'rating
 
 interface FetchCriteria {
   videoTypeId?: string;
+  videoTypeSlug?: string;
   videoId?: string;
+  videoNameSlug?: string;
   memberId?: string;
 }
 
 export function fetchData(dataTypes: DataType[], criteria: FetchCriteria = {}) {
   const data: Partial<DataMap> = {};
 
+  // Video
   if (dataTypes.includes('videos')) {
     data.videos = rawVideosData.map((video: Video) => ({ ...video }));
   }
+  if (dataTypes.includes('videos') && criteria.videoTypeId) {
+    data.videos = (data.videos || []).filter((video: Video) => video.type.documentId === criteria.videoTypeId);
+  }
+
+  // Category
   if (dataTypes.includes('categories')) {
     data.categories = rawCategoriesData.map((category: Category) => ({ ...category }));
   }
+  if (dataTypes.includes('categories') && criteria.videoTypeId) {
+    data.categories = (data.categories || []).filter((category: Category) => category.videoType.documentId === criteria.videoTypeId);
+  }
+
+  // Quality
   if (dataTypes.includes('qualities')) {
     data.qualities = rawQualitiesData.map((quality: Quality) => ({ ...quality }));
   }
+  if (dataTypes.includes('qualities') && criteria.videoId) {
+    data.qualities = (data.qualities || []).filter((quality: Quality) =>
+      (quality.videos || []).some(video => video.documentId === criteria.videoId)
+    );
+  }
+
+  // Rating
   if (dataTypes.includes('ratings')) {
     data.ratings = rawRatingsData.map((rating: Rating) => ({ ...rating }));
   }
+  if (dataTypes.includes('ratings') && criteria.videoId) {
+    data.ratings = (data.ratings || []).filter((rating: Rating) => rating.video.documentId === criteria.videoId);
+  }
+  if (dataTypes.includes('ratings') && criteria.memberId) {
+    data.ratings = (data.ratings || []).filter((rating: Rating) => rating.member?.documentId === criteria.memberId);
+  }
+
   if (dataTypes.includes('posters')) {
     data.posters = rawPostersData.map((poster: Poster) => ({ ...poster }));
   }
+
+  // VideoType
   if (dataTypes.includes('videoTypes')) {
     data.videoTypes = rawVideoTypesData.map((videoType: VideoType) => ({ ...videoType }));
   }
+  if (dataTypes.includes('videoTypes') && criteria.videoTypeSlug) {
+    const matchingVideoType = (data.videoTypes || []).find((video: VideoType) => video.videoTypeSlug === criteria.videoTypeSlug);
+    data.videoTypes = matchingVideoType ? [matchingVideoType] : [];
+  }
+
+  // VideoDetail
   if (dataTypes.includes('videosDetail')) {
     const videosData = data.videos || rawVideosData.map((video: Video) => ({ ...video }));
     const categoriesData = data.categories || rawCategoriesData.map((category: Category) => ({ ...category }));
@@ -53,19 +88,15 @@ export function fetchData(dataTypes: DataType[], criteria: FetchCriteria = {}) {
       type: videoTypesData.find((type: VideoType) => type.documentId === video.type.documentId) as VideoType,
     })) as VideoDetail[];
   }
-
-  // Apply filtering based on criteria
-  if (criteria.videoTypeId) {
-    data.videos = (data.videos || []).filter((video: Video) => video.type.documentId === criteria.videoTypeId);
+  if (dataTypes.includes('videosDetail') && criteria.videoTypeId) {
+    data.videosDetail = (data.videosDetail || []).filter((video: Video) => video.type.documentId === criteria.videoTypeId);
   }
-  if (criteria.videoId) {
-    data.qualities = (data.qualities || []).filter((quality: Quality) =>
-      (quality.videos || []).some(video => video.documentId === criteria.videoId)
-    );
-    data.ratings = (data.ratings || []).filter((rating: Rating) => rating.video.documentId === criteria.videoId);
-  }
-  if (criteria.memberId) {
-    data.ratings = (data.ratings || []).filter((rating: Rating) => rating.member?.documentId === criteria.memberId);
+  if (dataTypes.includes('videosDetail') && criteria.videoTypeSlug && criteria.videoNameSlug) {
+    data.videosDetail = (data.videosDetail || []).filter((videoDetail: VideoDetail) => {
+      const matchesType = criteria.videoTypeSlug ? videoDetail.type.videoTypeSlug === criteria.videoTypeSlug : true;
+      const matchesNameSlug = criteria.videoNameSlug ? videoDetail.nameSlug === criteria.videoNameSlug : true;
+      return matchesType && matchesNameSlug;
+    });
   }
 
   return data;
