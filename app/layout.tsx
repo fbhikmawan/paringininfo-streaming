@@ -14,7 +14,7 @@ import Preloader from '../components/elements/Preloader';
 import TemplateScripts from './TemplateScripts';
 
 export const metadata: Metadata = {
-  title: "ParinginInfo | Online Movies, Series & Live",
+  title: "ParinginInfo | Online Movies, Series, Sports & Live Streaming",
   description: "Description for ParinginInfo | Online Movies, Series & Live",
 };
 
