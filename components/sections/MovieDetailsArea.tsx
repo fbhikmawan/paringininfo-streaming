@@ -28,7 +28,7 @@ export default function MovieDetailsArea({ videosDetail }: Props) {
 
     const config = labelsMap[video.type.videoTypeSlug];
     if (config && diffDays <= config.limit) {
-      return config.text;
+      return video.videoUrl ? config.text : 'Available Soon';
     }
     return null;
   };
