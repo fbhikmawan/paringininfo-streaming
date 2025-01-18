@@ -1,9 +1,21 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation';
 
 // Template Elements
 import ImageLogo from '../elements/ImageLogo';
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  const isActiveRoute = (path: string): boolean => {
+    if (path === '/') {
+      return pathname === path;
+    }
+    return pathname.startsWith(path);
+  };
+
   return (
     <footer>
       <div className="footer-top-wrap">
@@ -19,11 +31,11 @@ export default function Footer() {
                 <div className="footer-menu">
                   <nav>
                     <ul className="navigation">
-                      <li><Link href="/">Home</Link></li>
-                      <li><Link href="/movies">Movies</Link></li>
-                      <li><Link href="/series">Series</Link></li>
-                      <li><Link href="/sports">Sports</Link></li>
-                      <li><Link href="/live">Live</Link></li>
+                      <li><Link href="/" className={isActiveRoute('/') ? 'active' : ''}>Home</Link></li>
+                      <li><Link href="/movies" className={isActiveRoute('/movies') ? 'active' : ''}>Movies</Link></li>
+                      <li><Link href="/series" className={isActiveRoute('/series') ? 'active' : ''}>Series</Link></li>
+                      <li><Link href="/sports" className={isActiveRoute('/sports') ? 'active' : ''}>Sports</Link></li>
+                      <li><Link href="/live" className={isActiveRoute('/live') ? 'active' : ''}>Live</Link></li>
                     </ul>
                   </nav>
                 </div>
