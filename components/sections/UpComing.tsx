@@ -23,8 +23,8 @@ interface CarouselItem {
 
 const FADE_TIMEOUT = 300;
 
-export default function UpComing() {  
-  const [activeTab, setActiveTab] = useState<string>('tvShow');
+export default function UpComing() {
+  const [activeTab, setActiveTab] = useState<string>('');
   const [fadeState, setFadeState] = useState(true);
   const [videoDetails, setVideoDetails] = useState<VideoDetail[]>([]);
   const [videoTypes, setVideoTypes] = useState<VideoType[]>([]);
