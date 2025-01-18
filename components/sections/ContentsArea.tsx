@@ -99,6 +99,11 @@ export default function ContentsArea({ title, videoType }: Props) {
               </div>
             </div>
           ))}
+          {filteredVideos.length === 0 && (
+            <div className="col-12">
+                <h5>Stay tuned! More exciting content is on the way.</h5>
+            </div>
+          )}
         </div>
         {/* <div className="row">
           <div className="col-12">
