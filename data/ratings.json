@@ -17,7 +17,7 @@
     "createdAt": "2023-05-02T00:00:00Z",
     "updatedAt": "2023-05-02T00:00:00Z",
     "publishedAt": "2023-05-02T00:00:00Z",
-    "score": 3,
+    "score": 3.6,
     "member": null,
     "video": {
       "documentId": "video_002"
@@ -41,7 +41,7 @@
     "createdAt": "2023-05-04T00:00:00Z",
     "updatedAt": "2023-05-04T00:00:00Z",
     "publishedAt": "2023-05-04T00:00:00Z",
-    "score": 3,
+    "score": 4,
     "member": null,
     "video": {
       "documentId": "video_004"
@@ -65,7 +65,7 @@
     "createdAt": "2023-05-06T00:00:00Z",
     "updatedAt": "2023-05-06T00:00:00Z",
     "publishedAt": "2023-05-06T00:00:00Z",
-    "score": 3,
+    "score": 5,
     "member": null,
     "video": {
       "documentId": "video_006"
