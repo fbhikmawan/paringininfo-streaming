@@ -19,17 +19,16 @@ export default function MovieDetailsArea({ videosDetail }: Props) {
     const now = new Date();
     const publishedAt = new Date(video.publishedAt);
     const diffDays = Math.floor((now.getTime() - publishedAt.getTime()) / (1000 * 60 * 60 * 24));
-    console.log(`now: ${now}`);
-    console.log(`publishedAt: ${publishedAt}`);
-    console.log(`diffDays: ${diffDays}`);
-    if (video.type.videoTypeSlug === 'movies' && diffDays <= 30) {
-      return 'New Release';
-    } else if (video.type.videoTypeSlug === 'series' && diffDays <= 14) {
-      return 'New Episode';
-    } else if (video.type.videoTypeSlug === 'sports' && diffDays <= 14) {
-      return 'New Highlight';
-    } else if (video.type.videoTypeSlug === 'live' && diffDays <= 7) {
-      return 'New Stream';
+    const labelsMap: Record<string, { limit: number; text: string }> = {
+      movies: { limit: 30, text: 'New Release' },
+      series: { limit: 14, text: 'New Episode' },
+      sports: { limit: 14, text: 'New Highlight' },
+      live: { limit: 7, text: 'New Stream' },
+    };
+
+    const config = labelsMap[video.type.videoTypeSlug];
+    if (config && diffDays <= config.limit) {
+      return config.text;
     }
     return null;
   };
