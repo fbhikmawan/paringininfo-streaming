@@ -127,9 +127,9 @@ export default function TemplateScripts() {
 
   return (
     <>
+      <Script src="../../assets/js/vendor/jquery-3.6.0.min.js" />
       <Script src="../../assets/js/bootstrap.min.js" />
       <Script src="../../assets/js/popper.min.js" />
-      <Script src="../../assets/js/vendor/jquery-3.6.0.min.js" />
     </>
   );
 }
