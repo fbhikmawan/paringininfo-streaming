@@ -94,7 +94,7 @@ export default function Header() {
                       <li className={isActiveRoute('/series') ? 'active' : ''}><Link href="/series">Series</Link></li>
                       <li className={isActiveRoute('/sports') ? 'active' : ''}><Link href="/sports">Sports</Link></li>
                       <li className={isActiveRoute('/live') ? 'active' : ''}><Link href="/live">Live</Link></li>
-                      <li><Link href="https://paringininfo.com/contactus">Contacts</Link></li>
+                        <li><Link href="https://paringininfo.com/contactus" target='_blank' onClick={(e) => { e.preventDefault(); const newWindow = window.open('https://paringininfo.com/contactus', '_blank'); if (newWindow) newWindow.focus(); }}>Contacts</Link></li>
                     </ul>
                   </div>
                   <div className="header-action d-none d-md-block">

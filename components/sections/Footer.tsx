@@ -49,7 +49,7 @@ export default function Footer() {
                   <ul>
                     <li><Link href="/faq">FAQ</Link></li>
                     <li><Link href="/terms-of-use">Terms of Use</Link></li>
-                    <li><Link href="https://paringininfo.com/privacy">Privacy</Link></li>
+                    <li><Link href="https://paringininfo.com/privacy" target='_blank' onClick={(e) => { e.preventDefault(); const newWindow = window.open('https://paringininfo.com/privacy', '_blank'); if (newWindow) newWindow.focus(); }}>Privacy</Link></li>
                   </ul>
                 </div>
               </div>
@@ -72,7 +72,7 @@ export default function Footer() {
           <div className="row">
             <div className="col-lg-6 col-md-6">
               <div className="copyright-text">
-                <p>Copyright &copy; {new Date().getFullYear()}. All Rights Reserved By <Link href="https://paringininfo.com" target='_blank'>ParinginInfo</Link></p>
+                <p>Copyright &copy; {new Date().getFullYear()}. All Rights Reserved By <Link href="https://paringininfo.com" target='_blank' onClick={(e) => { e.preventDefault(); const newWindow = window.open('https://paringininfo.com', '_blank'); if (newWindow) newWindow.focus(); }}>ParinginInfo</Link></p>
               </div>
             </div>
           </div>
