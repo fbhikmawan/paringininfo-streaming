@@ -95,19 +95,33 @@ export default function MovieDetailsArea({ videosDetail }: Props) {
                     <span>Streaming Channels</span>
                   </li>
                   <li className="watch d-flex">
-                    <a className="btn" href='#'>
-                      <i className="fas fa-play"></i> Watch Trailer
-                    </a>
+                    {video.trailerUrl ? (
+                      <VideoPlayerModal
+                        modalId="trailerModal"
+                        videoSrc={video.trailerUrl}
+                        posterSrc={video.poster.url}
+                      >
+                        <a
+                          className="btn"
+                          data-toggle="modal"
+                          data-target="#trailerModal"
+                        >
+                          <i className="fas fa-play"></i> Watch Trailer
+                        </a>
+                      </VideoPlayerModal>
+                    ) : (
+                      <></>
+                    )}
                     {video.videoUrl ? (
                       <VideoPlayerModal
-                        modalId="videoPlayerModal"
+                        modalId="videoModal"
                         videoSrc={video.videoUrl}
                         posterSrc={video.poster.url}
                       >
                         <a
                           className="btn"
                           data-toggle="modal"
-                          data-target="#videoPlayerModal"
+                          data-target="#videoModal"
                         >
                           <i className="fas fa-play"></i> Watch Now
                         </a>

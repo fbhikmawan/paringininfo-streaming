@@ -52,8 +52,8 @@
     "nameSlug": "exhuma-2024",
     "releaseYear": 2024,
     "duration": 134,
-    "videoUrl": "https://dev-s3-api.paringininfo.com/videos/exhuma/Exhuma.m3u8",
-    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/exhuma/trailer/Exhuma.m3u8",
+    "videoUrl": "https://dev-s3-api.paringininfo.com/videos/exhuma-2024/hd/Exhuma.m3u8",
+    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/exhuma-2024/trailer/Exhuma.m3u8",
     "description": [
       {
         "type": "paragraph",
@@ -138,8 +138,8 @@
     "nameSlug": "parasite-2019",
     "releaseYear": 2019,
     "duration": 132,
-    "videoUrl": "https://dev-s3-api.paringininfo.com/videos/parasite/parasite.m3u8",
-    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/parasite/trailer/parasite.m3u8",
+    "videoUrl": "https://dev-s3-api.paringininfo.com/videos/parasite-2019/hd/parasite.m3u8",
+    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/parasite-2019/trailer/parasite.m3u8",
     "description": [
       {
         "type": "paragraph",
@@ -224,8 +224,8 @@
     "nameSlug": "thaghut-2024",
     "releaseYear": 2024,
     "duration": 102,
-    "videoUrl": "https://dev-s3-api.paringininfo.com/videos/thaghut/Thaghut.m3u8",
-    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/thaghut/Thaghut.m3u8",
+    "videoUrl": null,
+    "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/thaghut-2024/trailer/Thaghut.m3u8",
     "description": [
       {
         "type": "paragraph",
