@@ -47,7 +47,7 @@ export default function MovieDetailsArea({ videosDetail }: Props) {
         <div className="row align-items-center position-relative">
           <div className="col-xl-3 col-lg-4 align-self-start">
             <div className="movie-details-img">
-              <img src={video.poster.url} alt={video.name} />
+              <Image src={video.poster.url} alt={video.name} width={303} height={430}/>
               <a
                 className="popup-video"
                 data-toggle="modal"
