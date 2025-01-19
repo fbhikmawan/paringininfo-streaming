@@ -1879,7 +1879,6 @@ label {
 .movie-details-prime ul {
     display: flex;
     align-items: center;
-    max-width: 475px;
     background: #242c38;
     border-radius: 4px;
     border: 1px solid #343434;
@@ -1930,6 +1929,7 @@ label {
 }
 .movie-details-prime ul li.watch {
     margin-left: auto;
+    gap: 10px;
 }
 .movie-details-prime ul li.watch .btn {
     font-size: 10px;

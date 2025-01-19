@@ -94,7 +94,10 @@ export default function MovieDetailsArea({ videosDetail }: Props) {
                     <h6>Prime Video</h6>
                     <span>Streaming Channels</span>
                   </li>
-                  <li className="watch">
+                  <li className="watch d-flex">
+                    <a className="btn" href='#'>
+                      <i className="fas fa-play"></i> Watch Trailer
+                    </a>
                     {video.videoUrl ? (
                       <VideoPlayerModal
                         modalId="videoPlayerModal"
