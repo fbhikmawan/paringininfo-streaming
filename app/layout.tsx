@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: "ParinginInfo | Online Movies, Series, Sports & Live Streaming",
-    description: "Description for ParinginInfo | Online Movies, Series & Live",
+    description: "Discover endless entertainment with ParinginInfo. Stream movies, series, and live events in high quality!",
     metadataBase: new URL(metadataBase),
     alternates: {
       canonical: '/',
