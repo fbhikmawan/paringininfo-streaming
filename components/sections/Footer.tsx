@@ -48,19 +48,18 @@ export default function Footer() {
                 <div className="quick-link-list">
                   <ul>
                     <li><Link href="/faq">FAQ</Link></li>
-                    <li><Link href="/help-center">Help Center</Link></li>
                     <li><Link href="/terms-of-use">Terms of Use</Link></li>
-                    <li><Link href="/privacy">Privacy</Link></li>
+                    <li><Link href="https://paringininfo.com/privacy">Privacy</Link></li>
                   </ul>
                 </div>
               </div>
               <div className="col-md-5">
                 <div className="footer-social">
                   <ul>
-                    <li><Link href="#" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></Link></li>
-                    <li><Link href="#" target="_blank" rel="noopener noreferrer"><i className="fab fa-twitter"></i></Link></li>
-                    <li><Link href="#" target="_blank" rel="noopener noreferrer"><i className="fab fa-pinterest-p"></i></Link></li>
-                    <li><Link href="#" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin-in"></i></Link></li>
+                    <li><Link href="#" target="_blank"><i className="fab fa-facebook-f"></i></Link></li>
+                    <li><Link href="#" target="_blank"><i className="fab fa-twitter"></i></Link></li>
+                    <li><Link href="#" target="_blank"><i className="fab fa-pinterest-p"></i></Link></li>
+                    <li><Link href="#" target="_blank"><i className="fab fa-linkedin-in"></i></Link></li>
                   </ul>
                 </div>
               </div>
@@ -73,7 +72,7 @@ export default function Footer() {
           <div className="row">
             <div className="col-lg-6 col-md-6">
               <div className="copyright-text">
-                <p>Copyright &copy; {new Date().getFullYear()}. All Rights Reserved By <Link href="/">ParinginInfo</Link></p>
+                <p>Copyright &copy; {new Date().getFullYear()}. All Rights Reserved By <Link href="https://paringininfo.com" target='_blank'>ParinginInfo</Link></p>
               </div>
             </div>
           </div>
