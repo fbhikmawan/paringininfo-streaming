@@ -13,10 +13,25 @@ import Preloader from '../components/elements/Preloader';
 // Template Scripts
 import TemplateScripts from './TemplateScripts';
 
-export const metadata: Metadata = {
-  title: "ParinginInfo | Online Movies, Series, Sports & Live Streaming",
-  description: "Description for ParinginInfo | Online Movies, Series & Live",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const metadataBase = process.env.NEXT_PUBLIC_METADATA_BASE_URL || 'http://localhost:3000';
+
+  return {
+    title: "ParinginInfo | Online Movies, Series, Sports & Live Streaming",
+    description: "Description for ParinginInfo | Online Movies, Series & Live",
+    metadataBase: new URL(metadataBase),
+    alternates: {
+      canonical: '/',
+      languages: {
+        'en-US': '/',
+        'id-ID': '/id',
+      },
+    },
+    openGraph: {
+      images: '/og-image.png',
+    },
+  };
+}
 
 export default function RootLayout({
   children,
