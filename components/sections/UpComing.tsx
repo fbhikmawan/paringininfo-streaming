@@ -90,7 +90,7 @@ export default function UpComing() {
                 {videoTypes.map(type => (
                   <li className="nav-item" role="presentation" key={type.documentId}>
                     <a
-                      href={`#${type.videoTypeSlug}`}
+                      href='#'
                       className={`nav-link ${activeTab === type.videoTypeSlug ? 'active' : ''}`}
                       onClick={(e) => {
                         e.preventDefault();

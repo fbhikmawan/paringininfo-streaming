@@ -74,11 +74,11 @@ export default function TopRatedMovie() {
           {videoDetails.map((video, index) => (
             <div key={index} className="col-xl-3 col-lg-4 col-sm-6 movie-item mb-60 d-flex flex-column">
               <div className="movie-poster">
-                <Link href={`/movie-details`}><Image src={video.poster.url} alt={video.name} width={300} height={450} /></Link>
+                <Link href={`/${video.type.videoTypeSlug}/${video.nameSlug}`}><Image src={video.poster.url} alt={video.name} width={300} height={450} /></Link>
               </div>
               <div className="movie-content">
                 <div className="top">
-                  <h5 className="title"><Link href={`/movie-details`}>{video.name}</Link> </h5>
+                  <h5 className="title"><Link href={`/${video.type.videoTypeSlug}/${video.nameSlug}`}>{video.name}</Link> </h5>
                   <span className="date">{video.releaseYear}</span>
                 </div>
                 <div className="bottom">
