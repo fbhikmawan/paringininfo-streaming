@@ -70,9 +70,9 @@ export default function TopRatedMovie() {
             </div>
           </div>
         </div>
-        <div className="row tr-movie-active">
+        <div className="row tr-movie-active justify-content-center">
           {videoDetails.map((video, index) => (
-            <div key={index} className="col-xl-3 col-lg-4 col-sm-6 movie-item mb-60">
+            <div key={index} className="col-xl-3 col-lg-4 col-sm-6 movie-item mb-60 d-flex flex-column">
               <div className="movie-poster">
                 <Link href={`/movie-details`}><Image src={video.poster.url} alt={video.name} width={300} height={450} /></Link>
               </div>

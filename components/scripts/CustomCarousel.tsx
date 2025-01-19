@@ -64,12 +64,12 @@ export default function CustomCarousel({ items }: CustomCarouselProps) {
       keyBoardControl={true}
       customTransition="transform 300ms ease-in-out"
       transitionDuration={300}
-      containerClass="ucm-active owl-carousel"
-      itemClass="carousel-item-padding-40-px mr-2"
+      containerClass="ucm-active owl-carousel justify-content-center"
+      itemClass="carousel-item-padding-40-px mr-3"
       arrows={true}
     >
       {carouselItems.map((item, index) => (
-        <div key={index} className="movie-item mb-50">
+        <div key={index} className="movie-item mb-50 h-100 d-flex flex-column">
           <div className="movie-poster">
             <Link href={`/${item.videoTypeSlug}/${item.titleSlug}`}>
               <Image src={item.poster} alt={item.title} width={300} height={450} />
