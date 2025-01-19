@@ -65,11 +65,14 @@ export default function MovieDetailsArea({ videosDetail }: Props) {
               <div className="banner-meta">
                 <ul>
                   <li className="quality">
-                    <span>hd</span>
+                    <span>{video.quality.qualityType.toLowerCase()}</span>
                   </li>
                   <li className="category">
-                    <Link href="#">Romance,</Link>
-                    <Link href="#">Drama</Link>
+                    {video.categories.map((category, index) => (
+                      <Link key={index} href="#">
+                        {category.categoryType}{index < video.categories.length - 1 && ','}
+                      </Link>
+                    ))}
                   </li>
                   <li className="release-time">
                     <span><i className="far fa-calendar-alt"></i> { video.releaseYear }</span>
