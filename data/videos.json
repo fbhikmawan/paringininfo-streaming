@@ -52,7 +52,7 @@
     "nameSlug": "exhuma-2024",
     "releaseYear": 2024,
     "duration": 134,
-    "videoUrl": "https://dev-s3-api.paringininfo.com/videos/exhuma-2024/hd/Exhuma.m3u8",
+    "videoUrl": null,
     "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/exhuma-2024/trailer/Exhuma.m3u8",
     "description": [
       {
@@ -138,7 +138,7 @@
     "nameSlug": "parasite-2019",
     "releaseYear": 2019,
     "duration": 132,
-    "videoUrl": "https://dev-s3-api.paringininfo.com/videos/parasite-2019/hd/parasite.m3u8",
+    "videoUrl": null,
     "trailerUrl": "https://dev-s3-api.paringininfo.com/videos/parasite-2019/trailer/parasite.m3u8",
     "description": [
       {
