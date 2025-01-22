@@ -5,21 +5,11 @@ import { useEffect, useState } from 'react';
 // Template Scripts
 import Fade from '../scripts/Fade';
 import CustomCarousel from '../scripts/CustomCarousel';
+import CarouselItemUpcoming from '../elements/CarouselItemUpcoming';
 
 import { fetchData } from '../../lib/videoDataFetcher';
 import { VideoDetail, VideoType } from '../../types/videos';
 import { DataMap } from '../../types/dataMaps';
-
-interface CarouselItem {
-  title: string;
-  titleSlug: string;
-  videoTypeSlug: string;
-  poster: string;
-  quality: string;
-  duration: number;
-  rating: number;
-  year: number;
-}
 
 const FADE_TIMEOUT = 300;
 
@@ -54,19 +44,6 @@ export default function UpComing() {
 
   const getActiveItems = (): VideoDetail[] => {
     return videoDetails.filter(video => video.type.videoTypeSlug === activeTab);
-  };
-
-  const mapToCarouselItems = (videos: VideoDetail[]): CarouselItem[] => {
-    return videos.map(video => ({
-      title: video.name,
-      titleSlug: video.nameSlug || '',
-      videoTypeSlug: video.type.videoTypeSlug,
-      poster: video.poster.url,
-      quality: video.quality.qualityType,
-      duration: video.duration,
-      rating: video.ratings[0]?.score || 0,
-      year: video.releaseYear,
-    }));
   };
 
   if (videoDetails.length === 0) {
@@ -111,7 +88,9 @@ export default function UpComing() {
         <div className="tab-content" id="myTabContent">
           <div className="tab-pane fade show active" id="activeTab" role="tabpanel" aria-labelledby="activeTab-tab">
             <Fade in={fadeState} timeout={FADE_TIMEOUT}>
-              <CustomCarousel items={mapToCarouselItems(getActiveItems())} />
+              <CustomCarousel items={getActiveItems()}>
+                {(item, index) => <CarouselItemUpcoming key={index} item={item} />}
+              </CustomCarousel>
             </Fade>
           </div>
         </div>

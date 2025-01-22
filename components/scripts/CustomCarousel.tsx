@@ -1,33 +1,18 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+// React Multi Carousel
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import Image from 'next/image';
-import Link from 'next/link';
 
-interface CarouselItem {
-  title: string;
-  titleSlug: string;
-  videoTypeSlug: string;
-  poster: string;
-  quality: string;
-  duration: number;
-  rating: number;
-  year: number;
-}
+// Interface types
+import { VideoDetail } from '../../types/videos';
 
 interface CustomCarouselProps {
-  items: CarouselItem[];
+  items: VideoDetail[];
+  children: (item: VideoDetail, index: number) => React.ReactNode;
 }
 
-export default function CustomCarousel({ items }: CustomCarouselProps) {
-  const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([]);
-
-  useEffect(() => {
-    setCarouselItems(items);
-  }, [items]);
-
+export default function CustomCarousel({ items, children }: CustomCarouselProps) {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1200 },
@@ -56,6 +41,7 @@ export default function CustomCarousel({ items }: CustomCarouselProps) {
       swipeable={true}
       draggable={false}
       showDots={false}
+      centerMode={false}
       responsive={responsive}
       ssr={false}
       infinite={false}
@@ -64,34 +50,11 @@ export default function CustomCarousel({ items }: CustomCarouselProps) {
       keyBoardControl={true}
       customTransition="transform 300ms ease-in-out"
       transitionDuration={300}
-      containerClass="ucm-active owl-carousel justify-content-center"
-      itemClass="carousel-item-padding-40-px mr-3"
+      containerClass="ucm-active"
+      itemClass="movie-item mr-3 mb-50 d-flex flex-column"
       arrows={true}
     >
-      {carouselItems.map((item, index) => (
-        <div key={index} className="movie-item mb-50 h-100 d-flex flex-column">
-          <div className="movie-poster">
-            <Link href={`/${item.videoTypeSlug}/${item.titleSlug}`}>
-              <Image src={item.poster} alt={item.title} width={300} height={450} />
-            </Link> 
-          </div>
-          <div className="movie-content">
-            <div className="top">
-              <h5 className="title"><Link href={`/${item.videoTypeSlug}/${item.titleSlug}`}>{item.title}</Link> </h5>
-              <span className="date">{item.year}</span>
-            </div>
-            <div className="bottom">
-              <ul>
-                <li><span className="quality">{item.quality}</span></li>
-                <li>
-                  <span className="duration"><i className="far fa-clock"></i> {item.duration} min</span>
-                  <span className="rating"><i className="fas fa-thumbs-up"></i> {item.rating}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      ))}
+      {items.map((item, index) => children(item, index))}
     </Carousel>
   );
 };
