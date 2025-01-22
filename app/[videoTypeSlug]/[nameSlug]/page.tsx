@@ -10,7 +10,7 @@ import { truncateText } from '../../../lib/functions';
 export async function generateMetadata({
   params,
 }: {
-  params: { videoTypeSlug: string; nameSlug: string }
+  params: Promise<{ videoTypeSlug: string; nameSlug: string }>
 }): Promise<Metadata> {
   const { videoTypeSlug, nameSlug } = (await params);
   const data: DataMap = fetchData(['videosDetail', 'videoTypes'], { videoTypeSlug, videoNameSlug: nameSlug });
