@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { fetchData } from '../../lib/videoDataFetcher';
-import { VideoDetail, VideoType } from '../../types/videos';
+import { VideoDetail } from '../../types/videos';
 import { DataMap } from '../../types/dataMaps';
 
 interface VideoDetailWithRating extends VideoDetail {
@@ -23,17 +23,11 @@ export default function TopRatedMovie() {
     return { ...video, averageRating };
   });
 
-  const filteredVideoTypes = data.videoTypes?.filter(type => 
-    filteredVideos.some(video => video.type.documentId === type.documentId)
-  ) || [];
-
   const [activeTab, setActiveTab] = useState<string>('*');
   const [videoDetails, setVideoDetails] = useState<VideoDetailWithRating[]>([]);
-  const [videoTypes, setVideoTypes] = useState<VideoType[]>([]);
 
   useEffect(() => {
     setVideoDetails(filteredVideos);
-    setVideoTypes(filteredVideoTypes);
   }, []);
 
   useEffect(() => {
@@ -64,7 +58,7 @@ export default function TopRatedMovie() {
           <div className="col-lg-8">
             <div className="tr-movie-menu-active text-center">
               <button onClick={() => setActiveTab('*')} className={`me-3 ${activeTab === '*' ? 'active' : ''}`}>All</button>
-              {videoTypes.map((videoType, index) => (
+              {data.videoTypes && data.videoTypes.map((videoType, index) => (
                 <button key={index} onClick={() => setActiveTab(videoType.videoTypeSlug)} className={`me-3 ${activeTab === videoType.videoTypeSlug ? 'active' : ''}`}>{videoType.bannerPageTitle}</button>
               ))}
             </div>
@@ -93,6 +87,11 @@ export default function TopRatedMovie() {
               </div>
             </div>
           ))}
+          {videoDetails.length === 0 && (
+            <div className="col-6">
+              <h5 className='text-center'>Stay tuned! More exciting content is on the way.</h5>
+            </div>
+          )}
         </div>
       </div>
     </section>
