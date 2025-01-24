@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -24,20 +24,17 @@ export default function TopRatedMovie() {
   });
 
   const [activeTab, setActiveTab] = useState<string>('*');
-  const [videoDetails, setVideoDetails] = useState<VideoDetailWithRating[]>([]);
+  const [videoDetails, setVideoDetails] = useState<VideoDetailWithRating[]>(filteredVideos);
 
-  useEffect(() => {
-    setVideoDetails(filteredVideos);
-  }, []);
-
-  useEffect(() => {
-    if (activeTab === '*') {
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+    if (tab === '*') {
       setVideoDetails(filteredVideos);
     } else {
-      const filtered = filteredVideos.filter((video: VideoDetailWithRating) => video.type.videoTypeSlug === activeTab);
+      const filtered = filteredVideos.filter((video: VideoDetailWithRating) => video.type.videoTypeSlug === tab);
       setVideoDetails(filtered);
     }
-  }, [activeTab]);
+  };
 
   if (filteredVideos.length === 0) {
     return null;
@@ -57,9 +54,9 @@ export default function TopRatedMovie() {
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <div className="tr-movie-menu-active text-center">
-              <button onClick={() => setActiveTab('*')} className={`me-3 ${activeTab === '*' ? 'active' : ''}`}>All</button>
+              <button onClick={() => handleTabClick('*')} className={`me-3 ${activeTab === '*' ? 'active' : ''}`}>All</button>
               {data.videoTypes && data.videoTypes.map((videoType, index) => (
-                <button key={index} onClick={() => setActiveTab(videoType.videoTypeSlug)} className={`me-3 ${activeTab === videoType.videoTypeSlug ? 'active' : ''}`}>{videoType.bannerPageTitle}</button>
+                <button key={index} onClick={() => handleTabClick(videoType.videoTypeSlug)} className={`me-3 ${activeTab === videoType.videoTypeSlug ? 'active' : ''}`}>{videoType.bannerPageTitle}</button>
               ))}
             </div>
           </div>
