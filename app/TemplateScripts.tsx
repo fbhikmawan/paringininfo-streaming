@@ -87,9 +87,6 @@ export default function TemplateScripts() {
 
   useEffect(() => {
     window.addEventListener('scroll', triggerYposition);
-    return () => {
-      window.removeEventListener('scroll', triggerYposition);
-    };
   }, [triggerYposition]);
 
   useEffect(() => {
