@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import Script from 'next/script'
 
@@ -20,9 +20,8 @@ import "../assets/css/responsive.css";
 export default function TemplateScripts() {
   const [isYtriggered, setisYtriggered] = useState(false);
   const pathname = usePathname();
-  
-  // Function to set background images
-  const setBackgroundImages = () => {
+
+  const setBackgroundImages = useCallback(() => {
     const elements = document.querySelectorAll<HTMLElement>('[data-background]');
     elements.forEach((element) => {
       if (element instanceof HTMLElement) {
@@ -32,35 +31,26 @@ export default function TemplateScripts() {
         }
       }
     });
-  };
+  }, []);
 
-  // Function to handle scroll-to-target behavior
-  const setupScrollToTarget = () => {
+  const setupScrollToTarget = useCallback(() => {
     const scrollToTargetElements = document.querySelectorAll<HTMLElement>('.scroll-to-target');
-    
     scrollToTargetElements.forEach((element) => {
       if (element instanceof HTMLElement) {
         element.addEventListener('click', (event) => {
           event.preventDefault();
-          
           const targetSelector = element.getAttribute('data-target');
           if (targetSelector) {
             let targetElement: Element | null = null;
-  
-            // Check whther it is an ID, class, tag name, or CSS selector
             if (targetSelector.startsWith('#')) {
               targetElement = document.getElementById(targetSelector.slice(1));
-            }
-            else if (targetSelector.startsWith('.')) {
+            } else if (targetSelector.startsWith('.')) {
               targetElement = document.querySelector(targetSelector);
-            }
-            else if (/^[a-z]+$/i.test(targetSelector)) {
+            } else if (/^[a-z]+$/i.test(targetSelector)) {
               targetElement = document.getElementsByTagName(targetSelector)[0];
-            }
-            else {
+            } else {
               targetElement = document.querySelector(targetSelector);
             }
-  
             if (targetElement) {
               const duration = 1000;
               const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
@@ -68,20 +58,18 @@ export default function TemplateScripts() {
                 top: targetPosition,
                 behavior: 'smooth'
               });
-              setTimeout(() => {
-              }, duration);
+              setTimeout(() => {}, duration);
             }
           }
         });
       }
     });
-  };
+  }, []);
 
-  // Function to scrollY position
-  const triggerYposition = () => {
+  const triggerYposition = useCallback(() => {
     const scrollPosition = window.scrollY;
     setisYtriggered(scrollPosition >= 245);
-  };
+  }, []);
 
   useEffect(() => {
     AOS.init({
@@ -90,30 +78,27 @@ export default function TemplateScripts() {
       once: true,
       disable: 'mobile',
     });
-
-    // Set up event listener for route changes
-    const handleRouteChange = () => {
-      setBackgroundImages();
-    };
-
-    handleRouteChange();
-  }, [pathname]);
+  }, []);
 
   useEffect(() => {
     setBackgroundImages();
     setupScrollToTarget();
-    window.addEventListener('scroll', triggerYposition);
+  }, [setBackgroundImages, setupScrollToTarget]);
 
+  useEffect(() => {
+    window.addEventListener('scroll', triggerYposition);
     return () => {
       window.removeEventListener('scroll', triggerYposition);
     };
-  }, []);
+  }, [triggerYposition]);
 
-  // Effect to scrollY position
+  useEffect(() => {
+    setBackgroundImages();
+  }, [pathname, setBackgroundImages]);
+
   useEffect(() => {
     const stickyHeader = document.getElementById('sticky-header');
     const scrollToTargetElements = document.querySelectorAll('.scroll-to-target');
-
     if (stickyHeader) {
       if (isYtriggered) {
         stickyHeader.classList.add('sticky-menu');
@@ -133,4 +118,3 @@ export default function TemplateScripts() {
     </>
   );
 }
-
