@@ -8,11 +8,7 @@ export default function Preloader() {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 0);
-
-    return () => clearTimeout(timer);
+    setIsVisible(false);
   }, []);
 
   return (
