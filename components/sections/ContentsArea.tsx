@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Video, VideoDetail, VideoType, Category } from '../../types/videos';
@@ -12,31 +12,25 @@ interface Props {
 }
 
 export default function ContentsArea({ title, videoType }: Props) {
+  const data = fetchData(['videosDetail', 'categories'], { videoTypeId: videoType.documentId });
+
   const [filter, setFilter] = useState<string>('*');
-  const [filteredVideos, setFilteredMovies] = useState<VideoDetail[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [videosDetail, setVideosDetail] = useState<VideoDetail[]>([]);
+  const [filteredVideos, setFilteredMovies] = useState<VideoDetail[]>(data.videosDetail || []);
 
-  useEffect(() => {
-    const data = fetchData(['videosDetail', 'categories'], { videoTypeId: videoType.documentId });
-    setCategories(data.categories || []);
-    setVideosDetail(data.videosDetail || []);
-    setFilteredMovies(data.videosDetail || []);
-  }, [videoType.documentId]);
-
-  useEffect(() => {
+  const handleFilterClick = (filter: string) => {
+    setFilter(filter);
     if (filter === '*') {
-      setFilteredMovies(videosDetail);
+      setFilteredMovies(data.videosDetail || []);
     } else {
-      const filtered = videosDetail.filter((video: Video) => {
-        const movieCategories = categories.filter((cat: Category) => 
+      const filtered = (data.videosDetail ?? []).filter((video: Video) => {
+        const movieCategories = (data.categories ?? []).filter((cat: Category) => 
           video.categories.some(mc => mc.documentId === cat.documentId)
         );
         return movieCategories.some((cat: Category) => cat.categoryType === filter);
       });
       setFilteredMovies(filtered);
     }
-  }, [filter, videosDetail, categories]);
+  };
 
   return (
     <section className="movie-area movie-bg" data-background="/assets/img/bg/movie_bg.jpg">
@@ -51,11 +45,11 @@ export default function ContentsArea({ title, videoType }: Props) {
           <div className="col-lg-6">
             <div className="movie-page-meta">
               <div className="tr-movie-menu-active text-center">
-                <button onClick={() => setFilter('*')} className={`me-3 ${filter === '*' ? 'active' : ''}`}>All</button>
-                {categories.map((category: Category) => (
+                <button onClick={() => handleFilterClick('*')} className={`me-3 ${filter === '*' ? 'active' : ''}`}>All</button>
+                {data.categories?.map((category: Category) => (
                   <button 
                     key={category.documentId}
-                    onClick={() => setFilter(category.categoryType)}
+                    onClick={() => handleFilterClick(category.categoryType)}
                     className={`me-3 ${filter === category.categoryType ? 'active' : ''}`}
                   >
                     {category.categoryType.charAt(0).toUpperCase() + category.categoryType.slice(1)}
