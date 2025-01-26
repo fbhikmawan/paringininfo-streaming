@@ -24,6 +24,19 @@
       "type": "integer",
       "required": true
     },
+    "nameSlug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "videoUrl": {
+      "type": "string"
+    },
+    "trailerUrl": {
+      "type": "string"
+    },
+    "description": {
+      "type": "blocks"
+    },
     "poster": {
       "type": "media",
       "multiple": false,
@@ -32,40 +45,29 @@
         "images"
       ]
     },
-    "videoUrl": {
-      "type": "string",
-      "required": false
-    },
-    "description": {
-      "type": "blocks",
-      "required": false
-    },
-    "categories": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::category.category",
-      "mappedBy": "video"
-    },
-    "ratings": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::rating.rating",
-      "mappedBy": "video"
-    },
-    "quality": {
+    "video_type": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::quality.quality",
+      "target": "api::video-type.video-type",
       "inversedBy": "videos"
     },
-    "type": {
+    "video_ratings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::video-rating.video-rating",
+      "mappedBy": "video"
+    },
+    "video_categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::video-category.video-category",
+      "mappedBy": "videos"
+    },
+    "video_quality": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::type.type",
+      "target": "api::video-quality.video-quality",
       "inversedBy": "videos"
-    },
-    "trailerUrl": {
-      "type": "string"
     }
   }
 }
