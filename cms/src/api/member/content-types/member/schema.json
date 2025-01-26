@@ -11,19 +11,22 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "username": {
-      "type": "string"
-    },
     "email": {
-      "type": "email"
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "username": {
+      "type": "string",
+      "required": true
     },
     "provider": {
       "type": "string"
     },
-    "ratings": {
+    "video_ratings": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::rating.rating",
+      "target": "api::video-rating.video-rating",
       "mappedBy": "member"
     }
   }

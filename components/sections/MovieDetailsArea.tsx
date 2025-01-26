@@ -1,44 +1,92 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import imgMovieDetails from '../../assets/img/poster/movie_details_img.jpg'
+import VideoPlayerModal from '../modals/VideoPlayerModal';
+
+import { VideoDetail } from '../../types/videos';
+
 import imgDownload from '../../assets/fonts/download.svg'
 import imgPlayIcon from '../../assets/img/images/play_icon.png'
 
-export default function MovieDetailsArea() {
+interface Props {
+  videosDetail: VideoDetail[];
+}
+
+export default function MovieDetailsArea({ videosDetail }: Props) {
+  const video = videosDetail[0];
+
+  const getLabel = (video: VideoDetail) => {
+    const now = new Date();
+    const publishedAt = new Date(video.publishedAt);
+    const diffDays = Math.floor((now.getTime() - publishedAt.getTime()) / (1000 * 60 * 60 * 24));
+    const labelsMap: Record<string, { limit: number; text: string }> = {
+      movies: { limit: 30, text: 'New Release' },
+      series: { limit: 14, text: 'New Episode' },
+      sports: { limit: 14, text: 'New Highlight' },
+      live: { limit: 7, text: 'New Stream' },
+    };
+
+    const config = labelsMap[video.type.videoTypeSlug];
+    if (config && diffDays <= config.limit) {
+      return video.videoUrl ? config.text : 'Available Soon';
+    }
+    return null;
+  };
+
+  const label = getLabel(video);
+
   return (
     <section className="movie-details-area" data-background="/assets/img/bg/movie_details_bg.jpg">
       <div className="container">
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb" style={{ backgroundColor: 'transparent' }}>
+            <li className="breadcrumb-item"><Link href={`/${video.type.videoTypeSlug}`}>{video.type.videoType}</Link></li>
+            <li className="breadcrumb-item active" aria-current="page">{video.name} ({video.releaseYear})</li>
+          </ol>
+        </nav>
         <div className="row align-items-center position-relative">
-          <div className="col-xl-3 col-lg-4">
+          <div className="col-xl-3 col-lg-4 align-self-start">
             <div className="movie-details-img">
-              <Image src={ imgMovieDetails } alt="" />
-                <Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><Image src={ imgPlayIcon } alt="" /></Link>
+              <Image src={video.poster.url} alt={video.name} width={303} height={430}/>
+              <a
+                className="popup-video"
+                data-toggle="modal"
+                data-target="#videoPlayerModal"
+                data-disabled={!video.videoUrl}
+              >
+                <Image src={imgPlayIcon} alt={ video.name } />
+              </a>
             </div>
           </div>
           <div className="col-xl-6 col-lg-8">
             <div className="movie-details-content">
-              <h5>New Episodes</h5>
-              <h2>The Easy <span>Reach</span></h2>
+              {label && <h5>{label}</h5>}
+              <h2>{ video.name }</h2>
               <div className="banner-meta">
                 <ul>
                   <li className="quality">
-                    <span>Pg 18</span>
-                    <span>hd</span>
+                    <span>{video.quality.qualityType.toLowerCase()}</span>
                   </li>
                   <li className="category">
-                    <Link href="#">Romance,</Link>
-                    <Link href="#">Drama</Link>
+                    {video.categories.map((category, index) => (
+                      <Link key={index} href="#">
+                        {category.categoryType}{index < video.categories.length - 1 && ','}
+                      </Link>
+                    ))}
                   </li>
                   <li className="release-time">
-                    <span><i className="far fa-calendar-alt"></i> 2021</span>
-                    <span><i className="far fa-clock"></i> 128 min</span>
+                    <span><i className="far fa-calendar-alt"></i> { video.releaseYear }</span>
+                    <span><i className="far fa-clock"></i> { video.duration } minutes</span>
                   </li>
                 </ul>
               </div>
-              <p>Lorem ipsum dolor sit amet, consecetur adipiscing elseddo eiusmod tempor.There are many
-                variations of passages of lorem
-                Ipsum available, but the majority have suffered alteration in some injected humour.</p>
+              {video.description?.map((desc, index) => (
+                <p key={index}>
+                  {desc.children.map((child, childIndex) => (
+                    <span key={childIndex}>{child.text}</span>
+                  ))}
+                </p>
+              ))}
               <div className="movie-details-prime">
                 <ul>
                   <li className="share"><Link href="#"><i className="fas fa-share-alt"></i> Share</Link></li>
@@ -46,13 +94,52 @@ export default function MovieDetailsArea() {
                     <h6>Prime Video</h6>
                     <span>Streaming Channels</span>
                   </li>
-                  <li className="watch"><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="btn popup-video"><i className="fas fa-play"></i> Watch Now</Link></li>
+                  <li className="watch d-flex">
+                    {video.trailerUrl ? (
+                      <VideoPlayerModal
+                        modalId="trailerModal"
+                        videoSrc={video.trailerUrl}
+                        posterSrc={video.poster.url}
+                      >
+                        <a
+                          className="btn"
+                          data-toggle="modal"
+                          data-target="#trailerModal"
+                        >
+                          <i className="fas fa-play"></i> Watch Trailer
+                        </a>
+                      </VideoPlayerModal>
+                    ) : (
+                      <></>
+                    )}
+                    {video.videoUrl ? (
+                      <VideoPlayerModal
+                        modalId="videoModal"
+                        videoSrc={video.videoUrl}
+                        posterSrc={video.poster.url}
+                      >
+                        <a
+                          className="btn"
+                          data-toggle="modal"
+                          data-target="#videoModal"
+                        >
+                          <i className="fas fa-play"></i> Watch Now
+                        </a>
+                      </VideoPlayerModal>
+                    ) : (
+                      <>
+                        <a className="btn disabled" href='#'>
+                          <i className="fas fa-play"></i> Available Soon
+                        </a>
+                      </>
+                    )}
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
           <div className="movie-details-btn">
-            <a href="/assets/img/poster/movie_details_img.jpg" className="download-btn" download="">Download <Image src={ imgDownload } alt="" /></a>
+            <a href="/assets/img/poster/movie_details_img.jpg" className="download-btn" download="">Download <Image src={imgDownload} alt="" /></a>
           </div>
         </div>
       </div>

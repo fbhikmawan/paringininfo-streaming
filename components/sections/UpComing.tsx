@@ -1,61 +1,40 @@
 'use client'
 
-import { useState } from 'react';
-import Link from 'next/link'
+import { useEffect, useState } from 'react';
 
 // Template Scripts
 import Fade from '../scripts/Fade';
 import CustomCarousel from '../scripts/CustomCarousel';
+import CarouselItemUpcoming from '../elements/CarouselItemUpcoming';
 
-import imgPoster01 from '../../assets/img/poster/ucm_poster01.jpg'
-import imgPoster02 from '../../assets/img/poster/ucm_poster02.jpg'
-import imgPoster03 from '../../assets/img/poster/ucm_poster03.jpg'
-import imgPoster04 from '../../assets/img/poster/ucm_poster04.jpg'
-import imgPoster05 from '../../assets/img/poster/ucm_poster05.jpg'
-import imgPoster06 from '../../assets/img/poster/ucm_poster06.jpg'
-import imgPoster07 from '../../assets/img/poster/ucm_poster07.jpg'
-import imgPoster08 from '../../assets/img/poster/ucm_poster08.jpg'
-
-interface CarouselItem {
-  title: string;
-  poster: string;
-  quality: string;
-  duration: number;
-  rating: number;
-  year: number;
-}
-
-const tvShowItems: CarouselItem[] = [
-  { title: "Women's Day", poster: imgPoster01.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Perfect Match", poster: imgPoster02.src, quality: "4k", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Dog Woof", poster: imgPoster03.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Easy Reach", poster: imgPoster04.src, quality: "8k", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Cooking", poster: imgPoster05.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
-];
-
-const movieItems: CarouselItem[] = [
-  { title: "The Cooking", poster: imgPoster05.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Hikers", poster: imgPoster06.src, quality: "4k", duration: 128, rating: 3.5, year: 2021 },
-  { title: "Life Quotes", poster: imgPoster07.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Beachball", poster: imgPoster08.src, quality: "4k", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Dog Woof", poster: imgPoster03.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
-];
-
-const animeItems: CarouselItem[] = [
-  { title: "Women's Day", poster: imgPoster01.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Perfect Match", poster: imgPoster02.src, quality: "4k", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Dog Woof", poster: imgPoster03.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Easy Reach", poster: imgPoster04.src, quality: "8k", duration: 128, rating: 3.5, year: 2021 },
-  { title: "The Cooking", poster: imgPoster05.src, quality: "hd", duration: 128, rating: 3.5, year: 2021 },
-];
+import { fetchData } from '../../lib/videoDataFetcher';
+import { VideoDetail, VideoType } from '../../types/videos';
+import { DataMap } from '../../types/dataMaps';
 
 const FADE_TIMEOUT = 300;
 
-export default function UpComing() {  
-  const [activeTab, setActiveTab] = useState<'tvShow' | 'movies' | 'anime'>('tvShow');
+export default function UpComing() {
+  const [activeTab, setActiveTab] = useState<string>('');
   const [fadeState, setFadeState] = useState(true);
+  const [videoDetails, setVideoDetails] = useState<VideoDetail[]>([]);
+  const [videoTypes, setVideoTypes] = useState<VideoType[]>([]);
 
-  const handleTabClick = (tab: 'tvShow' | 'movies' | 'anime') => {
+  useEffect(() => {
+    const data: DataMap = fetchData(['videosDetail', 'videoTypes']);
+    const filteredVideos = (data.videosDetail || []).filter(video => video.videoUrl === null);
+    setVideoDetails(filteredVideos);
+    
+    const filteredVideoTypes = data.videoTypes?.filter(type => 
+      filteredVideos.some(video => video.type.documentId === type.documentId)
+    ) || [];
+    setVideoTypes(filteredVideoTypes);
+
+    if (filteredVideoTypes.length > 0) {
+      setActiveTab(filteredVideoTypes[0].videoTypeSlug);
+    }
+  }, []);
+
+  const handleTabClick = (tab: string) => {
     setFadeState(false);
     setTimeout(() => {
       setActiveTab(tab);
@@ -63,18 +42,13 @@ export default function UpComing() {
     }, FADE_TIMEOUT);
   };
 
-  const getActiveItems = (): CarouselItem[] => {
-    switch(activeTab) {
-      case 'tvShow':
-        return tvShowItems;
-      case 'movies':
-        return movieItems;
-      case 'anime':
-        return animeItems;
-      default:
-        return [];
-    }
+  const getActiveItems = (): VideoDetail[] => {
+    return videoDetails.filter(video => video.type.videoTypeSlug === activeTab);
   };
+
+  if (videoDetails.length === 0) {
+    return null;
+  }
 
   return (
     <section className="ucm-area ucm-bg" data-background="/assets/img/bg/ucm_bg.jpg">
@@ -84,57 +58,29 @@ export default function UpComing() {
           <div className="col-lg-6">
             <div className="section-title text-center text-lg-left">
               <span className="sub-title">ONLINE STREAMING</span>
-              <h2 className="title">Upcoming Movies</h2>
+              <h2 className="title">Upcoming Videos</h2>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="ucm-nav-wrap">
               <ul className="nav nav-tabs" id="myTab" role="tablist">
-                <li className="nav-item" role="presentation">
-                  <Link 
-                    href="#tvShow"
-                    className={`nav-link ${activeTab === 'tvShow' ? 'active' : ''}`} 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleTabClick('tvShow');
-                    }}
-                    role="tab" 
-                    aria-controls="tvShow" 
-                    aria-selected={activeTab === 'tvShow'}
-                  >
-                    TV Shows
-                  </Link>
-                </li>
-                <li className="nav-item" role="presentation">
-                  <Link 
-                    href="#movies"
-                    className={`nav-link ${activeTab === 'movies' ? 'active' : ''}`} 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleTabClick('movies');
-                    }}
-                    role="tab" 
-                    aria-controls="movies" 
-                    aria-selected={activeTab === 'movies'}
-                  >
-                    Movies
-                  </Link>
-                </li>
-                <li className="nav-item" role="presentation">
-                  <Link 
-                    href="#anime"
-                    className={`nav-link ${activeTab === 'anime' ? 'active' : ''}`} 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleTabClick('anime');
-                    }}
-                    role="tab" 
-                    aria-controls="anime" 
-                    aria-selected={activeTab === 'anime'}
-                  >
-                    Anime
-                  </Link>
-                </li>
+                {videoTypes.map(type => (
+                  <li className="nav-item" role="presentation" key={type.documentId}>
+                    <a
+                      href='#'
+                      className={`nav-link ${activeTab === type.videoTypeSlug ? 'active' : ''}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleTabClick(type.videoTypeSlug);
+                      }}
+                      role="tab"
+                      aria-controls={type.videoTypeSlug}
+                      aria-selected={activeTab === type.videoTypeSlug}
+                    >
+                      {type.videoType}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -142,7 +88,9 @@ export default function UpComing() {
         <div className="tab-content" id="myTabContent">
           <div className="tab-pane fade show active" id="activeTab" role="tabpanel" aria-labelledby="activeTab-tab">
             <Fade in={fadeState} timeout={FADE_TIMEOUT}>
-              <CustomCarousel items={getActiveItems()} />
+              <CustomCarousel items={getActiveItems()}>
+                {(item, index) => <CarouselItemUpcoming key={index} item={item} />}
+              </CustomCarousel>
             </Fade>
           </div>
         </div>

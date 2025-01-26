@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "video_types",
+  "info": {
+    "singularName": "video-type",
+    "pluralName": "video-types",
+    "displayName": "Video Type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "nameSlug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "bannerPageTitle": {
+      "type": "string",
+      "required": true
+    },
+    "contentsAreaTitle": {
+      "type": "string",
+      "required": true
+    },
+    "videos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::video.video",
+      "mappedBy": "video_type"
+    }
+  }
+}

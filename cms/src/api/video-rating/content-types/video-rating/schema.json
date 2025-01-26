@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "video_ratings",
+  "info": {
+    "singularName": "video-rating",
+    "pluralName": "video-ratings",
+    "displayName": "Video Rating",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "score": {
+      "type": "integer",
+      "required": true
+    },
+    "video": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::video.video",
+      "inversedBy": "video_ratings"
+    },
+    "member": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::member.member",
+      "inversedBy": "video_ratings"
+    }
+  }
+}

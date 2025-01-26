@@ -1,58 +1,46 @@
-{
-  "data": [
-    {
-      "id": 3,
-      "documentId": "jwa3u7t1lpoehf6q1k1cuxy2",
-      "videoType": "series",
-      "createdAt": "2025-01-08T19:15:14.838Z",
-      "updatedAt": "2025-01-08T19:15:14.838Z",
-      "publishedAt": "2025-01-08T19:15:14.850Z",
-      "videos": []
-    },
-    {
-      "id": 5,
-      "documentId": "i4a1dhttny3qocr5ikz38nor",
-      "videoType": "sports",
-      "createdAt": "2025-01-08T19:15:26.297Z",
-      "updatedAt": "2025-01-08T19:15:26.297Z",
-      "publishedAt": "2025-01-08T19:15:26.306Z",
-      "videos": []
-    },
-    {
-      "id": 6,
-      "documentId": "n5owggt6qj7mv14xh41rp8e7",
-      "videoType": "movies",
-      "createdAt": "2025-01-08T19:15:02.089Z",
-      "updatedAt": "2025-01-08T19:15:39.633Z",
-      "publishedAt": "2025-01-08T19:15:39.641Z",
-      "videos": [
-        {
-          "id": 6,
-          "documentId": "qysjqqv68wmvlmfktjle0fyj",
-          "name": "Thaghut",
-          "releaseYear": 2024,
-          "duration": 102,
-          "videoUrl": null,
-          "description": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "text": "A female student named Ainun, who admires the figure of Abah Mulya, the owner of the Padepokan in Bumi Suwung village who is famous for his supernatural powers in curing various diseases. One day, surprising news came. Abah Mulya was found dead, which made Ainun sad. However, the fact that surprised him more was the fact that Abah Mulya was Ainun's biological father. Armed with the desire to see his father's funeral process for the last time, Ainun together with two of his friends, Bagas and Rini, were determined to go to Padepokan. The three of them managed to arrive safely. However, there were many irregularities that occurred. One of them is about Abah Mulya's will which wants Ainun to be his successor. Ainun was also caught in heretical teachings. So, how do Bagas and Rini save Ainun so she returns to the right path?"
-                }
-              ]
-            }
-          ],
-          "createdAt": "2025-01-08T17:28:32.496Z",
-          "updatedAt": "2025-01-09T14:29:18.098Z",
-          "publishedAt": "2025-01-09T14:29:18.117Z",
-          "trailerUrl": "https://www.youtube.com/watch?v=0zmLouvxfsM"
-        }
-      ]
-    }
-  ],
-  "meta": {
-    "pagination": { "page": 1, "pageSize": 25, "pageCount": 1, "total": 3 }
+[
+  {
+    "id": 501,
+    "documentId": "type_001",
+    "createdAt": "2025-01-12T00:00:00Z",
+    "updatedAt": "2025-01-12T00:00:00Z",
+    "publishedAt": "2025-01-12T00:00:00Z",
+    "videoType": "Movies",
+    "videoTypeSlug": "movies",
+    "bannerPageTitle": "Movies",
+    "contentsAreaTitle": "Timeless Movies Library"
+  },
+  {
+    "id": 502,
+    "documentId": "type_002",
+    "createdAt": "2023-05-02T00:00:00Z",
+    "updatedAt": "2023-05-02T00:00:00Z",
+    "publishedAt": "2023-05-02T00:00:00Z",
+    "videoType": "Series",
+    "videoTypeSlug": "series",
+    "bannerPageTitle": "Series",
+    "contentsAreaTitle": "Popular Series"
+  },
+  {
+    "id": 503,
+    "documentId": "type_003",
+    "createdAt": "2023-05-03T00:00:00Z",
+    "updatedAt": "2023-05-03T00:00:00Z",
+    "publishedAt": "2023-05-03T00:00:00Z",
+    "videoType": "Sports",
+    "videoTypeSlug": "sports",
+    "bannerPageTitle": "Sport Videos",
+    "contentsAreaTitle": "Latest Sport Highlights"
+  },
+  {
+    "id": 504,
+    "documentId": "type_004",
+    "createdAt": "2023-05-04T00:00:00Z",
+    "updatedAt": "2023-05-04T00:00:00Z",
+    "publishedAt": "2023-05-04T00:00:00Z",
+    "videoType": "Live",
+    "videoTypeSlug": "live",
+    "bannerPageTitle": "Live Streaming",
+    "contentsAreaTitle": "Live Events"
   }
-}
+]

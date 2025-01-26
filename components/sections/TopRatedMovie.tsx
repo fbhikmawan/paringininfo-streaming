@@ -1,50 +1,44 @@
 'use client'
 
-import { useState, useEffect } from 'react';
-import Image, { StaticImageData } from 'next/image';
+import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
-// Import poster images
-import imgPoster01 from '../../assets/img/poster/ucm_poster01.jpg'
-import imgPoster02 from '../../assets/img/poster/ucm_poster02.jpg'
-import imgPoster03 from '../../assets/img/poster/ucm_poster03.jpg'
-import imgPoster04 from '../../assets/img/poster/ucm_poster04.jpg'
-import imgPoster05 from '../../assets/img/poster/ucm_poster05.jpg'
-import imgPoster06 from '../../assets/img/poster/ucm_poster06.jpg'
-import imgPoster07 from '../../assets/img/poster/ucm_poster07.jpg'
-import imgPoster08 from '../../assets/img/poster/ucm_poster08.jpg'
+import { fetchData } from '../../lib/videoDataFetcher';
+import { VideoDetail } from '../../types/videos';
+import { DataMap } from '../../types/dataMaps';
 
-interface MovieItem {
-  title: string;
-  year: number;
-  quality: string;
-  duration: number;
-  rating: number;
-  category: string[];
-  poster: StaticImageData;
+interface VideoDetailWithRating extends VideoDetail {
+  averageRating: number;
 }
 
-const movies: MovieItem[] = [
-  { title: "Women's Day", year: 2021, quality: "hd", duration: 128, rating: 3.5, category: ["cat-two"], poster: imgPoster01 },
-  { title: "The Perfect Match", year: 2021, quality: "4k", duration: 128, rating: 3.5, category: ["cat-one", "cat-three"], poster: imgPoster02 },
-  { title: "The Dog Woof", year: 2021, quality: "hd", duration: 128, rating: 3.5, category: ["cat-two"], poster: imgPoster03 },
-  { title: "The Easy Reach", year: 2021, quality: "8K", duration: 128, rating: 3.5, category: ["cat-one", "cat-three"], poster: imgPoster04 },
-  { title: "The Cooking", year: 2021, quality: "3D", duration: 128, rating: 3.5, category: ["cat-two"], poster: imgPoster05 },
-  { title: "The Hikaru", year: 2021, quality: "hd", duration: 128, rating: 3.9, category: ["cat-one", "cat-three"], poster: imgPoster06 },
-  { title: "Life Quotes", year: 2021, quality: "4K", duration: 128, rating: 3.9, category: ["cat-two"], poster: imgPoster07 },
-  { title: "The Beachball", year: 2021, quality: "4K", duration: 128, rating: 3.9, category: ["cat-one", "cat-three"], poster: imgPoster08 },
-];
+export default function TopRatedMovie() {  
+  const data: DataMap = fetchData(['videosDetail', 'videoTypes']);
 
-export default function TopRatedMovie() {
-  const [filter, setFilter] = useState<string>('*');
-  const [filteredMovies, setFilteredMovies] = useState<MovieItem[]>(movies);
+  const filteredVideos = (data.videosDetail || []).filter(video => {
+    const averageRating = video.ratings.reduce((acc, rating) => acc + rating.score, 0) / video.ratings.length;
+    return averageRating > 3;
+  }).map(video => {
+    const averageRating = video.ratings.reduce((acc, rating) => acc + rating.score, 0) / video.ratings.length;
+    return { ...video, averageRating };
+  });
 
-  useEffect(() => {
-    const filtered = movies.filter(movie =>
-      filter === '*' || movie.category.includes(filter)
-    );
-    setFilteredMovies(filtered);
-  }, [filter]);
+  const [activeTab, setActiveTab] = useState<string>('*');
+  const [videoDetails, setVideoDetails] = useState<VideoDetailWithRating[]>(filteredVideos);
+
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+    if (tab === '*') {
+      setVideoDetails(filteredVideos);
+    } else {
+      const filtered = filteredVideos.filter((video: VideoDetailWithRating) => video.type.videoTypeSlug === tab);
+      setVideoDetails(filtered);
+    }
+  };
+
+  if (filteredVideos.length === 0) {
+    return null;
+  }
 
   return (
     <section className="top-rated-movie tr-movie-bg" data-background="/assets/img/bg/tr_movies_bg.jpg">
@@ -60,36 +54,41 @@ export default function TopRatedMovie() {
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <div className="tr-movie-menu-active text-center">
-              <button onClick={() => setFilter('*')} className={`me-3 ${filter === '*' ? 'active' : ''}`}>All</button>
-              <button onClick={() => setFilter('cat-one')} className={`me-3 ${filter === 'cat-one' ? 'active' : ''}`}>Movies</button>
-              <button onClick={() => setFilter('cat-two')} className={`me-3 ${filter === 'cat-two' ? 'active' : ''}`}>Series</button>
-              <button onClick={() => setFilter('cat-three')} className={`${filter === 'cat-three' ? 'active' : ''}`}>Sports</button>
+              <button onClick={() => handleTabClick('*')} className={`me-3 ${activeTab === '*' ? 'active' : ''}`}>All</button>
+              {data.videoTypes && data.videoTypes.map((videoType, index) => (
+                <button key={index} onClick={() => handleTabClick(videoType.videoTypeSlug)} className={`me-3 ${activeTab === videoType.videoTypeSlug ? 'active' : ''}`}>{videoType.bannerPageTitle}</button>
+              ))}
             </div>
           </div>
         </div>
-        <div className="row tr-movie-active">
-          {filteredMovies.map((movie, index) => (
-            <div key={index} className={`col-xl-3 col-lg-4 col-sm-6 movie-item mb-60 ${movie.category.join(' ')}`}>
+        <div className="row tr-movie-active justify-content-center">
+          {videoDetails.map((video, index) => (
+            <div key={index} className="col-xl-3 col-lg-4 col-sm-6 movie-item mb-60 d-flex flex-column">
               <div className="movie-poster">
-                <Link href={`/movie-details`}><Image src={movie.poster} alt={movie.title} width={300} height={450} /></Link>
+                <Link href={`/${video.type.videoTypeSlug}/${video.nameSlug}`}><Image src={video.poster.url} alt={video.name} width={300} height={450} /></Link>
               </div>
               <div className="movie-content">
                 <div className="top">
-                  <h5 className="title"><Link href={`/movie-details`}>{movie.title}</Link> </h5>
-                  <span className="date">{movie.year}</span>
+                  <h5 className="title"><Link href={`/${video.type.videoTypeSlug}/${video.nameSlug}`}>{video.name}</Link> </h5>
+                  <span className="date">{video.releaseYear}</span>
                 </div>
                 <div className="bottom">
                   <ul>
-                    <li><span className={`quality ${movie.quality}`}>{movie.quality.toUpperCase()}</span></li>
+                    <li><span className={`quality ${video.quality}`}>{video.quality.qualityType.toUpperCase()}</span></li>
                     <li>
-                      <span className="duration"><i className="far fa-clock"></i> {movie.duration} min</span>
-                      <span className="rating"><i className="fas fa-thumbs-up"></i> {movie.rating}</span>
+                      <span className="duration"><i className="far fa-clock"></i> {video.duration} min</span>
+                      <span className="rating"><i className="fas fa-thumbs-up"></i> {video.averageRating}</span>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
           ))}
+          {videoDetails.length === 0 && (
+            <div className="col-6">
+              <h5 className='text-center'>Stay tuned! More exciting content is on the way.</h5>
+            </div>
+          )}
         </div>
       </div>
     </section>

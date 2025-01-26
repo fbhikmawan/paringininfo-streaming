@@ -80,11 +80,10 @@ export default function LiveArea() {
               <h2 className="title">Movies, Series & Live For Friends & Family</h2>
             </div>
             <div className="live-movie-content">
-              <p>Lorem ipsum dolor sit amet, consecetur adipiscing elseddo eiusmod There are many variations of passages of lorem Ipsum
-                available, but the majority have suffered alteration.</p>
+              <p>Discover a world of endless entertainment with ParinginInfo. <br />Dive into our extensive library of movies, series, and live streams, all available at your fingertips. <br />Experience high-quality streaming and Elevate your entertainment experience!</p>
               <div className="live-fact-wrap">
                 <div className="resolution">
-                  <h2>HD 4K</h2>
+                  <h2>HD</h2>
                 </div>
                 <div className="active-customer">
                   <h4><Odometer count={50} duration={3000} />+</h4>

@@ -398,36 +398,6 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
-  collectionName: 'categories';
-  info: {
-    description: '';
-    displayName: 'Category';
-    pluralName: 'categories';
-    singularName: 'category';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    categoryType: Schema.Attribute.String & Schema.Attribute.Required;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::category.category'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    video: Schema.Attribute.Relation<'manyToOne', 'api::video.video'>;
-  };
-}
-
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -474,7 +444,9 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    email: Schema.Attribute.Email;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -483,21 +455,25 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    ratings: Schema.Attribute.Relation<'oneToMany', 'api::rating.rating'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    username: Schema.Attribute.String;
+    username: Schema.Attribute.String & Schema.Attribute.Required;
+    video_ratings: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::video-rating.video-rating'
+    >;
   };
 }
 
-export interface ApiQualityQuality extends Struct.CollectionTypeSchema {
-  collectionName: 'qualities';
+export interface ApiVideoCategoryVideoCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'video_categories';
   info: {
     description: '';
-    displayName: 'Quality';
-    pluralName: 'qualities';
-    singularName: 'quality';
+    displayName: 'Video Category';
+    pluralName: 'video-categories';
+    singularName: 'video-category';
   };
   options: {
     draftAndPublish: true;
@@ -509,11 +485,44 @@ export interface ApiQualityQuality extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::quality.quality'
+      'api::video-category.video-category'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    nameSlug: Schema.Attribute.UID<'name'>;
     publishedAt: Schema.Attribute.DateTime;
-    qualityType: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    videos: Schema.Attribute.Relation<'manyToMany', 'api::video.video'>;
+  };
+}
+
+export interface ApiVideoQualityVideoQuality
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'video_qualities';
+  info: {
+    description: '';
+    displayName: 'Video Quality';
+    pluralName: 'video-qualities';
+    singularName: 'video-quality';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::video-quality.video-quality'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    nameSlug: Schema.Attribute.UID<'name'>;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -521,13 +530,13 @@ export interface ApiQualityQuality extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiRatingRating extends Struct.CollectionTypeSchema {
-  collectionName: 'ratings';
+export interface ApiVideoRatingVideoRating extends Struct.CollectionTypeSchema {
+  collectionName: 'video_ratings';
   info: {
     description: '';
-    displayName: 'Rating';
-    pluralName: 'ratings';
-    singularName: 'rating';
+    displayName: 'Video Rating';
+    pluralName: 'video-ratings';
+    singularName: 'video-rating';
   };
   options: {
     draftAndPublish: true;
@@ -539,19 +548,12 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::rating.rating'
+      'api::video-rating.video-rating'
     > &
       Schema.Attribute.Private;
     member: Schema.Attribute.Relation<'manyToOne', 'api::member.member'>;
     publishedAt: Schema.Attribute.DateTime;
-    score: Schema.Attribute.Decimal &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 5;
-          min: 1;
-        },
-        number
-      >;
+    score: Schema.Attribute.Integer & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -559,30 +561,36 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiTypeType extends Struct.CollectionTypeSchema {
-  collectionName: 'types';
+export interface ApiVideoTypeVideoType extends Struct.CollectionTypeSchema {
+  collectionName: 'video_types';
   info: {
     description: '';
-    displayName: 'Type';
-    pluralName: 'types';
-    singularName: 'type';
+    displayName: 'Video Type';
+    pluralName: 'video-types';
+    singularName: 'video-type';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
+    bannerPageTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    contentsAreaTitle: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::type.type'> &
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::video-type.video-type'
+    > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    nameSlug: Schema.Attribute.UID<'name'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     videos: Schema.Attribute.Relation<'oneToMany', 'api::video.video'>;
-    videoType: Schema.Attribute.String;
   };
 }
 
@@ -598,10 +606,6 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    categories: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::category.category'
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -611,16 +615,30 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::video.video'> &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    nameSlug: Schema.Attribute.UID<'name'>;
     poster: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    quality: Schema.Attribute.Relation<'manyToOne', 'api::quality.quality'>;
-    ratings: Schema.Attribute.Relation<'oneToMany', 'api::rating.rating'>;
     releaseYear: Schema.Attribute.Integer & Schema.Attribute.Required;
     trailerUrl: Schema.Attribute.String;
-    type: Schema.Attribute.Relation<'manyToOne', 'api::type.type'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    video_categories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::video-category.video-category'
+    >;
+    video_quality: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::video-quality.video-quality'
+    >;
+    video_ratings: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::video-rating.video-rating'
+    >;
+    video_type: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::video-type.video-type'
+    >;
     videoUrl: Schema.Attribute.String;
   };
 }
@@ -1135,12 +1153,12 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
-      'api::category.category': ApiCategoryCategory;
       'api::global.global': ApiGlobalGlobal;
       'api::member.member': ApiMemberMember;
-      'api::quality.quality': ApiQualityQuality;
-      'api::rating.rating': ApiRatingRating;
-      'api::type.type': ApiTypeType;
+      'api::video-category.video-category': ApiVideoCategoryVideoCategory;
+      'api::video-quality.video-quality': ApiVideoQualityVideoQuality;
+      'api::video-rating.video-rating': ApiVideoRatingVideoRating;
+      'api::video-type.video-type': ApiVideoTypeVideoType;
       'api::video.video': ApiVideoVideo;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

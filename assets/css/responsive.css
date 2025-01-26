@@ -635,7 +635,7 @@
     font-size: 46px;
 }
 .movie-details-prime ul li.watch {
-    margin-left: auto;
+    /* margin-left: auto; */
 }
 .episode-watch-wrap .card-body ul li a {
     font-size: 14px;
@@ -656,4 +656,8 @@
 
 }
 
-
+@media only screen and (max-width: 412px) {
+    .movie-details-prime ul li.watch {
+        flex-direction: column;
+    }
+}
