@@ -1,123 +1,58 @@
-import { BaseFields } from './bases'
+import { BaseFields, DescriptionElement, Image, PaginationMeta } from './bases'
 
-export interface Poster extends BaseFields {
-  name: string;
-  alternativeText?: string | null;
-  caption?: string | null;
-  width: number;
-  height: number;
-  formats?: {
-    thumbnail: {
-      name: string;
-      hash: string;
-      ext: string;
-      mime: string;
-      width: number;
-      height: number;
-      size: number;
-      url: string;
-    };
-    small: {
-      name: string;
-      hash: string;
-      ext: string;
-      mime: string;
-      width: number;
-      height: number;
-      size: number;
-      url: string;
-    };
-  } | null;
-  size: number;
-  url: string;
-  previewUrl?: string | null;
-  provider: string;
-  provider_metadata?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-}
-
-export interface Category extends BaseFields {
-  categoryType: string;
-  videoType: { documentId: string };
-}
-
-export interface Quality extends BaseFields {
-  qualityType: string;
-  videos?: { documentId: string }[] | null;
-}
-
-export interface Rating extends BaseFields {
+export interface VideoRating extends BaseFields {
   score: number;
-  member?: { documentId: string } | null;
-  video: { documentId: string };
 }
 
 export interface VideoType extends BaseFields {
-  videoType: string;
-  videoTypeSlug: string;
+  name: string;
+  nameSlug: string;
   bannerPageTitle: string;
   contentsAreaTitle: string;
 }
 
+export interface VideoCategory extends BaseFields {
+  name: string;
+  nameSlug: string;
+}
+export interface PopulatedVideoCategory extends VideoCategory {
+  videos: Video[];
+  video_types: VideoType[];
+}
+
+export interface VideoQuality extends BaseFields {
+  name: string;
+  nameSlug: string;
+}
+
 export interface Video extends BaseFields {
   name: string;
-  nameSlug?: string | null;
   releaseYear: number;
   duration: number;
-  videoUrl?: string | null;
-  trailerUrl?: string | null;
-  description?: Array<{
-    type: string;
-    children: Array<{
-      type: string;
-      text: string;
-    }>;
-  }> | null;
-  poster: { documentId: string };
-  categories: { documentId: string }[];
-  ratings: { documentId: string }[];
-  quality: { documentId: string };
-  type: { documentId: string };
+  nameSlug: string;
+  videoUrl: string | null;
+  trailerUrl: string | null;
+  description: DescriptionElement[];
 }
 
-export interface VideoDetail extends BaseFields {
-  name: string;
-  nameSlug?: string | null;
-  releaseYear: number;
-  duration: number;
-  videoUrl?: string | null;
-  trailerUrl?: string | null;
-  description?: Array<{
-    type: string;
-    children: Array<{
-      type: string;
-      text: string;
-    }>;
-  }> | null;
-  poster: Poster;
-  categories: Category[];
-  ratings: Rating[];
-  quality: Quality;
-  type: VideoType;
+export interface PopulatedVideo extends Video {
+  poster?: Image;
+  video_type?: VideoType;
+  video_ratings: VideoRating[];
+  video_categories: VideoCategory[];
+  video_quality?: VideoQuality;
 }
 
-export interface Meta {
-  pagination: {
-    page: number;
-    pageSize: number;
-    pageCount: number;
-    total: number;
+export interface VideosApiResponse {
+  data: Video[];
+  meta: {
+    pagination: PaginationMeta;
   };
 }
 
-export interface VideoResponse {
-  data: Video[];
-  meta: Meta;
-}
-
-export interface SingleVideoResponse {
-  data: Video;
-  meta: Meta;
+export interface PopulatedVideosApiResponse {
+  data: PopulatedVideo[];
+  meta: {
+    pagination: PaginationMeta;
+  };
 }

@@ -25,6 +25,12 @@
       "relation": "manyToMany",
       "target": "api::video.video",
       "inversedBy": "video_categories"
+    },
+    "video_types": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::video-type.video-type",
+      "inversedBy": "video_categories"
     }
   }
 }

@@ -494,6 +494,10 @@ export interface ApiVideoCategoryVideoCategory
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    video_types: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::video-type.video-type'
+    >;
     videos: Schema.Attribute.Relation<'manyToMany', 'api::video.video'>;
   };
 }
@@ -590,6 +594,10 @@ export interface ApiVideoTypeVideoType extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    video_categories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::video-category.video-category'
+    >;
     videos: Schema.Attribute.Relation<'oneToMany', 'api::video.video'>;
   };
 }

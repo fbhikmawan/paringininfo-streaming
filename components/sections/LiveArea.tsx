@@ -71,7 +71,7 @@ const Odometer: React.FC<OdometerProps> = ({ count, duration = 1000 }) => {
 
 export default function LiveArea() {
   return (
-    <section className="live-area live-bg fix" data-background="/assets/img/bg/live_bg.jpg">
+    <section className="live-area live-bg fix" style={{ backgroundImage: 'url(/assets/img/bg/live_bg.jpg)' }}>
       <div className="container">
         <div className="row align-items-center">
           <div className="col-xl-5 col-lg-6">

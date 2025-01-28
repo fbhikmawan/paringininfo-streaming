@@ -5,7 +5,7 @@ import imgEpisode from '../../assets/img/images/episode_img.jpg'
 
 export default function EpisodeArea() {
   return (
-    <section className="episode-area episode-bg" data-background="/assets/img/bg/episode_bg.jpg">
+    <section className="episode-area episode-bg" style={{ backgroundImage: 'url(/assets/img/bg/episode_bg.jpg)' }}>
       <div className="container">
         <div className="row">
           <div className="col-lg-8">

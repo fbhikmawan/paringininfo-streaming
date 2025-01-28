@@ -12,7 +12,7 @@ export default function BannerPage({
   activeBreadcrumb,
 }: BannerPageProps) {
   return (
-    <section className="breadcrumb-area breadcrumb-bg" data-background={backgroundUrl}>
+    <section className="breadcrumb-area breadcrumb-bg" style={{ backgroundImage: `url(${backgroundUrl})` }}>
       <div className="container">
         <div className="row">
           <div className="col-12">

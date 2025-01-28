@@ -7,31 +7,30 @@ import Fade from '../scripts/Fade';
 import CustomCarousel from '../scripts/CustomCarousel';
 import CarouselItemUpcoming from '../elements/CarouselItemUpcoming';
 
-import { fetchData } from '../../lib/videoDataFetcher';
-import { VideoDetail, VideoType } from '../../types/videos';
-import { DataMap } from '../../types/dataMaps';
+import { PopulatedVideo, VideoType } from '@/types/videos';
+import { getAllVideoByVideoUrlNull } from '@/lib/api';
 
 const FADE_TIMEOUT = 300;
 
 export default function UpComing() {
   const [activeTab, setActiveTab] = useState<string>('');
   const [fadeState, setFadeState] = useState(true);
-  const [videoDetails, setVideoDetails] = useState<VideoDetail[]>([]);
+  const [videoDetails, setVideoDetails] = useState<PopulatedVideo[]>([]);
   const [videoTypes, setVideoTypes] = useState<VideoType[]>([]);
 
   useEffect(() => {
-    const data: DataMap = fetchData(['videosDetail', 'videoTypes']);
-    const filteredVideos = (data.videosDetail || []).filter(video => video.videoUrl === null);
-    setVideoDetails(filteredVideos);
-    
-    const filteredVideoTypes = data.videoTypes?.filter(type => 
-      filteredVideos.some(video => video.type.documentId === type.documentId)
-    ) || [];
-    setVideoTypes(filteredVideoTypes);
-
-    if (filteredVideoTypes.length > 0) {
-      setActiveTab(filteredVideoTypes[0].videoTypeSlug);
+    async function fetchData() {
+      const { videos } = await getAllVideoByVideoUrlNull();
+      setVideoDetails(videos);
+      
+      const filteredVideoTypes = videos.map(video => video.video_type).filter((type, index, self) => type && self.findIndex(t => t?.nameSlug === type?.nameSlug) === index) as VideoType[];
+      setVideoTypes(filteredVideoTypes);
+  
+      if (filteredVideoTypes.length > 0) {
+        setActiveTab(filteredVideoTypes[0]?.nameSlug);
+      }
     }
+    fetchData();
   }, []);
 
   const handleTabClick = (tab: string) => {
@@ -42,8 +41,8 @@ export default function UpComing() {
     }, FADE_TIMEOUT);
   };
 
-  const getActiveItems = (): VideoDetail[] => {
-    return videoDetails.filter(video => video.type.videoTypeSlug === activeTab);
+  const getActiveItems = (): PopulatedVideo[] => {
+    return videoDetails.filter(video => video.video_type?.nameSlug === activeTab);
   };
 
   if (videoDetails.length === 0) {
@@ -51,8 +50,8 @@ export default function UpComing() {
   }
 
   return (
-    <section className="ucm-area ucm-bg" data-background="/assets/img/bg/ucm_bg.jpg">
-      <div className="ucm-bg-shape" data-background="/assets/img/bg/ucm_bg_shape.png"></div>
+    <section className="ucm-area ucm-bg" style={{ backgroundImage: 'url(/assets/img/bg/ucm_bg.jpg)' }}>
+      <div className="ucm-bg-shape" style={{ backgroundImage: 'url(/assets/img/bg/ucm_bg_shape.png)' }}></div>
       <div className="container">
         <div className="row align-items-end mb-55">
           <div className="col-lg-6">
@@ -68,16 +67,16 @@ export default function UpComing() {
                   <li className="nav-item" role="presentation" key={type.documentId}>
                     <a
                       href='#'
-                      className={`nav-link ${activeTab === type.videoTypeSlug ? 'active' : ''}`}
+                      className={`nav-link ${activeTab === type.nameSlug ? 'active' : ''}`}
                       onClick={(e) => {
                         e.preventDefault();
-                        handleTabClick(type.videoTypeSlug);
+                        handleTabClick(type.nameSlug);
                       }}
                       role="tab"
-                      aria-controls={type.videoTypeSlug}
-                      aria-selected={activeTab === type.videoTypeSlug}
+                      aria-controls={type.nameSlug}
+                      aria-selected={activeTab === type.nameSlug}
                     >
-                      {type.videoType}
+                      {type.name}
                     </a>
                   </li>
                 ))}

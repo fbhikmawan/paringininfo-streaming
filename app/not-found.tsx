@@ -1,6 +1,6 @@
 export default function NotFound() {
   return (
-    <section className="breadcrumb-area breadcrumb-bg" data-background="/assets/img/bg/movie_bg.jpg">
+    <section className="breadcrumb-area breadcrumb-bg" style={{ backgroundImage: 'url(/assets/img/bg/movie_bg.jpg)' }}>
       <div className="container">
         <div className="row">
           <div className="col-12">

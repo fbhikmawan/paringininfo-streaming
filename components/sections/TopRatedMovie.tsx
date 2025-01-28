@@ -1,38 +1,51 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { PopulatedVideo, VideoType } from '@/types/videos';
+import { getAllVideo } from '@/lib/api';
 
-import { fetchData } from '../../lib/videoDataFetcher';
-import { VideoDetail } from '../../types/videos';
-import { DataMap } from '../../types/dataMaps';
-
-interface VideoDetailWithRating extends VideoDetail {
+interface PopulatedVideoWithRating extends PopulatedVideo {
   averageRating: number;
 }
 
-export default function TopRatedMovie() {  
-  const data: DataMap = fetchData(['videosDetail', 'videoTypes']);
-
-  const filteredVideos = (data.videosDetail || []).filter(video => {
-    const averageRating = video.ratings.reduce((acc, rating) => acc + rating.score, 0) / video.ratings.length;
-    return averageRating > 3;
-  }).map(video => {
-    const averageRating = video.ratings.reduce((acc, rating) => acc + rating.score, 0) / video.ratings.length;
-    return { ...video, averageRating };
-  });
-
+export default function TopRatedMovie() {
   const [activeTab, setActiveTab] = useState<string>('*');
-  const [videoDetails, setVideoDetails] = useState<VideoDetailWithRating[]>(filteredVideos);
+  const [filteredVideos, setFilteredVideos] = useState<PopulatedVideoWithRating[]>([]);
+  const [videoTypes, setVideoTypes] = useState<VideoType[]>([]);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const { videos } = await getAllVideo();
+      const filteredVideos = videos
+        .map(video => {
+          const averageRating = video.video_ratings.reduce((acc, rating) => acc + rating.score, 0) / video.video_ratings.length;
+          return { ...video, averageRating };
+        })
+        .filter(video => video.averageRating > 3 && video.videoUrl !== null);
+      setFilteredVideos(filteredVideos);
+
+      const uniqueVideoTypes = filteredVideos
+        .map(video => video.video_type)
+        .filter((type, index, self) => type && self.findIndex(t => t?.nameSlug === type?.nameSlug) === index) as VideoType[];
+      setVideoTypes(uniqueVideoTypes);
+    } catch (error) {
+      console.error("Error fetching videos:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
     if (tab === '*') {
-      setVideoDetails(filteredVideos);
+      setFilteredVideos(filteredVideos);
     } else {
-      const filtered = filteredVideos.filter((video: VideoDetailWithRating) => video.type.videoTypeSlug === tab);
-      setVideoDetails(filtered);
+      const filtered = filteredVideos.filter(video => video.video_type?.nameSlug === tab);
+      setFilteredVideos(filtered);
     }
   };
 
@@ -41,7 +54,7 @@ export default function TopRatedMovie() {
   }
 
   return (
-    <section className="top-rated-movie tr-movie-bg" data-background="/assets/img/bg/tr_movies_bg.jpg">
+    <section className="top-rated-movie tr-movie-bg" style={{ backgroundImage: 'url(/assets/img/bg/tr_movies_bg.jpg)' }}>
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-8">
@@ -55,26 +68,36 @@ export default function TopRatedMovie() {
           <div className="col-lg-8">
             <div className="tr-movie-menu-active text-center">
               <button onClick={() => handleTabClick('*')} className={`me-3 ${activeTab === '*' ? 'active' : ''}`}>All</button>
-              {data.videoTypes && data.videoTypes.map((videoType, index) => (
-                <button key={index} onClick={() => handleTabClick(videoType.videoTypeSlug)} className={`me-3 ${activeTab === videoType.videoTypeSlug ? 'active' : ''}`}>{videoType.bannerPageTitle}</button>
+              {videoTypes && videoTypes.map((videoType, index) => (
+                <button key={index} onClick={() => handleTabClick(videoType.nameSlug)} className={`me-3 ${activeTab === videoType.nameSlug ? 'active' : ''}`}>{videoType.name}</button>
               ))}
             </div>
           </div>
         </div>
         <div className="row tr-movie-active justify-content-center">
-          {videoDetails.map((video, index) => (
+          {filteredVideos.map((video, index) => (
             <div key={index} className="col-xl-3 col-lg-4 col-sm-6 movie-item mb-60 d-flex flex-column">
               <div className="movie-poster">
-                <Link href={`/${video.type.videoTypeSlug}/${video.nameSlug}`}><Image src={video.poster.url} alt={video.name} width={300} height={450} /></Link>
+                <Link href={`/${video.video_type?.nameSlug}/${video.nameSlug}`}>
+                  <Image 
+                  src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
+                  alt={video.name} 
+                  width={video.poster?.width} 
+                  height={video.poster?.height} />
+                </Link>
               </div>
               <div className="movie-content">
                 <div className="top">
-                  <h5 className="title"><Link href={`/${video.type.videoTypeSlug}/${video.nameSlug}`}>{video.name}</Link> </h5>
+                  <h5 className="title">
+                    <Link href={`/${video.video_type?.nameSlug}/${video.nameSlug}`}>
+                      {video.name}
+                    </Link> 
+                  </h5>
                   <span className="date">{video.releaseYear}</span>
                 </div>
                 <div className="bottom">
                   <ul>
-                    <li><span className={`quality ${video.quality}`}>{video.quality.qualityType.toUpperCase()}</span></li>
+                    <li><span className={`quality ${video.video_quality?.nameSlug}`}>{video.video_quality?.name.toUpperCase()}</span></li>
                     <li>
                       <span className="duration"><i className="far fa-clock"></i> {video.duration} min</span>
                       <span className="rating"><i className="fas fa-thumbs-up"></i> {video.averageRating}</span>
@@ -84,7 +107,7 @@ export default function TopRatedMovie() {
               </div>
             </div>
           ))}
-          {videoDetails.length === 0 && (
+          {filteredVideos.length === 0 && (
             <div className="col-6">
               <h5 className='text-center'>Stay tuned! More exciting content is on the way.</h5>
             </div>

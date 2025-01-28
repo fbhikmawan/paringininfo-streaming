@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function Banner() {
   return (
-    <section className="banner-area banner-bg" data-background="/assets/img/banner/banner_bg01.jpg">
+    <section className="banner-area banner-bg" style={{ backgroundImage: 'url(/assets/img/banner/banner_bg01.jpg)' }}>
       <div className="container custom-container">
         <div className="row">
           <div className="col-xl-6 col-lg-8">

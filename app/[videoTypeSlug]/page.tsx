@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation'
 // Template Sections
 import BannerPage from '../../components/sections/BannerPage';
 import ContentsArea from '../../components/sections/ContentsArea';
-import { DataMap } from '../../types/dataMaps';
-import { fetchData } from '../../lib/videoDataFetcher';
+import { getAllVideoTypes, getVideoTypeBySlug } from "@/lib/api";
+import { VideoType } from "@/types/videos";
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 60 seconds.
@@ -16,12 +16,12 @@ export const revalidate = 60
 export const dynamicParams = true // or false, to 404 on unknown paths
 
 export async function generateStaticParams() {
-  const data: DataMap = fetchData(['videoTypes']);
-  if (!data.videoTypes) {
+  const { videoTypes } = await getAllVideoTypes();
+  if (!videoTypes || videoTypes.length === 0) {
     return [];
   }
-  return data.videoTypes.map((videoType) => ({
-    params: { videoTypeSlug: videoType.videoTypeSlug },
+  return videoTypes.map((videoType) => ({
+    params: { videoTypeSlug: videoType.nameSlug },
   }));
 }
 
@@ -31,9 +31,9 @@ export default async function VideoTypePage({
   params: Promise<{ videoTypeSlug: string }>
 }) {
   const videoTypeSlug = (await params).videoTypeSlug
-  const data: DataMap = fetchData(['videoTypes'], { videoTypeSlug: videoTypeSlug });
+  const videoType: VideoType = await getVideoTypeBySlug(videoTypeSlug);
   
-  if (!data.videoTypes || data.videoTypes.length < 1) {
+  if (!videoType) {
     notFound();
   }
 
@@ -41,10 +41,10 @@ export default async function VideoTypePage({
     <>
       <BannerPage
         backgroundUrl="/assets/img/bg/breadcrumb_bg.jpg"
-        titleParts={['Our', data.videoTypes[0].bannerPageTitle]}
-        activeBreadcrumb={data.videoTypes[0].bannerPageTitle}
+        titleParts={['Our', videoType.bannerPageTitle]}
+        activeBreadcrumb={videoType.bannerPageTitle}
       />
-      <ContentsArea title={data.videoTypes[0].contentsAreaTitle} videoType={data.videoTypes[0]} />
+      <ContentsArea title={videoType.contentsAreaTitle} videoType={videoType} />
     </>
   );
 }

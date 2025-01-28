@@ -5,11 +5,11 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 // Interface types
-import { VideoDetail } from '../../types/videos';
+import { PopulatedVideo } from '../../types/videos';
 
 interface CustomCarouselProps {
-  items: VideoDetail[];
-  children: (item: VideoDetail, index: number) => React.ReactNode;
+  items: PopulatedVideo[];
+  children: (item: PopulatedVideo, index: number) => React.ReactNode;
 }
 
 export default function CustomCarousel({ items, children }: CustomCarouselProps) {

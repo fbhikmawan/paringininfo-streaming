@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react';
-import { usePathname } from 'next/navigation';
 import Script from 'next/script'
 
 import AOS from 'aos';
@@ -19,19 +18,6 @@ import "../assets/css/responsive.css";
 
 export default function TemplateScripts() {
   const [isYtriggered, setisYtriggered] = useState(false);
-  const pathname = usePathname();
-
-  const setBackgroundImages = useCallback(() => {
-    const elements = document.querySelectorAll<HTMLElement>('[data-background]');
-    elements.forEach((element) => {
-      if (element instanceof HTMLElement) {
-        const backgroundUrl = element.getAttribute('data-background');
-        if (backgroundUrl) {
-          element.style.backgroundImage = `url(${backgroundUrl})`;
-        }
-      }
-    });
-  }, []);
 
   const setupScrollToTarget = useCallback(() => {
     const scrollToTargetElements = document.querySelectorAll<HTMLElement>('.scroll-to-target');
@@ -81,17 +67,12 @@ export default function TemplateScripts() {
   }, []);
 
   useEffect(() => {
-    setBackgroundImages();
     setupScrollToTarget();
-  }, [setBackgroundImages, setupScrollToTarget]);
+  }, [setupScrollToTarget]);
 
   useEffect(() => {
     window.addEventListener('scroll', triggerYposition);
   }, [triggerYposition]);
-
-  useEffect(() => {
-    setBackgroundImages();
-  }, [pathname, setBackgroundImages]);
 
   useEffect(() => {
     const stickyHeader = document.getElementById('sticky-header');
