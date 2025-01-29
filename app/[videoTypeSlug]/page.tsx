@@ -39,12 +39,8 @@ export default async function VideoTypePage({
 
   return (
     <>
-      <BannerPage
-        backgroundUrl="/assets/img/bg/breadcrumb_bg.jpg"
-        titleParts={['Our', videoType.bannerPageTitle]}
-        activeBreadcrumb={videoType.bannerPageTitle}
-      />
-      <ContentsArea title={videoType.contentsAreaTitle} videoType={videoType} />
+      <BannerPage videoType={videoType} />
+      <ContentsArea videoType={videoType} />
     </>
   );
 }
