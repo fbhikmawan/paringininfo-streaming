@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import Script from 'next/script'
 
 import AOS from 'aos';
@@ -18,6 +19,7 @@ import "../assets/css/responsive.css";
 
 export default function TemplateScripts() {
   const [isYtriggered, setisYtriggered] = useState(false);
+  const pathname = usePathname();
 
   const setupScrollToTarget = useCallback(() => {
     const scrollToTargetElements = document.querySelectorAll<HTMLElement>('.scroll-to-target');
@@ -64,7 +66,7 @@ export default function TemplateScripts() {
       once: true,
       disable: 'mobile',
     });
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     setupScrollToTarget();
