@@ -191,15 +191,15 @@ export const getAllVideoTypes = async (): Promise<{ videoTypes: VideoType[], pag
   }
 };
 // Get video type by slug
-export const getVideoTypeBySlug = async (slug: string): Promise<VideoType> => {
+export const getVideoTypeBySlug = async (slug: string): Promise<VideoType | null> => {
   try {
     const response = await api.get(
       `api/video-types?filters[nameSlug]=${slug}&populate=*`
     );
-    if (response.data.data.length > 0) {
+    if (response.data.data && response.data.data.length > 0) {
       return response.data.data[0] as VideoType;
     }
-    throw new Error("Video type not found.");
+    return null; // Return null if no video type is found
   } catch (error) {
     console.error("Error fetching video type:", error);
     throw new Error("Server error");

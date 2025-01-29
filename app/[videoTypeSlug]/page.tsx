@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation'
 import BannerPage from '../../components/sections/BannerPage';
 import ContentsArea from '../../components/sections/ContentsArea';
 import { getAllVideoTypes, getVideoTypeBySlug } from "@/lib/api";
-import { VideoType } from "@/types/videos";
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 60 seconds.
@@ -31,7 +30,7 @@ export default async function VideoTypePage({
   params: Promise<{ videoTypeSlug: string }>
 }) {
   const videoTypeSlug = (await params).videoTypeSlug
-  const videoType: VideoType = await getVideoTypeBySlug(videoTypeSlug);
+  const videoType = await getVideoTypeBySlug(videoTypeSlug);
   
   if (!videoType) {
     notFound();
