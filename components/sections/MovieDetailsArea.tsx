@@ -32,7 +32,8 @@ export default function MovieDetailsArea({ video }: Props) {
   const label = getLabel(video);
 
   return (
-    <section className="movie-details-area" style={{ backgroundImage: 'url(/assets/img/bg/movie_details_bg.jpg)' }}>
+    <section className="movie-details-area">
+      <Image src="/assets/img/bg/movie_details_bg.jpg" alt="Movie Details Background" fill style={{ objectFit: 'cover' }} />
       <div className="container">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb" style={{ backgroundColor: 'transparent' }}>

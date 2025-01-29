@@ -54,7 +54,8 @@ export default function TopRatedMovie() {
   }
 
   return (
-    <section className="top-rated-movie tr-movie-bg" style={{ backgroundImage: 'url(/assets/img/bg/tr_movies_bg.jpg)' }}>
+    <section className="top-rated-movie tr-movie-bg">
+      <Image src="/assets/img/bg/tr_movies_bg.jpg" alt="top rated movie" fill={true} style={{ objectFit: 'cover' }} />
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-8">

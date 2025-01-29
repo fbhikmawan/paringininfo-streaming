@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 // Template Scripts
 import Fade from '../scripts/Fade';
@@ -50,8 +51,11 @@ export default function UpComing() {
   }
 
   return (
-    <section className="ucm-area ucm-bg" style={{ backgroundImage: 'url(/assets/img/bg/ucm_bg.jpg)' }}>
-      <div className="ucm-bg-shape" style={{ backgroundImage: 'url(/assets/img/bg/ucm_bg_shape.png)' }}></div>
+    <section className="ucm-area ucm-bg">
+      <Image src="/assets/img/bg/ucm_bg.jpg" alt="ucm" fill={true} style={{ objectFit: 'cover' }} />
+      <div className="ucm-bg-shape">
+        <Image src="/assets/img/bg/ucm_bg_shape.png" alt="ucm" fill={true} style={{ objectFit: 'cover' }} />
+      </div>
       <div className="container">
         <div className="row align-items-end mb-55">
           <div className="col-lg-6">

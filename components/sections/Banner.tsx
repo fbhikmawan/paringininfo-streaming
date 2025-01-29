@@ -1,8 +1,10 @@
-import Link from 'next/link'
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Banner() {
   return (
-    <section className="banner-area banner-bg" style={{ backgroundImage: 'url(/assets/img/banner/banner_bg01.jpg)' }}>
+    <section className="banner-area banner-bg">
+      <Image src="/assets/img/banner/banner_bg01.jpg" alt="banner" fill style={{ objectFit: 'cover' }} />
       <div className="container custom-container">
         <div className="row">
           <div className="col-xl-6 col-lg-8">

@@ -931,6 +931,7 @@ label {
 
 /* 5. Breadcrumb */
 .breadcrumb-bg {
+    position: relative;
     padding: 270px 0 240px;
     background-position: center;
     background-size: cover;
@@ -948,6 +949,7 @@ label {
     background: -webkit-linear-gradient(to right, #04081a, transparent);
     background: linear-gradient(to right, #04081a, transparent);
     opacity: .66;
+    z-index: 1;
 }
 .breadcrumb-bg::after {
     content: "";
@@ -960,6 +962,11 @@ label {
     background: -webkit-linear-gradient(to bottom, #000000, transparent);
     background: linear-gradient(to bottom, #000000, transparent);
     opacity: .66;
+    z-index: 2;
+}
+.breadcrumb-area .container {
+    position: relative;
+    z-index: 3;
 }
 .breadcrumb-content {
     text-align: center;
@@ -996,9 +1003,11 @@ label {
 
 /* 6. Banner */
 .banner-bg {
+    position: relative;
     padding: 295px 0 273px;
     background-position: center;
     background-size: cover;
+    z-index: 1;
 }
 .banner-content .sub-title {
 	font-size: 26px;
@@ -1073,6 +1082,10 @@ label {
     max-width: 100%;
     margin-right: -15px;
 }
+.banner-area .container {
+    position: relative;
+    z-index: 2;
+}
 
 /* 7. Up-coming */
 .ucm-bg {
@@ -1090,7 +1103,8 @@ label {
     width: 100%;
     height: 100%;
     background: #100e17;
-    opacity: .95;
+    opacity: 0.9;
+    z-index: 1;
 }
 .ucm-bg-shape {
     position: absolute;
@@ -1100,6 +1114,10 @@ label {
     height: 100%;
     background-position: center;
     background-size: cover;
+}
+.ucm-area .container {
+    position: relative;
+    z-index: 5;
 }
 .section-title .sub-title {
     display: block;
@@ -1152,6 +1170,10 @@ label {
 .movie-item {
     height: 572px;
 }
+.movie-bg {
+    position: relative;
+    z-index: 1;
+}
 .movie-bg .tr-movie-menu-active {
     display: flex;
     align-items: center;
@@ -1170,6 +1192,10 @@ label {
 }
 .movie-bg .tr-movie-menu-active button.active {
     text-shadow: none;
+}
+.movie-area .container {
+    position: relative;
+    z-index: 2;
 }
 .movie-page-meta {
     display: flex;
@@ -1522,6 +1548,7 @@ label {
 
 /* 9. Top-movies */
 .tr-movie-bg {
+    position: relative;
     background-position: top center;
     background-size: cover;
     padding: 120px 0 60px;
@@ -1530,6 +1557,10 @@ label {
     background-position: top center;
     background-size: cover;
     padding: 120px 0 120px;
+}
+.top-rated-movie .container {
+    position: relative;
+    z-index: 2;
 }
 .tr-movie-menu-active {
     display: flex;
@@ -1772,6 +1803,7 @@ label {
 
 /* 12. Live-show */
 .live-bg {
+    position: relative;
     background-position: left center;
     background-size: cover;
     padding: 120px 0 120px;
@@ -1781,6 +1813,10 @@ label {
 }
 .live-bg .title-style-two .title {
 	color: #1e1b29;
+}
+.live-area .container {
+    position: relative;
+    z-index: 2;
 }
 .live-movie-img {
     margin-left: 70px;
@@ -1842,9 +1878,15 @@ label {
 
 /* 13. Movie-details */
 .movie-details-area {
+    position: relative;
     background-position: top center;
     background-size: cover;
     padding: 175px 0 120px;
+    z-index: 1;
+}
+.movie-details-area .container {
+    position: relative;
+    z-index: 2;
 }
 .movie-details-img {
     position: relative;
@@ -1962,9 +2004,15 @@ label {
     border-radius: 6px;
 }
 .episode-bg {
+    position: relative;
     background-position: top center;
     background-size: cover;
     padding: 120px 0 115px;
+    z-index: 1;
+}
+.episode-area .container {
+    position: relative;
+    z-index: 2;
 }
 .episode-top-wrap {
     display: flex;

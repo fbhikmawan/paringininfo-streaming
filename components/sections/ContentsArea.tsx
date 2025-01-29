@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, Suspense } from "react";
+import Image from 'next/image';
 import { VideoType } from "@/types/videos";
 import CategoryButtons from "@/components/elements/CategoryButtons";
 import VideoList from "@/components/elements/VideoList";
@@ -13,7 +14,8 @@ export default function ContentsArea({ videoType }: Props) {
   const [filter, setFilter] = useState<string>('*');
 
   return (
-    <section className="movie-area movie-bg" style={{ backgroundImage: 'url(/assets/img/bg/movie_bg.jpg)' }}>
+    <section className="movie-area movie-bg">
+      <Image src="/assets/img/bg/movie_bg.jpg" alt="movie" fill style={{ objectFit: 'cover' }} />
       <div className="container">
         <div className="row align-items-end mb-60">
           <div className="col-lg-6">

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { VideoType } from "@/types/videos";
 
 interface BannerPageProps {
@@ -9,7 +10,8 @@ export default function BannerPage({
   videoType,
 }: BannerPageProps) {
   return (
-    <section className="breadcrumb-area breadcrumb-bg" style={{ backgroundImage: `url("/assets/img/bg/breadcrumb_bg.jpg")` }}>
+    <section className="breadcrumb-area breadcrumb-bg">
+      <Image src="/assets/img/bg/breadcrumb_bg.jpg" alt="breadcrumb" fill style={{ objectFit: 'cover' }} />
       <div className="container">
         <div className="row">
           <div className="col-12">
