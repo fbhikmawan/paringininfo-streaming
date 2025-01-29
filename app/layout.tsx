@@ -1,5 +1,5 @@
+import { Poppins } from 'next/font/google'
 import type { Metadata } from "next";
-
 import { Toaster } from "react-hot-toast";
 
 // Template Sections
@@ -12,6 +12,13 @@ import Preloader from '../components/elements/Preloader';
 
 // Template Scripts
 import TemplateScripts from './TemplateScripts';
+
+const poppins = Poppins({
+  weight: ['400', '500', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  subsets: ['latin', 'latin-ext']
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const metadataBase = process.env.NEXT_PUBLIC_METADATA_BASE_URL || 'http://localhost:3000';
@@ -39,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={poppins.className}>
       <body>
         <Preloader />
         <ButtonScrollToTop />
