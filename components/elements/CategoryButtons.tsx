@@ -1,6 +1,6 @@
-import { useAllCategoriesByVideoType } from "@/lib/api";
-import { VideoType } from "@/types/videos";
-import Loader from "./Loader";
+import { useEffect, useState } from "react";
+import { getAllCategoriesByVideoType } from "@/lib/api";
+import { VideoCategory, VideoType } from "@/types/videos";
 
 interface CategoryButtonsProps {
   videoType: VideoType;
@@ -9,8 +9,20 @@ interface CategoryButtonsProps {
 }
 
 export default function CategoryButtons({ videoType, filter, onFilterChange }: CategoryButtonsProps) {
-  const { categories, isLoading } = useAllCategoriesByVideoType(videoType);
-  if (isLoading) return <Loader />
+  const [categories, setCategories] = useState<VideoCategory[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { categories } = await getAllCategoriesByVideoType(videoType);
+        setCategories(categories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, [videoType]);
 
   return (
     <div className="tr-movie-menu-active text-center">
