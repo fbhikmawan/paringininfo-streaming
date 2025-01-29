@@ -1,41 +1,32 @@
-import { useEffect, useState, useCallback } from "react";
-import { getAllVideoByTypeAndCategory } from "@/lib/api";
-import { PopulatedVideo, VideoType } from "@/types/videos";
-import { PaginationMeta } from "@/types/bases";
+'use client';
+
+import { useState } from 'react';
+import { useAllVideoByTypeAndCategory } from "@/lib/api";
+import { VideoType } from "@/types/videos";
 import Pagination from "@/components/elements/Pagination";
 import VideoItem from "@/components/elements/VideoItem";
+import Loader from "@/components/elements/Loader";
 
 interface VideoListProps {
   videoType: VideoType;
   filter: string;
-  onPaginationChange: (pagination: PaginationMeta) => void;
 }
 
-export default function VideoList({ videoType, filter, onPaginationChange }: VideoListProps) {
-  const [filteredVideos, setFilteredVideos] = useState<PopulatedVideo[]>([]);
-  const [pagination, setPagination] = useState<PaginationMeta>();
+export default function VideoList({ videoType, filter }: VideoListProps) {
+  const [page, setPage] = useState(1);
+  const { videos, pagination , isLoading } = useAllVideoByTypeAndCategory(page, videoType, filter);
+  if (isLoading) return <Loader />;
 
-  const fetchVideos = useCallback(async (filter: string, page: number) => {
-    try {
-      const { videos, pagination } = await getAllVideoByTypeAndCategory(page, videoType, filter);
-      setFilteredVideos(videos);
-      setPagination(pagination);
-      onPaginationChange(pagination);
-    } catch (error) {
-      console.error("Error fetching videos:", error);
-    }
-  }, [videoType, onPaginationChange]);
-
-  useEffect(() => {
-    fetchVideos(filter, 1);
-  }, [fetchVideos, filter]);
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
   return (
     <div className="row tr-movie-active">
-      {filteredVideos.map((video) => (
+      {videos.map((video) => (
         <VideoItem key={video.nameSlug} video={video} />
       ))}
-      {filteredVideos.length === 0 && (
+      {videos.length === 0 && (
         <div className="col-12">
           <h5>Stay tuned! More exciting content is on the way.</h5>
         </div>
@@ -43,7 +34,7 @@ export default function VideoList({ videoType, filter, onPaginationChange }: Vid
       {pagination && (
         <Pagination
           meta={pagination}
-          onPageChange={(page: number) => fetchVideos(filter, page)}
+          onPageChange={handlePageChange}
         />
       )}
     </div>

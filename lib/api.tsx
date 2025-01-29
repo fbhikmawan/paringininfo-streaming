@@ -1,6 +1,7 @@
 import { PaginationMeta } from "@/types/bases";
-import { PopulatedVideo, VideoType } from "@/types/videos";
+import { PopulatedVideo, VideoCategory, VideoType } from "@/types/videos";
 import axios, { AxiosInstance } from "axios";
+import useSWR from 'swr'
 
 export interface VideoFilters {
   [key: string]: string | number | boolean | { [subKey: string]: string | number | boolean };
@@ -13,9 +14,13 @@ export const api: AxiosInstance = axios.create({
   },
 });
 
+// fether for SWR
+const fetcher = (url: string) => api.get(url).then(res => res.data)
+
 // ***
 // APIs for Videos
 // ***
+// Get all videos
 export const getAllVideo = async (
   page: number = 1,
 ): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
@@ -33,6 +38,20 @@ export const getAllVideo = async (
     throw new Error("Server error"); // Error handling
   }
 };
+// Get all videos using SWR
+export function useAllVideo (page: number = 1): { videos: PopulatedVideo[], pagination: PaginationMeta, isLoading: boolean, isError: Error }{
+  const { data, error, isLoading } = useSWR(`api/videos?pagination[page]=${page}&pagination[pageSize]=${process.env.NEXT_PUBLIC_PAGE_LIMIT}&populate=*`, fetcher)
+  
+  const videos: PopulatedVideo[] = data?.data || [];
+  const pagination: PaginationMeta = data?.meta?.pagination || null;
+
+  return {
+    videos,
+    pagination,
+    isLoading,
+    isError: error,
+  }
+}
 // Get videos by slug
 export const getVideoBySlug = async (slug: string): Promise<{ video: PopulatedVideo }> => {
   try {
@@ -106,6 +125,25 @@ export const getAllVideoByTypeAndCategory = async (
     throw new Error("Server error"); // Error handling
   }
 };
+// Get videos by videoType and videoCategory
+export function useAllVideoByTypeAndCategory (
+  page: number = 1,
+  videoType: VideoType,
+  videoCategorySlug: string,
+): { videos: PopulatedVideo[], pagination: PaginationMeta, isLoading: boolean, isError: Error } {
+  const { data, error, isLoading } = useSWR(`api/videos?pagination[page]=${page}&pagination[pageSize]=${process.env.NEXT_PUBLIC_PAGE_LIMIT}&filters[video_type][nameSlug][$eq]=${videoType.nameSlug}${videoCategorySlug !== '*' ? `&filters[video_categories][nameSlug][$eq]=${videoCategorySlug}` : ''
+    }&populate=*`, fetcher);
+
+  const videos: PopulatedVideo[] = data?.data || [];
+  const pagination: PaginationMeta = data?.meta?.pagination || null;
+
+  return {
+    videos,
+    pagination,
+    isLoading,
+    isError: error,
+  };
+};
 // Get videos by nullness of videoUrl
 export const getAllVideoByVideoUrlNull = async (): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
   try {
@@ -173,6 +211,20 @@ export const getAllCategoriesByVideoType = async (
     throw new Error("Server error"); // Error handling
   }
 };
+// Get categories by videoType by SWR
+export function useAllCategoriesByVideoType(videoType: VideoType): { categories: VideoCategory[], pagination: PaginationMeta, isLoading: boolean, isError: Error } {
+  const { data, error, isLoading } = useSWR(`api/video-categories?filters[video_types][nameSlug][$eq]=${videoType.nameSlug}&populate=*`, fetcher);
+
+  const categories: VideoCategory[] = data?.data || [];
+  const pagination: PaginationMeta = data?.meta?.pagination || null;
+
+  return {
+    categories,
+    pagination,
+    isLoading,
+    isError: error,
+  };
+}
 
 // ***
 // APIs for Video Types

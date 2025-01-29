@@ -35,8 +35,7 @@ export default function ContentsArea({ videoType }: Props) {
         <Suspense fallback={<div>Loading...</div>}>
           <VideoList 
             videoType={videoType} 
-            filter={filter} 
-            onPaginationChange={() => {}} 
+            filter={filter}
           />
         </Suspense>
       </div>
