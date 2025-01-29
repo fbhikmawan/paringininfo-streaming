@@ -214,11 +214,13 @@ label {
 .banner-content .sub-title,
 .banner-content .title > span,
 .banner-meta ul li.release-time > span > i,
+.banner-meta ul li.release-time > span > svg,
 .banner-meta ul li.category > a:hover,
 .section-title .sub-title,
 .movie-content .top .date,
 .movie-content .bottom ul li .quality,
 .movie-content .bottom ul li > span i,
+.movie-content .bottom ul li > span svg,
 .movie-content .top .title a:hover,
 .ucm-active .owl-nav button:hover,
 .ucm-active-two .owl-nav button:hover,
@@ -272,7 +274,8 @@ label {
     white-space: nowrap;
     max-width: 200px;
 }
-.btn > i {
+.btn > i,
+.btn > svg {
     margin-right: 7px;
 }
 .btn.disabled {
@@ -1064,7 +1067,8 @@ label {
 .banner-meta ul li.release-time > span + span {
 	margin-left: 15px;
 }
-.banner-meta ul li.release-time > span > i {
+.banner-meta ul li.release-time > span > i,
+.banner-meta ul li.release-time > span > svg {
 	font-size: 12px;
 	margin-right: 5px;
 }

@@ -11,7 +11,6 @@ import 'aos/dist/aos.css';
 import "../assets/css/bootstrap.min.css";
 import "../assets/css/animate.min.css";
 import "../assets/css/magnific-popup.css";
-import "../assets/css/fontawesome-all.min.css";
 import "../assets/css/flaticon.css";
 import "../assets/css/default.css";
 import "../assets/css/style.css";

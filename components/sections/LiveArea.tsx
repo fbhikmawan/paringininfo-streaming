@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+
 import imgLive from '../../assets/img/images/live_img.png'
 
 interface OdometerProps {
@@ -91,7 +94,7 @@ export default function LiveArea() {
                   <p>Active Customer</p>
                 </div>
               </div>
-              <Link href="/movies" className="btn"><i className="fas fa-play"></i> Watch Now</Link>
+              <Link href="/movies" className="btn"><FontAwesomeIcon icon={faPlay} /> Watch Now</Link>
             </div>
           </div>
           <div className="col-xl-7 col-lg-6">

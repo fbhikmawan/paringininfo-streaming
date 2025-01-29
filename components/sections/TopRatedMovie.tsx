@@ -3,6 +3,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { PopulatedVideo, VideoType } from '@/types/videos';
 import { getAllVideo } from '@/lib/api';
 
@@ -100,8 +103,8 @@ export default function TopRatedMovie() {
                   <ul>
                     <li><span className={`quality ${video.video_quality?.nameSlug}`}>{video.video_quality?.name.toUpperCase()}</span></li>
                     <li>
-                      <span className="duration"><i className="far fa-clock"></i> {video.duration} min</span>
-                      <span className="rating"><i className="fas fa-thumbs-up"></i> {video.averageRating}</span>
+                      <span className="duration"><FontAwesomeIcon icon={faClock} /> {video.duration} min</span>
+                      <span className="rating"><FontAwesomeIcon icon={faThumbsUp} /> {video.averageRating}</span>
                     </li>
                   </ul>
                 </div>

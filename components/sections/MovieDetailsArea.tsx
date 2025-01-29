@@ -3,6 +3,10 @@ import Link from 'next/link';
 
 import VideoPlayerModal from '@/components/modals/VideoPlayerModal';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarAlt, faClock } from '@fortawesome/free-regular-svg-icons';
+import { faPlay, faShareAlt } from '@fortawesome/free-solid-svg-icons';
+
 import { PopulatedVideo } from '@/types/videos';
 
 import imgDownload from '@/assets/fonts/download.svg'
@@ -77,8 +81,8 @@ export default function MovieDetailsArea({ video }: Props) {
                     ))}
                   </li>
                   <li className="release-time">
-                    <span><i className="far fa-calendar-alt"></i> { video.releaseYear }</span>
-                    <span><i className="far fa-clock"></i> { video.duration } minutes</span>
+                    <span><FontAwesomeIcon icon={faCalendarAlt} /> { video.releaseYear }</span>
+                    <span><FontAwesomeIcon icon={faClock} /> { video.duration } minutes</span>
                   </li>
                 </ul>
               </div>
@@ -91,7 +95,7 @@ export default function MovieDetailsArea({ video }: Props) {
               ))}
               <div className="movie-details-prime">
                 <ul>
-                  <li className="share"><Link href="#"><i className="fas fa-share-alt"></i> Share</Link></li>
+                  <li className="share"><Link href="#"><FontAwesomeIcon icon={faShareAlt} /> Share</Link></li>
                   <li className="streaming">
                     <h6>Prime Video</h6>
                     <span>Streaming Channels</span>
@@ -108,7 +112,7 @@ export default function MovieDetailsArea({ video }: Props) {
                           data-toggle="modal"
                           data-target="#trailerModal"
                         >
-                          <i className="fas fa-play"></i> Watch Trailer
+                          <FontAwesomeIcon icon={faPlay} /> Watch Trailer
                         </a>
                       </VideoPlayerModal>
                     ) : (
@@ -125,13 +129,13 @@ export default function MovieDetailsArea({ video }: Props) {
                           data-toggle="modal"
                           data-target="#videoModal"
                         >
-                          <i className="fas fa-play"></i> Watch Now
+                          <FontAwesomeIcon icon={faPlay} /> Watch Now
                         </a>
                       </VideoPlayerModal>
                     ) : (
                       <>
                         <a className="btn disabled" href='#'>
-                          <i className="fas fa-play"></i> Available Soon
+                          <FontAwesomeIcon icon={faPlay} /> Available Soon
                         </a>
                       </>
                     )}

@@ -4,6 +4,9 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
+
 // Template Elements
 import ImageLogo from '../elements/ImageLogo';
 
@@ -81,7 +84,7 @@ export default function Header() {
         <div className="container custom-container">
           <div className="row">
             <div className="col-12">
-              <div className="mobile-nav-toggler"><i className="fas fa-bars"></i></div>
+              <div className="mobile-nav-toggler"><FontAwesomeIcon icon={faBars} /></div>
               <div className="menu-wrap">
                 <nav className="menu-nav show">
                   <div className="logo">
@@ -107,7 +110,7 @@ export default function Header() {
 
               {/* Mobile Menu */}
               <div ref={mobileMenuRef} className="mobile-menu">
-                <div className="close-btn"><i className="fas fa-times"></i></div>
+                <div className="close-btn"><FontAwesomeIcon icon={faTimes} /></div>
 
                 <nav className="menu-box">
                   <div className="nav-logo">
@@ -136,7 +139,7 @@ export default function Header() {
                   <div className="modal-content">
                     <form>
                       <input type="text" placeholder="Search here..." />
-                      <button><i className="fas fa-search"></i></button>
+                      <button><FontAwesomeIcon icon={faSearch} /></button>
                     </form>
                   </div>
                 </div>

@@ -13,6 +13,11 @@ import Preloader from '../components/elements/Preloader';
 // Template Scripts
 import TemplateScripts from './TemplateScripts';
 
+// FontAwesome
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
+
 const poppins = Poppins({
   weight: ['400', '500', '600', '700', '800', '900'],
   style: ['normal', 'italic'],

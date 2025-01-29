@@ -1,6 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faClock } from '@fortawesome/free-regular-svg-icons';
+
 import imgEpisode from '../../assets/img/images/episode_img.jpg'
 
 export default function EpisodeArea() {
@@ -17,7 +21,7 @@ export default function EpisodeArea() {
                   <h2 className="title">Watch Full Episode</h2>
                 </div>
                 <div className="total-views-count">
-                  <p>2.7 million <i className="far fa-eye"></i></p>
+                  <p>2.7 million <FontAwesomeIcon icon={faEye} /></p>
                 </div>
               </div>
               <div className="episode-watch-wrap">
@@ -32,11 +36,11 @@ export default function EpisodeArea() {
                     <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                       <div className="card-body">
                         <ul>
-                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><i className="fas fa-play"></i> Episode 1 - The World Is Purple</Link> <span className="duration"><i className="far fa-clock"></i> 28 Min</span></li>
-                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><i className="fas fa-play"></i> Episode 2 - Meaner Than Evil</Link> <span className="duration"><i className="far fa-clock"></i> 28 Min</span></li>
-                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><i className="fas fa-play"></i> Episode 3 - I Killed a Man Today</Link> <span className="duration"><i className="far fa-clock"></i> 28 Min</span></li>
-                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><i className="fas fa-play"></i> Episode 4 - Cowboys and Dreamers</Link> <span className="duration"><i className="far fa-clock"></i> 28 Min</span></li>
-                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><i className="fas fa-play"></i> Episode 5 - Freight Trains and Monsters</Link> <span className="duration"><i className="far fa-clock"></i> 28 Min</span></li>
+                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><FontAwesomeIcon icon={faPlay} /> Episode 1 - The World Is Purple</Link> <span className="duration"><FontAwesomeIcon icon={faClock} /> 28 Min</span></li>
+                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><FontAwesomeIcon icon={faPlay} /> Episode 2 - Meaner Than Evil</Link> <span className="duration"><FontAwesomeIcon icon={faClock} /> 28 Min</span></li>
+                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><FontAwesomeIcon icon={faPlay} /> Episode 3 - I Killed a Man Today</Link> <span className="duration"><FontAwesomeIcon icon={faClock} /> 28 Min</span></li>
+                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><FontAwesomeIcon icon={faPlay} /> Episode 4 - Cowboys and Dreamers</Link> <span className="duration"><FontAwesomeIcon icon={faClock} /> 28 Min</span></li>
+                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><FontAwesomeIcon icon={faPlay} /> Episode 5 - Freight Trains and Monsters</Link> <span className="duration"><FontAwesomeIcon icon={faClock} /> 28 Min</span></li>
                         </ul>
                       </div>
                     </div>
@@ -51,14 +55,14 @@ export default function EpisodeArea() {
                     <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                       <div className="card-body">
                         <ul>
-                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><i className="fas fa-play"></i> Episode 1 - The World Is Purple</Link> <span className="duration"><i className="far fa-clock"></i> 28 Min</span>
+                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><FontAwesomeIcon icon={faPlay} /> Episode 1 - The World Is Purple</Link> <span className="duration"><FontAwesomeIcon icon={faClock} /> 28 Min</span>
                           </li>
-                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><i className="fas fa-play"></i> Episode 2 - Meaner Than Evil</Link> <span className="duration"><i className="far fa-clock"></i> 28 Min</span></li>
-                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><i className="fas fa-play"></i> Episode 3 - I Killed a Man Today</Link> <span className="duration"><i className="far fa-clock"></i> 28 Min</span>
+                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><FontAwesomeIcon icon={faPlay} /> Episode 2 - Meaner Than Evil</Link> <span className="duration"><FontAwesomeIcon icon={faClock} /> 28 Min</span></li>
+                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><FontAwesomeIcon icon={faPlay} /> Episode 3 - I Killed a Man Today</Link> <span className="duration"><FontAwesomeIcon icon={faClock} /> 28 Min</span>
                           </li>
-                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><i className="fas fa-play"></i> Episode 4 - Cowboys and Dreamers</Link> <span className="duration"><i className="far fa-clock"></i> 28 Min</span>
+                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><FontAwesomeIcon icon={faPlay} /> Episode 4 - Cowboys and Dreamers</Link> <span className="duration"><FontAwesomeIcon icon={faClock} /> 28 Min</span>
                           </li>
-                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><i className="fas fa-play"></i> Episode 5 - Freight Trains and Monsters</Link> <span className="duration"><i className="far fa-clock"></i> 28 Min</span></li>
+                          <li><Link href="https://www.youtube.com/watch?v=R2gbPxeNk2E" className="popup-video"><FontAwesomeIcon icon={faPlay} /> Episode 5 - Freight Trains and Monsters</Link> <span className="duration"><FontAwesomeIcon icon={faClock} /> 28 Min</span></li>
                         </ul>
                       </div>
                     </div>

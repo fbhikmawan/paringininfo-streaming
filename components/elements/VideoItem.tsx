@@ -2,6 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PopulatedVideo } from "@/types/videos";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
+
 interface VideoItemProps {
   video: PopulatedVideo;
 }
@@ -37,8 +41,8 @@ export default function VideoItem({ video }: VideoItemProps) {
             <ul>
               <li><span className={`quality ${video.video_quality?.name.toLowerCase()}`}>{video.video_quality?.name.toUpperCase()}</span></li>
               <li>
-                <span className="duration"><i className="far fa-clock"></i> {video.duration} min</span>
-                <span className="rating"><i className="fas fa-thumbs-up"></i> {(video.video_ratings[0]?.score || 0).toFixed(1)}</span>
+                <span className="duration"><FontAwesomeIcon icon={faClock} /> {video.duration} min</span>
+                <span className="rating"><FontAwesomeIcon icon={faThumbsUp} /> {(video.video_ratings[0]?.score || 0).toFixed(1)}</span>
               </li>
             </ul>
           </div>
