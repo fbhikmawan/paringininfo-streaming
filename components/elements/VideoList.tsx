@@ -31,21 +31,23 @@ export default function VideoList({ videoType, filter, onPaginationChange }: Vid
   }, [fetchVideos, filter]);
 
   return (
-    <div className="row tr-movie-active">
-      {filteredVideos.map((video) => (
-        <VideoItem key={video.nameSlug} video={video} />
-      ))}
-      {filteredVideos.length === 0 && (
-        <div className="col-12">
-          <h5>Stay tuned! More exciting content is on the way.</h5>
-        </div>
-      )}
+    <>
+      <div className="row tr-movie-active">
+        {filteredVideos.map((video) => (
+          <VideoItem key={video.nameSlug} video={video} />
+        ))}
+        {filteredVideos.length === 0 && (
+          <div className="col-12">
+            <h5>Stay tuned! More exciting content is on the way.</h5>
+          </div>
+        )}
+      </div>
       {pagination && (
         <Pagination
           meta={pagination}
           onPageChange={(page: number) => fetchVideos(filter, page)}
         />
       )}
-    </div>
+    </>
   );
 }
