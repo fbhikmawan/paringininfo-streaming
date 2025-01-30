@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faFacebookSquare, faTwitter, faPinterestP, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
 // Template Elements
 import ImageLogo from '../elements/ImageLogo';
@@ -121,11 +122,11 @@ export default function Header() {
                   </div>
                   <div className="social-links">
                     <ul className="clearfix">
-                      <li><Link href="#"><span className="fab fa-twitter"></span></Link></li>
-                      <li><Link href="#"><span className="fab fa-facebook-square"></span></Link></li>
-                      <li><Link href="#"><span className="fab fa-pinterest-p"></span></Link></li>
-                      <li><Link href="#"><span className="fab fa-instagram"></span></Link></li>
-                      <li><Link href="#"><span className="fab fa-youtube"></span></Link></li>
+                      <li><Link href="#"><span><FontAwesomeIcon icon={faTwitter} /></span></Link></li>
+                      <li><Link href="#"><span><FontAwesomeIcon icon={faFacebookSquare} /></span></Link></li>
+                      <li><Link href="#"><span><FontAwesomeIcon icon={faPinterestP} /></span></Link></li>
+                      <li><Link href="#"><span><FontAwesomeIcon icon={faInstagram} /></span></Link></li>
+                      <li><Link href="#"><span><FontAwesomeIcon icon={faYoutube} /></span></Link></li>
                     </ul>
                   </div>
                 </nav>

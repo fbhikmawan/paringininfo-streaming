@@ -6,6 +6,9 @@ import { usePathname } from 'next/navigation';
 // Template Elements
 import ImageLogo from '../elements/ImageLogo';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF, faTwitter, faPinterestP, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+
 export default function Footer() {
   const pathname = usePathname();
 
@@ -56,10 +59,10 @@ export default function Footer() {
               <div className="col-md-5">
                 <div className="footer-social">
                   <ul>
-                    <li><Link href="#" target="_blank"><i className="fab fa-facebook-f"></i></Link></li>
-                    <li><Link href="#" target="_blank"><i className="fab fa-twitter"></i></Link></li>
-                    <li><Link href="#" target="_blank"><i className="fab fa-pinterest-p"></i></Link></li>
-                    <li><Link href="#" target="_blank"><i className="fab fa-linkedin-in"></i></Link></li>
+                    <li><Link href="#" target="_blank"><FontAwesomeIcon icon={faFacebookF} /></Link></li>
+                    <li><Link href="#" target="_blank"><FontAwesomeIcon icon={faTwitter} /></Link></li>
+                    <li><Link href="#" target="_blank"><FontAwesomeIcon icon={faPinterestP} /></Link></li>
+                    <li><Link href="#" target="_blank"><FontAwesomeIcon icon={faLinkedinIn} /></Link></li>
                   </ul>
                 </div>
               </div>
