@@ -37,8 +37,9 @@ const PublishingTable = () => {
       const response = await axios.get(`/asaid-strapi-plugin/video-sources?start=${start}`);
       // Check if response.data is an array
       if (Array.isArray(response.data.videoSources)) {
+        console.log(response.data.videoSources);
         setVideoSources(response.data.videoSources);
-        setPageCount(Math.ceil(response.data.totalPosts / postsPerPage));
+        setPageCount(Math.ceil(response.data.totalVideoSources / postsPerPage));
       } else {
         console.error("Unexpected response data:", response.data.videoSources);
       }
@@ -155,7 +156,7 @@ const PublishingTable = () => {
           </Typography>
         </Flex>
       ) : null}
-      {videoSources.length > 0 ? (
+      {videoSources.length > 0 && pageCount > 1 ? (
         <Pagination activePage={currentPage} pageCount={pageCount}>
           <PreviousLink onClick={(e: FormEvent) => handlePageChange(e, currentPage - 1)}>
             Go to previous page
