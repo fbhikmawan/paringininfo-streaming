@@ -11,12 +11,14 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
    * Upload Media to Strapi Media Library
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async uploadMedia(file: any, videoSourceId: any, attribute: any) {
+  async uploadMedia(file: any, videoSource: any, attribute: any) {
+    const videoSourceData = JSON.parse(videoSource);
+
     try {
       // Save the file to the Strapi Media Library
       const uploadedFiles = await strapi.plugin('upload').service('upload').upload({
         data: {
-          refId: videoSourceId,
+          refId: videoSourceData.documentId,
           ref: 'plugin::asaid-strapi-plugin.video-source',
           field: attribute,
         },
@@ -29,7 +31,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
 
       // Update the video source with the new file path
       const updatedVideoSource = await strapi.query('plugin::asaid-strapi-plugin.video-source').update({
-        where: { id: videoSourceId },
+        where: { documentId: videoSourceData.documentId },
         data: {
           [attribute]: uploadedFiles[0].url,
         },
@@ -105,9 +107,9 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
   },
 
   /**
-   * DELETE Post
+   * DELETE Video Source
    */
-  async deletePost(query: { videoSourceDocumentId: string }) {
+  async deleteVideoSource(query: { videoSourceDocumentId: string }) {
     try {
       // get videoSourceDocumentId from query
       const { videoSourceDocumentId } = query;

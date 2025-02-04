@@ -33,11 +33,11 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
   async uploadMedia(ctx: any) {
     try {
       const { file } = ctx.request.files;
-      const { videoSourceDocumentId, attribute } = ctx.request.body;
+      const { videoSource, attribute } = ctx.request.body;
       const result = await strapi
         .plugin('asaid-strapi-plugin')
         .service('service')
-        .uploadMedia(file, videoSourceDocumentId, attribute);
+        .uploadMedia(file, videoSource, attribute);
       ctx.body = result;
     } catch (error) {
       ctx.throw(400, error.message);

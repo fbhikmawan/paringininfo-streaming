@@ -54,7 +54,7 @@ const PublishingTable = () => {
   };
   
   const handleDeletePost = async (id: string) => {
-    await axios.delete(`/content-publisher/delete-post?videoSourceDocumentId=${id}`, {});
+    await axios.delete(`/asaid-strapi-plugin/delete-video-source?videoSourceDocumentId=${id}`, {});
     handleFetchPosts(1);
   };
 
