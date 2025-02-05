@@ -1,6 +1,16 @@
 import type { Core } from '@strapi/strapi';
+import { Client } from 'minio';
+import * as fs from 'fs';
 
 const postPerPage = 5;
+
+const minioClient = new Client({
+  endPoint: process.env.MINIO_ENDPOINT,
+  port: parseInt(process.env.MINIO_PORT, 10),
+  useSSL: false,
+  accessKey: process.env.MINIO_ACCESS_KEY,
+  secretKey: process.env.MINIO_SECRET_KEY,
+});
 
 const service = ({ strapi }: { strapi: Core.Strapi }) => ({
   getWelcomeMessage() {
@@ -13,34 +23,46 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async uploadMedia(file: any, videoSource: any, attribute: any) {
     const videoSourceData = JSON.parse(videoSource);
+  const bucketName = process.env.MINIO_BUCKET_NAME;
+  const folderPath = `${videoSourceData.video.video_type.nameSlug}/${videoSourceData.video.nameSlug}/${attribute}`;
+  const fileName = file.originalFilename;
+  const filePath = `${folderPath}/${fileName}`;
 
-    try {
-      // Save the file to the Strapi Media Library
-      const uploadedFiles = await strapi.plugin('upload').service('upload').upload({
-        data: {
-          refId: videoSourceData.documentId,
-          ref: 'plugin::asaid-strapi-plugin.video-source',
-          field: attribute,
-        },
-        files: file,
-      });
+  try {
+    const fileStream = fs.createReadStream(file.filepath);
 
-      if (!uploadedFiles || uploadedFiles.length === 0) {
-        return { success: false, error: 'File upload failed' };
+    const uploadPromise = minioClient.putObject(bucketName, filePath, fileStream);
+    const fileUrl = `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${filePath}`;
+
+    const updatePromise = strapi.query('plugin::asaid-strapi-plugin.video-source').update({
+      where: { documentId: videoSourceData.documentId },
+      data: {
+        [attribute]: fileUrl,
+      },
+    });
+
+    const [, updatedVideoSource] = await Promise.all([uploadPromise, updatePromise]);
+
+    return { success: true, data: updatedVideoSource };
+  } catch (error) {
+    console.error('Error during upload or update:', error);
+
+    // Rollback logic
+    if (error.message.includes('putObject')) {
+      // If upload failed, no need to delete anything
+      return { success: false, error: 'File upload failed' };
+    } else if (error.message.includes('update')) {
+      // If update failed, delete the uploaded file
+      try {
+        await minioClient.removeObject(bucketName, filePath);
+      } catch (deleteError) {
+        console.error('Error deleting uploaded file:', deleteError);
       }
-
-      // Update the video source with the new file path
-      const updatedVideoSource = await strapi.query('plugin::asaid-strapi-plugin.video-source').update({
-        where: { documentId: videoSourceData.documentId },
-        data: {
-          [attribute]: uploadedFiles[0].url,
-        },
-      });
-
-      return { success: true, data: updatedVideoSource };
-    } catch (error) {
-      throw error;
+      return { success: false, error: 'Database update failed' };
     }
+
+    return { success: false, error: 'Unknown error occurred' };
+  }
   },
 
   /**
