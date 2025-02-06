@@ -1,6 +1,9 @@
 import type { Core } from '@strapi/strapi';
 import { Client } from 'minio';
 import * as fs from 'fs';
+import * as path from 'path';
+import ffmpeg from 'fluent-ffmpeg';
+import { v4 as uuidv4 } from 'uuid';
 
 const postPerPage = 5;
 
@@ -11,6 +14,12 @@ const minioClient = new Client({
   accessKey: process.env.MINIO_ACCESS_KEY,
   secretKey: process.env.MINIO_SECRET_KEY,
 });
+
+// Set paths for ffmpeg and ffprobe binaries
+const ffmpegPath = path.resolve(__dirname, '../../bin/ffmpeg');
+const ffprobePath = path.resolve(__dirname, '../../bin/ffprobe');
+ffmpeg.setFfmpegPath(ffmpegPath);
+ffmpeg.setFfprobePath(ffprobePath);
 
 const service = ({ strapi }: { strapi: Core.Strapi }) => ({
   getWelcomeMessage() {
@@ -24,45 +33,87 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
   async uploadMedia(file: any, videoSource: any, attribute: any) {
     const videoSourceData = JSON.parse(videoSource);
     const bucketName = process.env.MINIO_BUCKET_NAME;
-    const folderPath = `${videoSourceData.video.video_type.nameSlug}/${videoSourceData.video.nameSlug}/${attribute}`;
-    const fileName = file.originalFilename;
-    const filePath = `${folderPath}/${fileName}`;
+    const objectFolder = `${videoSourceData.video.video_type.nameSlug}/${videoSourceData.video.nameSlug}/${attribute}`;
+    const tempFolder = `/tmp/${uuidv4()}`;
+    const tempSourceFolder = `${tempFolder}/source`;
+    const sourceFileName = file.originalFilename;
+    const tempSourcePath = `${tempSourceFolder}/${sourceFileName}`;
 
     try {
-      const fileStream = fs.createReadStream(file.filepath);
+      // Ensure the temporary directory exists
+      await fs.promises.mkdir(tempFolder, { recursive: true });
+      await fs.promises.mkdir(tempSourceFolder, { recursive: true });
 
-      const uploadPromise = minioClient.putObject(bucketName, filePath, fileStream);
-      const fileUrl = `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${filePath}`;
+      // Move the source file to the temporary directory
+      await fs.promises.rename(file.filepath, tempSourcePath);
 
-      const updatePromise = strapi.query('plugin::asaid-strapi-plugin.video-source').update({
+      // Video processing
+      const processedFiles = await this.processVideo(tempSourcePath, tempFolder);
+
+      // Upload processed files to MinIO
+      const uploadPromises = processedFiles.map(({ path, name }) => {
+        const fileStream = fs.createReadStream(path);
+        return minioClient.putObject(bucketName, `${objectFolder}/${name}`, fileStream);
+      });
+
+      await Promise.all(uploadPromises);
+
+      const fileUrl = `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${objectFolder}/stream.m3u8`;
+
+      const updatedVideoSource = await strapi.query('plugin::asaid-strapi-plugin.video-source').update({
         where: { documentId: videoSourceData.documentId },
         data: {
           [attribute]: fileUrl,
         },
       });
 
-      const [, updatedVideoSource] = await Promise.all([uploadPromise, updatePromise]);
-
       return { success: true, data: updatedVideoSource };
     } catch (error) {
-      console.error('Error during upload or update:', error);
-
-      // Rollback logic
-      if (error.message.includes('putObject')) {
-        // If upload failed, no need to delete anything
-        return { success: false, error: 'File upload failed' };
-      } else if (error.message.includes('update')) {
-        // If update failed, delete the uploaded file
-        try {
-          await minioClient.removeObject(bucketName, filePath);
-        } catch (deleteError) {
-          console.error('Error deleting uploaded file:', deleteError);
-        }
-        return { success: false, error: 'Database update failed' };
-      }
-
-      return { success: false, error: 'Unknown error occurred' };
+      console.error('Error during process media, upload media or update collection type:', error);
+    } finally {
+      // Ensure the temporary folder is deleted
+      await fs.promises.rm(tempFolder, { recursive: true, force: true });
     }
+  },
+
+  /**
+   * Process Video using ffmpeg
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async processVideo(inputFilePath: string, outputFolder: string): Promise<{ path: string, name: string }[]> {
+    return new Promise((resolve, reject) => {
+      const outputFiles: { path: string, name: string }[] = [];
+
+      ffmpeg(inputFilePath)
+        .outputOptions([
+          '-c copy',
+          '-start_number 0',
+          '-hls_time 10',
+          '-hls_list_size 0',
+          '-f hls'
+        ])
+        .output(`${outputFolder}/stream.m3u8`)
+        .on('end', () => {
+          // Collect all generated files
+          fs.readdir(outputFolder, async (err, files) => {
+            if (err) {
+              return reject(err);
+            }
+            for (const file of files) {
+              const filePath = path.join(outputFolder, file);
+              const stats = await fs.promises.stat(filePath);
+              if (stats.isFile()) {
+                outputFiles.push({ path: filePath, name: file });
+              }
+            }
+            resolve(outputFiles);
+          });
+        })
+        .on('error', (err) => {
+          reject(err);
+        })
+        .run();
+    });
   },
 
   /**
