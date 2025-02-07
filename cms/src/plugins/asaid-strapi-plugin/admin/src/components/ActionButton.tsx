@@ -23,15 +23,6 @@ const ActionButton = ({ videoSource, attribute }: ActionButtonProps) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const processUpload = async (event: any) => {
-    console.log(`ActionButton:`);
-    console.log(`videoSource:`);
-    console.log(videoSource);
-    console.log(`attribute:`);
-    console.log(attribute);
-
-    console.log(`processUpload:`);
-    console.log(event);
-
     const file = event.target.files[0];
     if (!file) return;
 

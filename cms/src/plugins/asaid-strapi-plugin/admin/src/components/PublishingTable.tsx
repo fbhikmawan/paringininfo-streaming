@@ -37,7 +37,6 @@ const PublishingTable = () => {
       const response = await axios.get(`/asaid-strapi-plugin/video-sources?start=${start}`);
       // Check if response.data is an array
       if (Array.isArray(response.data.videoSources)) {
-        console.log(response.data.videoSources);
         setVideoSources(response.data.videoSources);
         setPageCount(Math.ceil(response.data.totalVideoSources / postsPerPage));
       } else {
