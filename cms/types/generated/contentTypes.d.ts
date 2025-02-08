@@ -659,7 +659,6 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     poster: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     releaseYear: Schema.Attribute.Integer & Schema.Attribute.Required;
-    trailerUrl: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -683,7 +682,6 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::video-type.video-type'
     >;
-    videoUrl: Schema.Attribute.String;
   };
 }
 

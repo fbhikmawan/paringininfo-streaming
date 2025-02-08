@@ -28,12 +28,6 @@
       "type": "uid",
       "targetField": "name"
     },
-    "videoUrl": {
-      "type": "string"
-    },
-    "trailerUrl": {
-      "type": "string"
-    },
     "description": {
       "type": "blocks"
     },
