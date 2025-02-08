@@ -4,6 +4,13 @@ export interface VideoRating extends BaseFields {
   score: number;
 }
 
+export interface VideoSource extends BaseFields {
+  name: string;
+  video?: Video;
+  videoLink?: string;
+  trailerLink?: string;
+}
+
 export interface VideoType extends BaseFields {
   name: string;
   nameSlug: string;
