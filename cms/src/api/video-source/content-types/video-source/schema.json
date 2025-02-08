@@ -10,20 +10,23 @@
   "options": {
     "draftAndPublish": false
   },
-  "pluginOptions": {
-    "content-manager": {
-      "visible": true
-    },
-    "content-type-builder": {
-      "visible": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "video": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::video.video",
+      "inversedBy": "video_source"
+    },
     "videoLink": {
-      "type": "text"
+      "type": "string"
     },
     "trailerLink": {
-      "type": "text"
+      "type": "string"
     }
   }
 }

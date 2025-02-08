@@ -1,7 +1,3 @@
-import videoSource from './video-source';
-
-const contentTypes = {
-  'video-source': videoSource
-};
+const contentTypes = { };
 
 export default contentTypes;

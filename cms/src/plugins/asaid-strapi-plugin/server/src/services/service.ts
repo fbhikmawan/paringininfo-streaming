@@ -60,7 +60,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
 
       const fileUrl = `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${objectFolder}/stream.m3u8`;
 
-      const updatedVideoSource = await strapi.query('plugin::asaid-strapi-plugin.video-source').update({
+      const updatedVideoSource = await strapi.query('api::video-source.video-source').update({
         where: { documentId: videoSourceData.documentId },
         data: {
           [attribute]: fileUrl,
@@ -126,10 +126,10 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       const { start } = query;
         
       // get total video sources count
-      const totalVideoSources = await strapi.documents('plugin::asaid-strapi-plugin.video-source').count({});
+      const totalVideoSources = await strapi.documents('api::video-source.video-source').count({});
 
       // get video sources
-      const videoSources = await strapi.documents('plugin::asaid-strapi-plugin.video-source').findMany({
+      const videoSources = await strapi.documents('api::video-source.video-source').findMany({
         populate: {
           video: {
             populate: '*',
@@ -156,7 +156,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
     const { videoDocumentId } = query;
     try {
       // find the videoSource
-      const videoSource = await strapi.documents('plugin::asaid-strapi-plugin.video-source').findFirst({
+      const videoSource = await strapi.documents('api::video-source.video-source').findFirst({
         populate: {
           video: {
             populate: '*',
@@ -188,7 +188,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       const { videoSourceDocumentId } = query;
 
       // delete the video source
-      await strapi.documents('plugin::asaid-strapi-plugin.video-source').delete({ documentId: videoSourceDocumentId });
+      await strapi.documents('api::video-source.video-source').delete({ documentId: videoSourceDocumentId });
 
       return 'Video Source deleted';
     } catch (error) {

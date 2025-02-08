@@ -72,7 +72,7 @@
     "video_source": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::asaid-strapi-plugin.video-source",
+      "target": "api::video-source.video-source",
       "mappedBy": "video"
     }
   }

@@ -565,6 +565,38 @@ export interface ApiVideoRatingVideoRating extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiVideoSourceVideoSource extends Struct.CollectionTypeSchema {
+  collectionName: 'video_sources';
+  info: {
+    description: '';
+    displayName: 'Video Source';
+    pluralName: 'video-sources';
+    singularName: 'video-source';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::video-source.video-source'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    trailerLink: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    video: Schema.Attribute.Relation<'oneToOne', 'api::video.video'>;
+    videoLink: Schema.Attribute.String;
+  };
+}
+
 export interface ApiVideoTypeVideoType extends Struct.CollectionTypeSchema {
   collectionName: 'video_types';
   info: {
@@ -645,53 +677,13 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     >;
     video_source: Schema.Attribute.Relation<
       'oneToOne',
-      'plugin::asaid-strapi-plugin.video-source'
+      'api::video-source.video-source'
     >;
     video_type: Schema.Attribute.Relation<
       'manyToOne',
       'api::video-type.video-type'
     >;
     videoUrl: Schema.Attribute.String;
-  };
-}
-
-export interface PluginAsaidStrapiPluginVideoSource
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'video_sources';
-  info: {
-    description: '';
-    displayName: 'Video Source';
-    pluralName: 'video-sources';
-    singularName: 'video-source';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: true;
-    };
-    'content-type-builder': {
-      visible: true;
-    };
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'plugin::asaid-strapi-plugin.video-source'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    trailerLink: Schema.Attribute.Text;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    video: Schema.Attribute.Relation<'oneToOne', 'api::video.video'>;
-    videoLink: Schema.Attribute.Text;
   };
 }
 
@@ -1210,9 +1202,9 @@ declare module '@strapi/strapi' {
       'api::video-category.video-category': ApiVideoCategoryVideoCategory;
       'api::video-quality.video-quality': ApiVideoQualityVideoQuality;
       'api::video-rating.video-rating': ApiVideoRatingVideoRating;
+      'api::video-source.video-source': ApiVideoSourceVideoSource;
       'api::video-type.video-type': ApiVideoTypeVideoType;
       'api::video.video': ApiVideoVideo;
-      'plugin::asaid-strapi-plugin.video-source': PluginAsaidStrapiPluginVideoSource;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
