@@ -1,17 +1,25 @@
 import { PaginationMeta } from "@/types/bases";
 import { PopulatedVideo, VideoType } from "@/types/videos";
-import axios, { AxiosInstance } from "axios";
 
 export interface VideoFilters {
   [key: string]: string | number | boolean | { [subKey: string]: string | number | boolean };
 }
 
-export const api: AxiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_STRAPI_URL}`,
-  headers: {
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
-  },
-});
+const baseURL = process.env.NEXT_PUBLIC_STRAPI_URL;
+const headers = {
+  Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+};
+
+// Helper function to handle fetch requests
+const fetchData = async (url: string) => {
+  const response = await fetch(`${baseURL}/${url}`, {
+    headers,
+  });
+  if (!response.ok) {
+    throw new Error("Server error");
+  }
+  return response.json();
+};
 
 // ***
 // APIs for Videos
@@ -19,219 +27,126 @@ export const api: AxiosInstance = axios.create({
 export const getAllVideo = async (
   page: number = 1,
 ): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
-  try {
-    // Fetch videos with pagination and populate the required fields
-    const response = await api.get(
-      `api/videos?pagination[page]=${page}&pagination[pageSize]=${process.env.NEXT_PUBLIC_PAGE_LIMIT}&populate=*`
-    );
-    return {
-      videos: response.data.data as PopulatedVideo[],
-      pagination: response.data.meta.pagination as PaginationMeta, // Return data and include pagination data
-    };
-  } catch (error) {
-    console.error("Error fetching videos:", error);
-    throw new Error("Server error"); // Error handling
-  }
+  const data = await fetchData(
+    `api/videos?pagination[page]=${page}&pagination[pageSize]=${process.env.NEXT_PUBLIC_PAGE_LIMIT}&populate=*`
+  );
+  return {
+    videos: data.data as PopulatedVideo[],
+    pagination: data.meta.pagination as PaginationMeta,
+  };
 };
-// Get videos by slug
+
 export const getVideoBySlug = async (slug: string): Promise<{ video: PopulatedVideo }> => {
-  try {
-    const response = await api.get(
-      `api/videos?filters[nameSlug]=${slug}&populate=*`
-    ); // Fetch a single video using the slug parameter
-    if (response.data.data.length > 0) {
-      return {
-        video: response.data.data[0] as PopulatedVideo, // Return the video data
-      };
-    }
-    throw new Error("Video not found.");
-  } catch (error) {
-    console.error("Error fetching video:", error);
-    throw new Error("Server error");
-  }
-};
-// Get videos by slug
-export const getVideoByTypeAndSlug = async (videoTypeNameSlug: string, nameSlug: string): Promise<{ video: PopulatedVideo }> => {
-  try {
-    const response = await api.get(
-      `api/videos?filters[video_type][nameSlug][$eq]=${videoTypeNameSlug}&filters[nameSlug][$eq]=${nameSlug}&populate=*`
-    ); // Fetch a single video using the slug parameter
-    if (response.data.data.length > 0) {
-      return {
-        video: response.data.data[0] as PopulatedVideo, // Return the video data
-      };
-    }
-    throw new Error("Video not found.");
-  } catch (error) {
-    console.error("Error fetching video:", error);
-    throw new Error("Server error");
-  }
-};
-// Get videos by videoType
-export const getAllVideoByType = async (
-  videoTypeSlug: string,
-) => {
-  try {
-    // Fetch videos with pagination and populate the required fields
-    const response = await api.get(
-      `api/videos?filters[video_type][nameSlug][$eq]=${videoTypeSlug}&populate=*`
-    );
+  const data = await fetchData(`api/videos?filters[nameSlug]=${slug}&populate=*`);
+  if (data.data.length > 0) {
     return {
-      videos: response.data.data,
-      pagination: response.data.meta.pagination, // Return data and include pagination data
+      video: data.data[0] as PopulatedVideo,
     };
-  } catch (error) {
-    console.error("Error fetching videos:", error);
-    throw new Error("Server error"); // Error handling
   }
+  throw new Error("Video not found.");
 };
-// Get videos by videoType and videoCategory
+
+export const getVideoByTypeAndSlug = async (videoTypeNameSlug: string, nameSlug: string): Promise<{ video: PopulatedVideo }> => {
+  const data = await fetchData(
+    `api/videos?filters[video_type][nameSlug][$eq]=${videoTypeNameSlug}&filters[nameSlug][$eq]=${nameSlug}&populate=*`
+  );
+  if (data.data.length > 0) {
+    return {
+      video: data.data[0] as PopulatedVideo,
+    };
+  }
+  throw new Error("Video not found.");
+};
+
+export const getAllVideoByType = async (videoTypeSlug: string) => {
+  const data = await fetchData(`api/videos?filters[video_type][nameSlug][$eq]=${videoTypeSlug}&populate=*`);
+  return {
+    videos: data.data,
+    pagination: data.meta.pagination,
+  };
+};
+
 export const getAllVideoByTypeAndCategory = async (
   page: number = 1,
   videoType: VideoType,
   videoCategorySlug: string,
 ) => {
-  try {
-    // Fetch videos with pagination and populate the required fields
-    const response = await api.get(
-      `api/videos?pagination[page]=${page}&pagination[pageSize]=${process.env.NEXT_PUBLIC_PAGE_LIMIT}&filters[video_type][nameSlug][$eq]=${videoType.nameSlug}${videoCategorySlug !== '*' ? `&filters[video_categories][nameSlug][$eq]=${videoCategorySlug}` : ''
-      }&populate=*`
-    );
-    return {
-      videos: response.data.data,
-      pagination: response.data.meta.pagination, // Return data and include pagination data
-    };
-  } catch (error) {
-    console.error("Error fetching videos:", error);
-    throw new Error("Server error"); // Error handling
-  }
+  const data = await fetchData(
+    `api/videos?pagination[page]=${page}&pagination[pageSize]=${process.env.NEXT_PUBLIC_PAGE_LIMIT}&filters[video_type][nameSlug][$eq]=${videoType.nameSlug}${videoCategorySlug !== '*' ? `&filters[video_categories][nameSlug][$eq]=${videoCategorySlug}` : ''
+    }&populate=*`
+  );
+  return {
+    videos: data.data,
+    pagination: data.meta.pagination,
+  };
 };
-// Get videos by nullness of videolink
+
 export const getAllVideoByVideoLinkNull = async (): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
-  try {
-    // Fetch videos with pagination and populate the required fields
-    const response = await api.get(
-      `api/videos?filters[video_source][videoLink][$null]=true&populate=*`
-    );
-    return {
-      videos: response.data.data,
-      pagination: response.data.meta.pagination, // Return data and include pagination data
-    };
-  } catch (error) {
-    console.error("Error fetching videos:", error);
-    throw new Error("Server error"); // Error handling
-  }
+  const data = await fetchData(`api/videos?filters[video_source][videoLink][$null]=true&populate=*`);
+  return {
+    videos: data.data,
+    pagination: data.meta.pagination,
+  };
 };
 
 // ***
 // APIs for Video Categories
 // ***
-// Get categories
 export const getAllCategories = async () => {
-  try {
-    const response = await api.get(`api/video-categories?populate=*`); // Route to fetch Categories data
-    return {
-      categories: response.data.data,
-      pagination: response.data.meta.pagination, // Return data and include pagination data
-    };
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-    throw new Error("Server error");
-  }
+  const data = await fetchData(`api/video-categories?populate=*`);
+  return {
+    categories: data.data,
+    pagination: data.meta.pagination,
+  };
 };
-// Get category by slug
+
 export const getCategoryBySlug = async (slug: string) => {
-  try {
-    const response = await api.get(
-      `api/video-categories?filters[nameSlug]=${slug}&populate=*`
-    ); // Fetch a single category using the slug parameter
-    if (response.data.data.length > 0) {
-      // If category exists
-      return response.data.data[0]; // Return the category data
-    }
-    throw new Error("Category not found.");
-  } catch (error) {
-    console.error("Error fetching category:", error);
-    throw new Error("Server error");
+  const data = await fetchData(`api/video-categories?filters[nameSlug]=${slug}&populate=*`);
+  if (data.data.length > 0) {
+    return data.data[0];
   }
+  throw new Error("Category not found.");
 };
-// Get categories by videoType
-export const getAllCategoriesByVideoType = async (
-  videoType: VideoType,
-) => {
-  try {
-    // Fetch categories with pagination and populate the required fields
-    const response = await api.get(
-      `api/video-categories?filters[video_types][nameSlug][$eq]=${videoType.nameSlug}&populate=*`
-    );
-    return {
-      categories: response.data.data,
-      pagination: response.data.meta.pagination, // Return data and include pagination data
-    };
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-    throw new Error("Server error"); // Error handling
-  }
+
+export const getAllCategoriesByVideoType = async (videoType: VideoType) => {
+  const data = await fetchData(`api/video-categories?filters[video_types][nameSlug][$eq]=${videoType.nameSlug}&populate=*`);
+  return {
+    categories: data.data,
+    pagination: data.meta.pagination,
+  };
 };
 
 // ***
 // APIs for Video Types
 // ***
-// Get all video types
 export const getAllVideoTypes = async (): Promise<{ videoTypes: VideoType[], pagination: PaginationMeta }> => {
-  try {
-    const response = await api.get(`api/video-types?populate=*`);
-    return {
-      videoTypes: response.data.data as VideoType[],
-      pagination: response.data.meta.pagination as PaginationMeta, // Return data and include pagination data
-    };
-  } catch (error) {
-    console.error("Error fetching video types:", error);
-    throw new Error("Server error");
-  }
+  const data = await fetchData(`api/video-types?populate=*`);
+  return {
+    videoTypes: data.data as VideoType[],
+    pagination: data.meta.pagination as PaginationMeta,
+  };
 };
-// Get video type by slug
+
 export const getVideoTypeBySlug = async (slug: string): Promise<VideoType | null> => {
-  try {
-    const response = await api.get(
-      `api/video-types?filters[nameSlug]=${slug}&populate=*`
-    );
-    if (response.data.data && response.data.data.length > 0) {
-      return response.data.data[0] as VideoType;
-    }
-    return null; // Return null if no video type is found
-  } catch (error) {
-    console.error("Error fetching video type:", error);
-    throw new Error("Server error");
+  const data = await fetchData(`api/video-types?filters[nameSlug]=${slug}&populate=*`);
+  if (data.data && data.data.length > 0) {
+    return data.data[0] as VideoType;
   }
+  return null;
 };
 
 // ***
 // APIs for Video Qualities
 // ***
-// Get qualities
 export const getAllQualities = async () => {
-  try {
-    const response = await api.get(`api/video-categories?populate=*`); // Route to fetch Categories data
-    return response.data.data; // Return all categories
-  } catch (error) {
-    console.error("Error fetching qualitites:", error);
-    throw new Error("Server error");
-  }
+  const data = await fetchData(`api/video-categories?populate=*`);
+  return data.data;
 };
-// Get quality by slug
+
 export const getQualityBySlug = async (slug: string) => {
-  try {
-    const response = await api.get(
-      `api/video-qualities?filters[nameSlug]=${slug}&populate=*`
-    ); // Fetch a single category using the slug parameter
-    if (response.data.data.length > 0) {
-      // If category exists
-      return response.data.data[0]; // Return the category data
-    }
-    throw new Error("Category not found.");
-  } catch (error) {
-    console.error("Error fetching category:", error);
-    throw new Error("Server error");
+  const data = await fetchData(`api/video-qualities?filters[nameSlug]=${slug}&populate=*`);
+  if (data.data.length > 0) {
+    return data.data[0];
   }
+  throw new Error("Category not found.");
 };
