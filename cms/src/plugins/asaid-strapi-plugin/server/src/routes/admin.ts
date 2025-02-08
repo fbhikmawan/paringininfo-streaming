@@ -2,7 +2,6 @@ const routes = [
   {
     method: 'GET',
     path: '/',
-    // name of the controller file & the method.
     handler: 'controller.index',
     config: {
       policies: [],
@@ -13,6 +12,15 @@ const routes = [
     method: 'POST',
     path: '/upload',
     handler: 'controller.uploadMedia',
+    config: {
+      policies: [],
+      auth: false,
+    },
+  },
+  {
+    method: 'POST',
+    path: '/process-media',
+    handler: 'controller.processMedia',
     config: {
       policies: [],
       auth: false,

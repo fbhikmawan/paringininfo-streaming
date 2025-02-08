@@ -19,6 +19,7 @@ const smBtn = {
 
 const ActionButton = ({ videoSource, attribute }: ActionButtonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>('Upload Media');
   const inputRef = useRef<HTMLInputElement>(null);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,26 +28,36 @@ const ActionButton = ({ videoSource, attribute }: ActionButtonProps) => {
     if (!file) return;
 
     setLoading(true);
+    setStatus('Uploading..');
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('videoSource', JSON.stringify(videoSource));
-    formData.append('attribute', attribute);
 
     try {
-      const response = await axios.post('/asaid-strapi-plugin/upload', formData);
-      if (response.data.success) {
-        alert('File uploaded successfully');
-        // Reload the page
-        window.location.reload();
+      const uploadResponse = await axios.post('/asaid-strapi-plugin/upload', formData);
+      if (uploadResponse.data.success) {
+        setStatus('Processing..');
+        const processResponse = await axios.post('/asaid-strapi-plugin/process-media', {
+          videoSource,
+          attribute,
+          tempFolder: uploadResponse.data.tempFolder,
+          tempSourcePath: uploadResponse.data.tempSourcePath,
+        });
+        if (processResponse.data.success) {
+          alert('File processed and uploaded successfully');
+          window.location.reload();
+        } else {
+          alert(`Error processing file: ${processResponse.data.error}`);
+        }
       } else {
-        alert(`Error uploading file: ${response.data.error}`);
+        alert(`Error uploading file: ${uploadResponse.data.error}`);
       }
     } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('Error uploading file');
+      console.error('Error uploading or processing file:', error);
+      alert('Error uploading or processing file');
     } finally {
       setLoading(false);
+      setStatus('Upload Media');
     }
   };
 
@@ -91,7 +102,7 @@ const ActionButton = ({ videoSource, attribute }: ActionButtonProps) => {
       ) : loading ? 
         (
           <Button style={bigBtn} loading textColor="neutral800">
-            <Typography variant="pi">Uploading</Typography>
+            <Typography variant="pi">{status}</Typography>
           </Button>
         ) : (
           <Flex
@@ -111,7 +122,7 @@ const ActionButton = ({ videoSource, attribute }: ActionButtonProps) => {
               disabled={loading}
               onClick={handleUpload}
             >
-              Upload Media
+              {status}
             </Button>
             <input
               type="file"

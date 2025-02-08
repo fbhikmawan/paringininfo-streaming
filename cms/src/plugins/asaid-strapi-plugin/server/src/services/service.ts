@@ -27,30 +27,38 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
   },
 
   /**
-   * Upload Media to Strapi Media Library
+   * Upload Media to Temporary Folder
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async uploadMedia(file: any, videoSource: any, attribute: any) {
-    const videoSourceData = JSON.parse(videoSource);
-    const bucketName = process.env.MINIO_BUCKET_NAME;
-    const objectFolder = `${videoSourceData.video.video_type.nameSlug}/${videoSourceData.video.nameSlug}/${attribute}`;
+  async uploadMedia(file: any) {
     const tempFolder = `/tmp/${uuidv4()}`;
     const tempSourceFolder = `${tempFolder}/source`;
     const sourceFileName = file.originalFilename;
     const tempSourcePath = `${tempSourceFolder}/${sourceFileName}`;
 
     try {
-      // Ensure the temporary directory exists
       await fs.promises.mkdir(tempFolder, { recursive: true });
       await fs.promises.mkdir(tempSourceFolder, { recursive: true });
-
-      // Move the source file to the temporary directory
       await fs.promises.rename(file.filepath, tempSourcePath);
+      console.log(`Temp folder is ${tempFolder}`);
+      console.log(`File uploaded to ${tempSourcePath}`);
+      return { success: true, tempFolder, tempSourcePath };
+    } catch (error) {
+      console.error('Error during upload media:', error);
+      throw error;
+    }
+  },
 
-      // Video processing
-      const processedFiles = await this.processVideo(tempSourcePath, tempFolder);
+  /**
+   * Process Media
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async processMedia(videoSource: any, attribute: any, tempFolder: any, tempSourcePath: any) {
+    const bucketName = process.env.MINIO_BUCKET_NAME;
+    const objectFolder = `${videoSource.video.video_type.nameSlug}/${videoSource.video.nameSlug}/${attribute}`;
+    try {
+      const processedFiles = await this.convertVideo(tempSourcePath, tempFolder);
 
-      // Upload processed files to MinIO
       const uploadPromises = processedFiles.map(({ path, name }) => {
         const fileStream = fs.createReadStream(path);
         return minioClient.putObject(bucketName, `${objectFolder}/${name}`, fileStream);
@@ -61,7 +69,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       const fileUrl = `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${objectFolder}/stream.m3u8`;
 
       const updatedVideoSource = await strapi.query('api::video-source.video-source').update({
-        where: { documentId: videoSourceData.documentId },
+        where: { documentId: videoSource.documentId },
         data: {
           [attribute]: fileUrl,
         },
@@ -69,18 +77,20 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
 
       return { success: true, data: updatedVideoSource };
     } catch (error) {
-      console.error('Error during process media, upload media or update collection type:', error);
+      console.error('Error during process media:', error);
+      throw error;
     } finally {
-      // Ensure the temporary folder is deleted
       await fs.promises.rm(tempFolder, { recursive: true, force: true });
     }
   },
 
   /**
-   * Process Video using ffmpeg
+   * Covnert video using ffmpeg
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async processVideo(inputFilePath: string, outputFolder: string): Promise<{ path: string, name: string }[]> {
+  async convertVideo(inputFilePath: string, outputFolder: string): Promise<{ path: string, name: string }[]> {
+    console.log('Converting video:');
+    console.log(inputFilePath);
+    console.log(outputFolder);
     return new Promise((resolve, reject) => {
       const outputFiles: { path: string, name: string }[] = [];
 
