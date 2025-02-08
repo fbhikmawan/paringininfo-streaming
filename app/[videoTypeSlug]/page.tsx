@@ -1,13 +1,11 @@
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 
 // Template Sections
-import BannerPage from '../../components/sections/BannerPage';
-import ContentsArea from '../../components/sections/ContentsArea';
+import BannerPage from '@/components/sections/BannerPage';
+import BannerPageSkeleton from '@/components/sections/BannerPageSkeleton';
+import ContentsArea from '@/components/sections/ContentsArea';
 import { getAllVideoTypes, getVideoTypeBySlug } from "@/lib/api";
-
-// Next.js will invalidate the cache when a
-// request comes in, at most once every 60 seconds.
-export const revalidate = 60
 
 // We'll prerender only the params from `generateStaticParams` at build time.
 // If a request comes in for a path that hasn't been generated,
@@ -38,7 +36,9 @@ export default async function VideoTypePage({
 
   return (
     <>
-      <BannerPage videoType={videoType} />
+      <Suspense fallback={<BannerPageSkeleton />}>
+        <BannerPage videoType={videoType} />
+      </Suspense>
       <ContentsArea videoType={videoType} />
     </>
   );
