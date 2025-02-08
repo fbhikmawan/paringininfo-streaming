@@ -26,7 +26,7 @@ export default function TopRatedMovie() {
           const averageRating = video.video_ratings.reduce((acc, rating) => acc + rating.score, 0) / video.video_ratings.length;
           return { ...video, averageRating };
         })
-        .filter(video => video.averageRating > 3 && video.videoUrl !== null);
+        .filter(video => video.averageRating > 3 && video.video_source?.videoLink !== null);
       setFilteredVideos(filteredVideos);
 
       const uniqueVideoTypes = filteredVideos

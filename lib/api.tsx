@@ -106,12 +106,12 @@ export const getAllVideoByTypeAndCategory = async (
     throw new Error("Server error"); // Error handling
   }
 };
-// Get videos by nullness of videoUrl
-export const getAllVideoByVideoUrlNull = async (): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
+// Get videos by nullness of videolink
+export const getAllVideoByVideoLinkNull = async (): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
   try {
     // Fetch videos with pagination and populate the required fields
     const response = await api.get(
-      `api/videos?filters[videoUrl][$null]=true&populate=*`
+      `api/videos?filters[video_source][videoLink][$null]=true&populate=*`
     );
     return {
       videos: response.data.data,

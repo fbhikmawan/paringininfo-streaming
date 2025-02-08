@@ -9,7 +9,7 @@ import CustomCarousel from '../scripts/CustomCarousel';
 import CarouselItemUpcoming from '../elements/CarouselItemUpcoming';
 
 import { PopulatedVideo, VideoType } from '@/types/videos';
-import { getAllVideoByVideoUrlNull } from '@/lib/api';
+import { getAllVideoByVideoLinkNull } from '@/lib/api';
 
 const FADE_TIMEOUT = 300;
 
@@ -21,7 +21,7 @@ export default function UpComing() {
 
   useEffect(() => {
     async function fetchData() {
-      const { videos } = await getAllVideoByVideoUrlNull();
+      const { videos } = await getAllVideoByVideoLinkNull();
       setVideoDetails(videos);
       
       const filteredVideoTypes = videos.map(video => video.video_type).filter((type, index, self) => type && self.findIndex(t => t?.nameSlug === type?.nameSlug) === index) as VideoType[];

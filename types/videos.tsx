@@ -37,8 +37,6 @@ export interface Video extends BaseFields {
   releaseYear: number;
   duration: number;
   nameSlug: string;
-  videoUrl: string | null;
-  trailerUrl: string | null;
   description: DescriptionElement[];
 }
 
@@ -48,6 +46,7 @@ export interface PopulatedVideo extends Video {
   video_ratings: VideoRating[];
   video_categories: VideoCategory[];
   video_quality?: VideoQuality;
+  video_source?: VideoSource;
 }
 
 export interface VideosApiResponse {

@@ -7,10 +7,9 @@ interface VideoPlayerModalProps {
   modalId: string;
   videoSrc: string;
   posterSrc: string;
-  children: React.ReactNode;
 }
 
-export default function VideoPlayerModal({ modalId, videoSrc, posterSrc, children }: VideoPlayerModalProps) {
+export default function VideoPlayerModal({ modalId, videoSrc, posterSrc }: VideoPlayerModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [shouldPlay, setShouldPlay] = useState(false);
 
@@ -40,27 +39,24 @@ export default function VideoPlayerModal({ modalId, videoSrc, posterSrc, childre
   }, [modalId]);
 
   return (
-    <>
-      <div
-        className="modal fade"
-        id={modalId}
-        tabIndex={-1}
-        aria-labelledby={`${modalId}Label`}
-        ref={modalRef}
-      >
-        <div className="modal-dialog modal-dialog-centered modal-lg">
-          <div className="modal-content">
-            <div className="modal-body">
-              <VideoPlayer 
-                src={videoSrc} 
-                poster={posterSrc}
-                shouldPlay={shouldPlay}
-              />
-            </div>
+    <div
+      className="modal"
+      id={modalId}
+      tabIndex={-1}
+      aria-labelledby={`${modalId}Label`}
+      ref={modalRef}
+    >
+      <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div className="modal-content">
+          <div className="modal-body">
+            <VideoPlayer 
+              src={videoSrc} 
+              poster={posterSrc}
+              shouldPlay={shouldPlay}
+            />
           </div>
         </div>
       </div>
-      {children}
-    </>
+    </div>
   );
 }
