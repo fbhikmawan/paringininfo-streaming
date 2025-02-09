@@ -2,6 +2,9 @@ import { Poppins } from 'next/font/google'
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 
+// User Management Clerk
+import { ClerkProvider } from '@clerk/nextjs'
+
 // Template Sections
 import Header from '../components/sections/Header';
 import Footer from '../components/sections/Footer';
@@ -51,20 +54,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={poppins.className}>
-      <body>
-        <Preloader />
-        <ButtonScrollToTop />
-        <Header/>
+    <ClerkProvider>
+      <html lang="en" className={poppins.className}>
+        <body>
+          <Preloader />
+          <ButtonScrollToTop />
+          <Header/>
 
-        <main>
-          {children}
-        </main>
+          <main>
+            {children}
+          </main>
 
-        <Footer />
-        <TemplateScripts />
-        <Toaster />
-      </body>
-    </html>
+          <Footer />
+          <TemplateScripts />
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
