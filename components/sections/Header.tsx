@@ -121,7 +121,6 @@ export default function Header() {
                           <UserButton />
                         </SignedIn>
                       </li>
-                      {/* <li className="header-btn"><Link href="#" className="btn">Sign In</Link></li> */}
                     </ul>
                   </div>
                 </nav>
@@ -145,6 +144,20 @@ export default function Header() {
                       <li><Link href="#"><span><FontAwesomeIcon icon={faPinterestP} /></span></Link></li>
                       <li><Link href="#"><span><FontAwesomeIcon icon={faInstagram} /></span></Link></li>
                       <li><Link href="#"><span><FontAwesomeIcon icon={faYoutube} /></span></Link></li>
+                    </ul>
+                  </div>
+                  <div className="header-action d-block d-md-none mx-0">
+                    <ul className="justify-content-center py-2 mx-0">
+                      <li className="header-btn">
+                        <SignedOut>
+                          <SignInButton>
+                            <button className="btn">Sign In</button>
+                          </SignInButton>
+                        </SignedOut>
+                        <SignedIn>
+                          <UserButton />
+                        </SignedIn>
+                      </li>
                     </ul>
                   </div>
                 </nav>

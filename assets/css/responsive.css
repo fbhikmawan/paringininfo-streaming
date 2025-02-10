@@ -62,9 +62,6 @@
 .custom-container {
     max-width: 960px;
 }
-.header-action > ul > li.header-btn {
-	display: none;
-}
 .navbar-wrap > ul {
     margin-right: 0;
 }

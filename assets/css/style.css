@@ -903,7 +903,7 @@ label {
 .mobile-menu .social-links {
 	position: relative;
 	text-align: center;
-	padding: 30px 25px;
+	padding: 30px 25px 10px;
 }
 .mobile-menu .social-links li {
 	position: relative;
