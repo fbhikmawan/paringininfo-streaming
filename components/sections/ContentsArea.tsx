@@ -1,17 +1,39 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { use, useState } from "react";
 import Image from 'next/image';
-import { VideoType } from "@/types/videos";
-import CategoryButtons from "@/components/elements/CategoryButtons";
-import VideoList from "@/components/elements/VideoList";
+import { VideoType, VideoCategory, PopulatedVideo } from "@/types/videos";
+import { PaginationMeta } from "@/types/bases";
+import { getAllVideoByTypeAndCategory } from "@/lib/api";
+import Pagination from "@/components/elements/Pagination";
+import VideoItem from "@/components/elements/VideoItem";
 
-interface Props {
-  videoType: VideoType;
-}
+export default function ContentsArea({
+  videoType,
+  categories,
+  videos,
+}: {
+  videoType: VideoType,
+  categories: Promise<{ categories: VideoCategory[], pagination: PaginationMeta }>,
+  videos: Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }>,
+}) {
+  const currentCategories = use(categories);
+  const currentVideos = use(videos);
 
-export default function ContentsArea({ videoType }: Props) {
   const [filter, setFilter] = useState<string>('*');
+  const [filteredVideos, setFilteredVideos] = useState<PopulatedVideo[]>(currentVideos.videos);
+  const [currentPagination, setPagination] = useState<PaginationMeta>(currentVideos.pagination);
+
+  const fetchVideos = async (filter: string, page: number) => {
+    setFilter(filter);
+    try {
+      const { videos, pagination } = await getAllVideoByTypeAndCategory(page, videoType, filter);
+      setFilteredVideos(videos);
+      setPagination(pagination);
+    } catch (error) {
+      console.error("Error fetching videos:", error);
+    }
+  };
 
   return (
     <section className="movie-area movie-bg">
@@ -25,22 +47,36 @@ export default function ContentsArea({ videoType }: Props) {
             </div>
           </div>
           <div className="col-lg-6">
-            <Suspense fallback={<div>Loading...</div>}>
-              <CategoryButtons 
-                videoType={videoType} 
-                filter={filter} 
-                onFilterChange={setFilter} 
-              />
-            </Suspense>
+            <div className="tr-movie-menu-active text-center">
+              <button onClick={() => fetchVideos('*', 1)} className={`me-3 ${filter === '*' ? 'active' : ''}`}>All</button>
+              {currentCategories.categories.map((category) => (
+                <button
+                  key={category.documentId}
+                  onClick={() => fetchVideos(category.nameSlug, 1)}
+                  className={`me-3 ${filter === category.nameSlug ? 'active' : ''}`}
+                >
+                  {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <VideoList 
-            videoType={videoType} 
-            filter={filter} 
-            onPaginationChange={() => {}} 
+        <div className="row tr-movie-active">
+          {filteredVideos.map((video) => (
+            <VideoItem key={video.nameSlug} video={video} />
+          ))}
+          {filteredVideos.length === 0 && (
+            <div className="col-12">
+              <h5>Stay tuned! More exciting content is on the way.</h5>
+            </div>
+          )}
+        </div>
+        {currentPagination && (
+          <Pagination
+            meta={currentPagination}
+            onPageChange={(page: number) => fetchVideos(filter, page)}
           />
-        </Suspense>
+        )}
       </div>
     </section>
   )
