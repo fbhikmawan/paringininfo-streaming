@@ -5,11 +5,11 @@ import VideoPlayer from '../elements/VideoPlayer';
 
 interface VideoPlayerModalProps {
   modalId: string;
-  videoSrc: string;
+  videoObject: string;
   posterSrc: string;
 }
 
-export default function VideoPlayerModal({ modalId, videoSrc, posterSrc }: VideoPlayerModalProps) {
+export default function VideoPlayerModal({ modalId, videoObject, posterSrc }: VideoPlayerModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [shouldPlay, setShouldPlay] = useState(false);
 
@@ -50,7 +50,7 @@ export default function VideoPlayerModal({ modalId, videoSrc, posterSrc }: Video
         <div className="modal-content">
           <div className="modal-body">
             <VideoPlayer 
-              src={videoSrc} 
+              hlsManifest={videoObject} 
               poster={posterSrc}
               shouldPlay={shouldPlay}
             />

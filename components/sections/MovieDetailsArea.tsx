@@ -37,20 +37,20 @@ export default function MovieDetailsArea({ video }: Props) {
 
   return (
     <>
-      {video.video_source?.trailerLink ? (
+      {video.video_source?.trailerObject ? (
         <VideoPlayerModal
           modalId="trailerModal"
-          videoSrc={video.video_source.trailerLink}
+          videoObject={video.video_source.trailerObject}
           posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
         >
         </VideoPlayerModal>
       ) : (
         <></>
       )}
-      {video.video_source?.videoLink ? (
+      {video.video_source?.videoObject ? (
         <VideoPlayerModal
           modalId="videoModal"
-          videoSrc={video.video_source.videoLink}
+          videoObject={video.video_source.videoObject}
           posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
         >
         </VideoPlayerModal>

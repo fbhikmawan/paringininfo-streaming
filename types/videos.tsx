@@ -9,6 +9,8 @@ export interface VideoSource extends BaseFields {
   video?: Video;
   videoLink?: string;
   trailerLink?: string;
+  videoObject?: string;
+  trailerObject?: string;
 }
 
 export interface VideoType extends BaseFields {
