@@ -27,6 +27,12 @@
     },
     "trailerLink": {
       "type": "string"
+    },
+    "videoObject": {
+      "type": "string"
+    },
+    "trailerObject": {
+      "type": "string"
     }
   }
 }

@@ -589,11 +589,13 @@ export interface ApiVideoSourceVideoSource extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     trailerLink: Schema.Attribute.String;
+    trailerObject: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     video: Schema.Attribute.Relation<'oneToOne', 'api::video.video'>;
     videoLink: Schema.Attribute.String;
+    videoObject: Schema.Attribute.String;
   };
 }
 
