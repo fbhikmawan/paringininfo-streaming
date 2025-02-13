@@ -42,11 +42,11 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async processMedia(ctx: any) {
     try {
-      const { videoSource, attribute, tempFolder, tempSourcePath } = ctx.request.body;
+      const { videoSource, attributes, tempFolder, tempSourcePath } = ctx.request.body;
       const result = await strapi
         .plugin('asaid-strapi-plugin')
         .service('service')
-        .processMedia(videoSource, attribute, tempFolder, tempSourcePath);
+        .processMedia(videoSource, attributes, tempFolder, tempSourcePath);
       ctx.body = result;
     } catch (error) {
       ctx.throw(400, error.message);

@@ -53,9 +53,9 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
    * Process Media
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async processMedia(videoSource: any, attribute: any, tempFolder: any, tempSourcePath: any) {
+  async processMedia(videoSource: any, attributes: string[], tempFolder: any, tempSourcePath: any) {
     const bucketName = process.env.MINIO_BUCKET_NAME;
-    const objectFolder = `${videoSource.video.video_type.nameSlug}/${videoSource.video.nameSlug}/${attribute}`;
+    const objectFolder = `${videoSource.video.video_type.nameSlug}/${videoSource.video.nameSlug}/${attributes[0]}`;
     try {
       const processedFiles = await this.convertVideo(tempSourcePath, tempFolder);
 
@@ -68,11 +68,18 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
 
       const fileUrl = `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${objectFolder}/stream.m3u8`;
 
+      const updateData = attributes.reduce((acc, attr) => {
+        if (attr.includes('Link')) {
+          acc[attr] = fileUrl;
+        } else if (attr.includes('Object')) {
+          acc[attr] = `${objectFolder}/stream.m3u8`;
+        }
+        return acc;
+      }, {});
+
       const updatedVideoSource = await strapi.query('api::video-source.video-source').update({
         where: { documentId: videoSource.documentId },
-        data: {
-          [attribute]: fileUrl,
-        },
+        data: updateData,
       });
 
       return { success: true, data: updatedVideoSource };

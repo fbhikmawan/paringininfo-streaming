@@ -6,7 +6,7 @@ import axios from 'axios';
 type ActionButtonProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   videoSource: any;
-  attribute: string;
+  attributes: string[];
 };
 
 const bigBtn = {
@@ -17,7 +17,7 @@ const smBtn = {
   width: '50px',
 };
 
-const ActionButton = ({ videoSource, attribute }: ActionButtonProps) => {
+const ActionButton = ({ videoSource, attributes }: ActionButtonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<string>('Upload Media');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -39,7 +39,7 @@ const ActionButton = ({ videoSource, attribute }: ActionButtonProps) => {
         setStatus('Processing..');
         const processResponse = await axios.post('/asaid-strapi-plugin/process-media', {
           videoSource,
-          attribute,
+          attributes,
           tempFolder: uploadResponse.data.tempFolder,
           tempSourcePath: uploadResponse.data.tempSourcePath,
         });
@@ -67,9 +67,11 @@ const ActionButton = ({ videoSource, attribute }: ActionButtonProps) => {
     }
   };
 
+  const uploadedAttribute = attributes.find(attr => videoSource[attr]);
+
   return (
     <Box>
-      {(attribute === 'videoLink' ? videoSource.videoLink : videoSource.trailerLink) ? 
+      {uploadedAttribute ?
       (
         <Flex
           gap={{
@@ -91,7 +93,7 @@ const ActionButton = ({ videoSource, attribute }: ActionButtonProps) => {
           </Button>
 
           <LinkButton
-            href={attribute === 'videoLink' ? videoSource.videoLink : videoSource.trailerLink}
+            href={videoSource[uploadedAttribute]}
             isexternal="true"
             style={smBtn}
             variant="secondary"

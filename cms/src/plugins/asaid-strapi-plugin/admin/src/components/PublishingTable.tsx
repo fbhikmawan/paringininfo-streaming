@@ -117,10 +117,10 @@ const PublishingTable = () => {
                     </Typography>
                   </Td>
                   <Td>
-                    <ActionButton videoSource={videoSource} attribute="videoLink" />
+                    <ActionButton videoSource={videoSource} attributes={['videoLink', 'videoObject']} />
                   </Td>
                   <Td>
-                    <ActionButton videoSource={videoSource} attribute="trailerLink" />
+                    <ActionButton videoSource={videoSource} attributes={['trailerLink', 'trailerObject']} />
                   </Td>
                   <Td>
                     <Trash
