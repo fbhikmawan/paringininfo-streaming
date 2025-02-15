@@ -4,14 +4,6 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 
-// User Management Clerk
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faTwitter, faPinterestP, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
@@ -111,16 +103,7 @@ export default function Header() {
                   </div>
                   <div className="header-action d-none d-md-block">
                     <ul>
-                      <li className="header-btn">
-                        <SignedOut>
-                          <SignInButton>
-                            <button className="btn">Sign In</button>
-                          </SignInButton>
-                        </SignedOut>
-                        <SignedIn>
-                          <UserButton />
-                        </SignedIn>
-                      </li>
+                      <li className="header-btn"><Link href="#" className="btn">Sign In</Link></li>
                     </ul>
                   </div>
                 </nav>
