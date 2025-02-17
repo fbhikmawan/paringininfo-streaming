@@ -65,8 +65,8 @@ const PublishingTable = () => {
   return (
     <>
       <Box>
-        <Box padding={8} margin={20}>
-          <Table colCount={9} rowCount={videoSources.length + 1}>
+        <Box padding={4}>
+          <Table colCount={6} rowCount={videoSources.length + 1}>
             <Thead>
               <Tr>
                 <Th>
