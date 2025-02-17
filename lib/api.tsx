@@ -156,7 +156,7 @@ export const getQualityBySlug = async (slug: string) => {
 // ***
 export const getVideoSeasons = async (videoId: number): Promise<{ seriesSeasons: Season[] }> => {
   const data = await fetchData(`api/series-seasons?filters[video][id][$eq]=${videoId}&populate=*`);
-  if (data.data && data.data.length > 0) {
+  if (data.data) {
     return {
       seriesSeasons: data.data
     };
@@ -165,7 +165,7 @@ export const getVideoSeasons = async (videoId: number): Promise<{ seriesSeasons:
 };
 export const getSeasonEpisodes = async (seasonId: number): Promise<{ seriesEpisodes: Episode[] }> => {
   const data = await fetchData(`api/series-episodes?filters[series-season][id][$eq]=${seasonId}&populate=*`);
-  if (data.data && data.data.length > 0) {
+  if (data.data) {
     return {
       seriesEpisodes: data.data
     };
