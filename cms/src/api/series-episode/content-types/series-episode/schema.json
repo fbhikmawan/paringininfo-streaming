@@ -30,7 +30,7 @@
     "series_season": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::series-session.series-session",
+      "target": "api::series-season.series-season",
       "inversedBy": "series_episodes"
     }
   }

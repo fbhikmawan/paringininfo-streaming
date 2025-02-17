@@ -1,11 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "series_sessions",
+  "collectionName": "series_seasons",
   "info": {
-    "singularName": "series-session",
-    "pluralName": "series-sessions",
-    "displayName": "Series Season",
-    "description": ""
+    "singularName": "series-season",
+    "pluralName": "series-seasons",
+    "displayName": "Series Season"
   },
   "options": {
     "draftAndPublish": false

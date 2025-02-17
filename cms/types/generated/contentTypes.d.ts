@@ -493,7 +493,7 @@ export interface ApiSeriesEpisodeSeriesEpisode
     publishedAt: Schema.Attribute.DateTime;
     series_season: Schema.Attribute.Relation<
       'manyToOne',
-      'api::series-session.series-session'
+      'api::series-season.series-season'
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -505,14 +505,13 @@ export interface ApiSeriesEpisodeSeriesEpisode
   };
 }
 
-export interface ApiSeriesSessionSeriesSession
+export interface ApiSeriesSeasonSeriesSeason
   extends Struct.CollectionTypeSchema {
-  collectionName: 'series_sessions';
+  collectionName: 'series_seasons';
   info: {
-    description: '';
     displayName: 'Series Season';
-    pluralName: 'series-sessions';
-    singularName: 'series-session';
+    pluralName: 'series-seasons';
+    singularName: 'series-season';
   };
   options: {
     draftAndPublish: false;
@@ -524,7 +523,7 @@ export interface ApiSeriesSessionSeriesSession
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::series-session.series-session'
+      'api::series-season.series-season'
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
@@ -742,7 +741,7 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     releaseYear: Schema.Attribute.Integer & Schema.Attribute.Required;
     series_seasons: Schema.Attribute.Relation<
       'oneToMany',
-      'api::series-session.series-session'
+      'api::series-season.series-season'
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1283,7 +1282,7 @@ declare module '@strapi/strapi' {
       'api::global.global': ApiGlobalGlobal;
       'api::member.member': ApiMemberMember;
       'api::series-episode.series-episode': ApiSeriesEpisodeSeriesEpisode;
-      'api::series-session.series-session': ApiSeriesSessionSeriesSession;
+      'api::series-season.series-season': ApiSeriesSeasonSeriesSeason;
       'api::video-category.video-category': ApiVideoCategoryVideoCategory;
       'api::video-quality.video-quality': ApiVideoQualityVideoQuality;
       'api::video-rating.video-rating': ApiVideoRatingVideoRating;

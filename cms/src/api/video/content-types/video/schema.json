@@ -72,7 +72,7 @@
     "series_seasons": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::series-session.series-session",
+      "target": "api::series-season.series-season",
       "mappedBy": "video"
     }
   }
