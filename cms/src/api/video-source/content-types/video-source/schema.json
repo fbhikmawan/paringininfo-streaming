@@ -33,6 +33,12 @@
     },
     "trailerObject": {
       "type": "string"
+    },
+    "series_episode": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::series-episode.series-episode",
+      "mappedBy": "video_source"
     }
   }
 }

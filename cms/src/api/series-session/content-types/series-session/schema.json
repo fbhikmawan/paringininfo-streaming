@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "series_sessions",
+  "info": {
+    "singularName": "series-session",
+    "pluralName": "series-sessions",
+    "displayName": "Series Season",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "seasonNumber": {
+      "type": "integer",
+      "required": true
+    },
+    "series_episodes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::series-episode.series-episode",
+      "mappedBy": "series_season"
+    },
+    "video": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::video.video",
+      "inversedBy": "series_seasons"
+    }
+  }
+}

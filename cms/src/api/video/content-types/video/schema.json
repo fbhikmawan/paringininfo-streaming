@@ -68,6 +68,12 @@
       "relation": "oneToOne",
       "target": "api::video-source.video-source",
       "mappedBy": "video"
+    },
+    "series_seasons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::series-session.series-session",
+      "mappedBy": "video"
     }
   }
 }

@@ -466,6 +466,81 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSeriesEpisodeSeriesEpisode
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'series_episodes';
+  info: {
+    displayName: 'Series Episode';
+    pluralName: 'series-episodes';
+    singularName: 'series-episode';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    duration: Schema.Attribute.Integer;
+    episodeNumber: Schema.Attribute.Integer & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::series-episode.series-episode'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    series_season: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::series-session.series-session'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    video_source: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::video-source.video-source'
+    >;
+  };
+}
+
+export interface ApiSeriesSessionSeriesSession
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'series_sessions';
+  info: {
+    description: '';
+    displayName: 'Series Season';
+    pluralName: 'series-sessions';
+    singularName: 'series-session';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::series-session.series-session'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    seasonNumber: Schema.Attribute.Integer & Schema.Attribute.Required;
+    series_episodes: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::series-episode.series-episode'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    video: Schema.Attribute.Relation<'manyToOne', 'api::video.video'>;
+  };
+}
+
 export interface ApiVideoCategoryVideoCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'video_categories';
@@ -588,6 +663,10 @@ export interface ApiVideoSourceVideoSource extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    series_episode: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::series-episode.series-episode'
+    >;
     trailerLink: Schema.Attribute.String;
     trailerObject: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -661,6 +740,10 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     poster: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     releaseYear: Schema.Attribute.Integer & Schema.Attribute.Required;
+    series_seasons: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::series-session.series-session'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1199,6 +1282,8 @@ declare module '@strapi/strapi' {
       'api::about.about': ApiAboutAbout;
       'api::global.global': ApiGlobalGlobal;
       'api::member.member': ApiMemberMember;
+      'api::series-episode.series-episode': ApiSeriesEpisodeSeriesEpisode;
+      'api::series-session.series-session': ApiSeriesSessionSeriesSession;
       'api::video-category.video-category': ApiVideoCategoryVideoCategory;
       'api::video-quality.video-quality': ApiVideoQualityVideoQuality;
       'api::video-rating.video-rating': ApiVideoRatingVideoRating;

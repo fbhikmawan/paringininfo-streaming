@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "series_episodes",
+  "info": {
+    "singularName": "series-episode",
+    "pluralName": "series-episodes",
+    "displayName": "Series Episode"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "episodeNumber": {
+      "type": "integer",
+      "required": true
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "video_source": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::video-source.video-source",
+      "inversedBy": "series_episode"
+    },
+    "series_season": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::series-session.series-session",
+      "inversedBy": "series_episodes"
+    }
+  }
+}
