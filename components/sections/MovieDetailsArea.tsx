@@ -9,7 +9,6 @@ import { faPlay, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { PopulatedVideo } from '@/types/videos';
 
-import imgDownload from '@/assets/fonts/download.svg'
 import imgPlayIcon from '@/assets/img/images/play_icon.png'
 
 interface Props {
@@ -152,9 +151,6 @@ export default function MovieDetailsArea({ video }: Props) {
                   </ul>
                 </div>
               </div>
-            </div>
-            <div className="movie-details-btn">
-              <a href="/assets/img/poster/movie_details_img.jpg" className="download-btn" download="">Download <Image src={imgDownload} alt="" /></a>
             </div>
           </div>
         </div>

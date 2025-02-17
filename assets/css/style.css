@@ -1963,10 +1963,10 @@ label {
     font-size: 12px;
     font-weight: 500;
 }
-.movie-details-prime ul li.share a i {
+.movie-details-prime ul li.share a svg {
     display: block;
-    margin-bottom: 7px;
-    font-size: 16px;
+    margin: 0 auto 7px auto;
+    font-size: 20px;
     color: #fff;
 }
 .movie-details-prime ul li.streaming h6 {
