@@ -34,6 +34,21 @@ export interface VideoQuality extends BaseFields {
   nameSlug: string;
 }
 
+export interface Episode extends BaseFields {
+  name: string;
+  episodeNumber: number;
+  duration: number;
+  video_source?: VideoSource;
+  series_season?: Season;
+}
+
+export interface Season extends BaseFields {
+  name: string;
+  seasonNumber: number;
+  series_episodes: Episode[];
+  video?: Video;
+}
+
 export interface Video extends BaseFields {
   name: string;
   releaseYear: number;
@@ -49,6 +64,7 @@ export interface PopulatedVideo extends Video {
   video_categories: VideoCategory[];
   video_quality?: VideoQuality;
   video_source?: VideoSource;
+  series_seasons?: Season[];
 }
 
 export interface VideosApiResponse {

@@ -1,5 +1,5 @@
 import { PaginationMeta } from "@/types/bases";
-import { PopulatedVideo, VideoType } from "@/types/videos";
+import { PopulatedVideo, VideoType, Season, Episode } from "@/types/videos";
 
 export interface VideoFilters {
   [key: string]: string | number | boolean | { [subKey: string]: string | number | boolean };
@@ -149,4 +149,26 @@ export const getQualityBySlug = async (slug: string) => {
     return data.data[0];
   }
   throw new Error("Category not found.");
+};
+
+// ***
+// APIs for Series type
+// ***
+export const getVideoSeasons = async (videoId: number): Promise<{ seriesSeasons: Season[] }> => {
+  const data = await fetchData(`api/series-seasons?filters[video][id][$eq]=${videoId}&populate=*`);
+  if (data.data && data.data.length > 0) {
+    return {
+      seriesSeasons: data.data
+    };
+  }
+  throw new Error("Season not found.");
+};
+export const getSeasonEpisodes = async (seasonId: number): Promise<{ seriesEpisodes: Episode[] }> => {
+  const data = await fetchData(`api/series-episodes?filters[series-season][id][$eq]=${seasonId}&populate=*`);
+  if (data.data && data.data.length > 0) {
+    return {
+      seriesEpisodes: data.data
+    };
+  }
+  throw new Error("Episode not found.");
 };

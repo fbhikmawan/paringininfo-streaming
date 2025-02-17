@@ -1,13 +1,17 @@
+'use client'
+
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import VideoPlayerModal from '@/components/modals/VideoPlayerModal';
+import { getVideoSeasons, getSeasonEpisodes } from '@/lib/api';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faClock } from '@fortawesome/free-regular-svg-icons';
 import { faPlay, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { PopulatedVideo } from '@/types/videos';
+import { PopulatedVideo, Season, Episode } from '@/types/videos';
 
 import imgPlayIcon from '@/assets/img/images/play_icon.png'
 
@@ -16,6 +20,22 @@ interface Props {
 }
 
 export default function MovieDetailsArea({ video }: Props) {
+  const [seasons, setSeasons] = useState<Season[]>([]);
+  const [episodes, setEpisodes] = useState<{ [key: number]: Episode[] }>({});
+
+  useEffect(() => {
+    async function fetchSeasons() {
+      const seasonsData = await getVideoSeasons(video.id);
+      setSeasons(seasonsData.seriesSeasons);
+      const episodesData: { [key: number]: Episode[] } = {};
+      for (const season of seasonsData.seriesSeasons) {
+        episodesData[season.id] = (await getSeasonEpisodes(season.id)).seriesEpisodes;
+      }
+      setEpisodes(episodesData);
+    }
+    fetchSeasons();
+  }, [video.id]);
+
   const getLabel = (video: PopulatedVideo) => {
     const now = new Date();
     const publishedAt = new Date(video.publishedAt);
@@ -155,6 +175,56 @@ export default function MovieDetailsArea({ video }: Props) {
           </div>
         </div>
       </section>
+
+      {video.video_type?.nameSlug === 'series' && (
+        <section className="episode-area episode-bg" data-background="img/bg/episode_bg.jpg">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-8">
+                <div className="movie-episode-wrap">
+                  <div className="episode-top-wrap">
+                    <div className="section-title">
+                      <span className="sub-title">ONLINE STREAMING</span>
+                      <h2 className="title">Watch Full Episode</h2>
+                    </div>
+                  </div>
+                  <div className="episode-watch-wrap">
+                    <div className="accordion" id="accordionExample">
+                      {seasons.map((season) => (
+                        <div className="card" key={season.id}>
+                          <div className="card-header" id={`heading${season.id}`}>
+                            <button className="btn-block text-left" type="button" data-toggle="collapse" data-target={`#collapse${season.id}`} aria-expanded="true" aria-controls={`collapse${season.id}`}>
+                              <span className="season">Season {season.seasonNumber}</span>
+                              <span className="video-count">{episodes[season.id]?.length} Full Episodes</span>
+                            </button>
+                          </div>
+                          <div id={`collapse${season.id}`} className="collapse show" aria-labelledby={`heading${season.id}`} data-parent="#accordionExample">
+                            <div className="card-body">
+                              <ul>
+                                {episodes[season.id]?.map((episode) => (
+                                  <li key={episode.id}>
+                                    <a href={episode.video_source?.videoLink} className="popup-video"><i className="fas fa-play"></i> Episode {episode.episodeNumber} - {episode.name}</a>
+                                    <span className="duration"><i className="far fa-clock"></i> {episode.duration} Min</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-4">
+                <div className="episode-img">
+                  <img src="img/images/episode_img.jpg" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </>
   )
 }
