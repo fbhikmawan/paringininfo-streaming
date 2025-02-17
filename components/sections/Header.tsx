@@ -101,11 +101,6 @@ export default function Header() {
                         <li><Link href="https://paringininfo.com/contactus" target='_blank' onClick={(e) => { e.preventDefault(); const newWindow = window.open('https://paringininfo.com/contactus', '_blank'); if (newWindow) newWindow.focus(); }}>Contacts</Link></li>
                     </ul>
                   </div>
-                  <div className="header-action d-none d-md-block">
-                    <ul>
-                      <li className="header-btn"><Link href="#" className="btn">Sign In</Link></li>
-                    </ul>
-                  </div>
                 </nav>
               </div>
 
@@ -127,20 +122,6 @@ export default function Header() {
                       <li><Link href="#"><span><FontAwesomeIcon icon={faPinterestP} /></span></Link></li>
                       <li><Link href="#"><span><FontAwesomeIcon icon={faInstagram} /></span></Link></li>
                       <li><Link href="#"><span><FontAwesomeIcon icon={faYoutube} /></span></Link></li>
-                    </ul>
-                  </div>
-                  <div className="header-action d-block d-md-none mx-0">
-                    <ul className="justify-content-center py-2 mx-0">
-                      <li className="header-btn">
-                        <SignedOut>
-                          <SignInButton>
-                            <button className="btn">Sign In</button>
-                          </SignInButton>
-                        </SignedOut>
-                        <SignedIn>
-                          <UserButton />
-                        </SignedIn>
-                      </li>
                     </ul>
                   </div>
                 </nav>
