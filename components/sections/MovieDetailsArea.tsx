@@ -24,17 +24,19 @@ export default function MovieDetailsArea({ video }: Props) {
   const [episodes, setEpisodes] = useState<{ [key: number]: Episode[] }>({});
 
   useEffect(() => {
-    async function fetchSeasons() {
-      const seasonsData = await getVideoSeasons(video.id);
-      setSeasons(seasonsData.seriesSeasons);
-      const episodesData: { [key: number]: Episode[] } = {};
-      for (const season of seasonsData.seriesSeasons) {
-        episodesData[season.id] = (await getSeasonEpisodes(season.id)).seriesEpisodes;
+    if (video.video_type?.nameSlug === 'series') {
+      async function fetchSeasons() {
+        const seasonsData = await getVideoSeasons(video.id);
+        setSeasons(seasonsData.seriesSeasons);
+        const episodesData: { [key: number]: Episode[] } = {};
+        for (const season of seasonsData.seriesSeasons) {
+          episodesData[season.id] = (await getSeasonEpisodes(season.id)).seriesEpisodes;
+        }
+        setEpisodes(episodesData);
       }
-      setEpisodes(episodesData);
+      fetchSeasons();
     }
-    fetchSeasons();
-  }, [video.id]);
+  }, [video.id, video.video_type?.nameSlug]);
 
   const getLabel = (video: PopulatedVideo) => {
     const now = new Date();
