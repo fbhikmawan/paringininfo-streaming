@@ -4,7 +4,8 @@
   "info": {
     "singularName": "series-episode",
     "pluralName": "series-episodes",
-    "displayName": "Series Episode"
+    "displayName": "Series Episode",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -32,6 +33,12 @@
       "relation": "manyToOne",
       "target": "api::series-season.series-season",
       "inversedBy": "series_episodes"
+    },
+    "video": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::video.video",
+      "inversedBy": "series_episode"
     }
   }
 }

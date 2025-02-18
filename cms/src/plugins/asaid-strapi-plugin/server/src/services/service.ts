@@ -5,7 +5,7 @@ import * as path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
 import { v4 as uuidv4 } from 'uuid';
 
-const postPerPage = 5;
+const postPerPage = 10;
 
 const minioClient = new Client({
   endPoint: process.env.MINIO_ENDPOINT,
@@ -151,8 +151,14 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
           video: {
             populate: '*',
           },
+          series_episode: {
+            populate: {
+              series_season: {
+                populate: '*',
+              },
+            }
+          }
         },
-        // return only 5 videoSources from the start index
         start,
         limit: postPerPage,
       });

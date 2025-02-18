@@ -470,6 +470,7 @@ export interface ApiSeriesEpisodeSeriesEpisode
   extends Struct.CollectionTypeSchema {
   collectionName: 'series_episodes';
   info: {
+    description: '';
     displayName: 'Series Episode';
     pluralName: 'series-episodes';
     singularName: 'series-episode';
@@ -498,6 +499,7 @@ export interface ApiSeriesEpisodeSeriesEpisode
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    video: Schema.Attribute.Relation<'oneToOne', 'api::video.video'>;
     video_source: Schema.Attribute.Relation<
       'oneToOne',
       'api::video-source.video-source'
@@ -739,6 +741,10 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     poster: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     releaseYear: Schema.Attribute.Integer & Schema.Attribute.Required;
+    series_episode: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::series-episode.series-episode'
+    >;
     series_seasons: Schema.Attribute.Relation<
       'oneToMany',
       'api::series-season.series-season'

@@ -28,7 +28,7 @@ const PublishingTable = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [videoSources, setVideoSources] = useState<any[]>([]);
 
-  const postsPerPage = 5;
+  const postsPerPage = 10;
 
   const handleFetchPosts = async (page: number) => {
     const start = (page - 1) * postsPerPage;
@@ -86,6 +86,16 @@ const PublishingTable = () => {
                 </Th>
                 <Th>
                   <Typography variant="sigma" textColor="neutral600">
+                    Season
+                  </Typography>
+                </Th>
+                <Th>
+                  <Typography variant="sigma" textColor="neutral600">
+                    Episode
+                  </Typography>
+                </Th>
+                <Th>
+                  <Typography variant="sigma" textColor="neutral600">
                     Upload Video
                   </Typography>
                 </Th>
@@ -114,6 +124,16 @@ const PublishingTable = () => {
                       >
                         { videoSource.video?.name }
                       </Link>
+                    </Typography>
+                  </Td>
+                  <Td>
+                    <Typography textColor="neutral800">
+                      {videoSource.video?.video_type?.nameSlug === 'series' ? `${videoSource.series_episode?.series_season?.name}` : '-'}
+                    </Typography>
+                  </Td>
+                  <Td>
+                    <Typography textColor="neutral800">
+                      {videoSource.video?.video_type?.nameSlug === 'series' ? `${videoSource.series_episode?.episodeNumber} ${videoSource.series_episode?.name}` : '-'}
                     </Typography>
                   </Td>
                   <Td>

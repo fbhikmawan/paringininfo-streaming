@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const handleCreateNewPost = () => {
+  const handleCreateNewVideo = () => {
     navigate('/content-manager/collectionType/api::video.video/create');
   };
 
@@ -15,7 +15,7 @@ const HomePage = () => {
         <Typography variant="alpha">ASAid Strapi Plugin</Typography>
         <Flex justifyContent="space-between" alignItems="center" paddingTop={2}>
           <Typography variant="epsilon">Manage and publish your video content seamlessly.</Typography>
-          <Button onClick={handleCreateNewPost} variant="secondary">Create New Post</Button>
+          <Button onClick={handleCreateNewVideo} variant="secondary">Create New Video</Button>
         </Flex>
       </Box>
       <PublishingTable />
