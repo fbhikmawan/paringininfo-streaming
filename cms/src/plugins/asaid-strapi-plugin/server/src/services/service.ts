@@ -40,8 +40,6 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       await fs.promises.mkdir(tempFolder, { recursive: true });
       await fs.promises.mkdir(tempSourceFolder, { recursive: true });
       await fs.promises.rename(file.filepath, tempSourcePath);
-      console.log(`Temp folder is ${tempFolder}`);
-      console.log(`File uploaded to ${tempSourcePath}`);
       return { success: true, tempFolder, tempSourcePath };
     } catch (error) {
       console.error('Error during upload media:', error);
@@ -95,9 +93,6 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
    * Covnert video using ffmpeg
    */
   async convertVideo(inputFilePath: string, outputFolder: string): Promise<{ path: string, name: string }[]> {
-    console.log('Converting video:');
-    console.log(inputFilePath);
-    console.log(outputFolder);
     return new Promise((resolve, reject) => {
       const outputFiles: { path: string, name: string }[] = [];
 
