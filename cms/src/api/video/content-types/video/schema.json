@@ -75,9 +75,9 @@
       "target": "api::series-season.series-season",
       "mappedBy": "video"
     },
-    "series_episode": {
+    "series_episodes": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::series-episode.series-episode",
       "mappedBy": "video"
     }

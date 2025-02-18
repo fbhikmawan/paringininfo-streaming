@@ -36,9 +36,9 @@
     },
     "video": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::video.video",
-      "inversedBy": "series_episode"
+      "inversedBy": "series_episodes"
     }
   }
 }

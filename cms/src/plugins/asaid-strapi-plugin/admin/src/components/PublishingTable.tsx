@@ -112,28 +112,41 @@ const PublishingTable = () => {
               {videoSources.map((videoSource: any) => (
                 <Tr key={videoSource.id}>
                   <Td>
-                    <Typography textColor="neutral800">{videoSource.video?.id}</Typography>
-                  </Td>
-                  <Td>
-                    <Typography textColor="neutral800">{videoSource.video?.video_type?.name}</Typography>
+                    <Typography textColor="neutral800">
+                      {videoSource.series_episode ? 
+                      `${videoSource.series_episode?.series_season?.video?.id}` : 
+                      `${videoSource.video?.id}`}
+                    </Typography>
                   </Td>
                   <Td>
                     <Typography textColor="neutral800">
-                      <Link
-                        href={`http://localhost:1337/admin/content-manager/collection-types/api::video.video/${videoSource.video?.documentId}`}
-                      >
+                      {videoSource.series_episode ? 'Series' : videoSource.video?.video_type?.name}
+                    </Typography>
+                  </Td>
+                  <Td>
+                    <Typography textColor="neutral800">
+                      {videoSource.series_episode ? 
+                        <Link
+                          href={`http://localhost:1337/admin/content-manager/collection-types/api::video.video/${videoSource.series_episode?.series_season?.video?.documentId}`}
+                        >
+                          { videoSource.series_episode?.series_season?.video?.name }
+                        </Link> : 
+                        <Link
+                          href={`http://localhost:1337/admin/content-manager/collection-types/api::video.video/${videoSource.video?.documentId}`}
+                        >
                         { videoSource.video?.name }
-                      </Link>
+                        </Link>
+                      }
                     </Typography>
                   </Td>
                   <Td>
                     <Typography textColor="neutral800">
-                      {videoSource.video?.video_type?.nameSlug === 'series' ? `${videoSource.series_episode?.series_season?.name}` : '-'}
+                      {videoSource.series_episode ? `${videoSource.series_episode?.series_season?.name}` : '-'}
                     </Typography>
                   </Td>
                   <Td>
                     <Typography textColor="neutral800">
-                      {videoSource.video?.video_type?.nameSlug === 'series' ? `${videoSource.series_episode?.episodeNumber} ${videoSource.series_episode?.name}` : '-'}
+                      {videoSource.series_episode ? `${videoSource.series_episode?.episodeNumber} ${videoSource.series_episode?.name}` : '-'}
                     </Typography>
                   </Td>
                   <Td>
