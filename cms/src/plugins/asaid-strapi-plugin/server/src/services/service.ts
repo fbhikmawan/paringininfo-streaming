@@ -53,7 +53,12 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async processMedia(videoSource: any, attributes: string[], tempFolder: any, tempSourcePath: any) {
     const bucketName = process.env.MINIO_BUCKET_NAME;
-    const objectFolder = `${videoSource.video.video_type.nameSlug}/${videoSource.video.nameSlug}/${attributes[0]}`;
+    let objectFolder: string;
+    if (videoSource.series_episode) {
+      objectFolder = `series/${videoSource.series_episode.series_season.video.nameSlug}/season-${videoSource.series_episode.series_season.seasonNumber}/episode-${videoSource.series_episode.episodeNumber}`;
+    } else {
+      objectFolder = `${videoSource.video.video_type.nameSlug}/${videoSource.video.nameSlug}/${attributes[0]}`;
+    }
     try {
       const processedFiles = await this.convertVideo(tempSourcePath, tempFolder);
 
@@ -95,36 +100,79 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
   async convertVideo(inputFilePath: string, outputFolder: string): Promise<{ path: string, name: string }[]> {
     return new Promise((resolve, reject) => {
       const outputFiles: { path: string, name: string }[] = [];
-
-      ffmpeg(inputFilePath)
-        .outputOptions([
-          '-c copy',
-          '-start_number 0',
-          '-hls_time 10',
-          '-hls_list_size 0',
-          '-f hls'
-        ])
-        .output(`${outputFolder}/stream.m3u8`)
-        .on('end', () => {
-          // Collect all generated files
-          fs.readdir(outputFolder, async (err, files) => {
-            if (err) {
-              return reject(err);
+      const ext = path.extname(inputFilePath).toLowerCase();
+      const tempFilePath = `${outputFolder}/temp.mp4`;
+  
+      const convertToMp4 = (input: string, output: string) => {
+        return new Promise<void>((resolve, reject) => {
+          ffmpeg(input)
+            .outputOptions(['-c:v libx264', '-c:a aac'])
+            .output(output)
+            .on('start', (commandLine) => {
+              console.log('Spawned ffmpeg with command: ' + commandLine);
+            })
+            .on('end', () => resolve())
+            .on('error', (err) => {
+              console.error('Error during convertToMp4:', err);
+              reject(err);
+            })
+            .run();
+        });
+      };
+  
+      const convertToHls = (input: string) => {
+        return new Promise<void>((resolve, reject) => {
+          ffmpeg(input)
+            .outputOptions([
+              '-c copy',
+              '-start_number 0',
+              '-hls_time 10',
+              '-hls_list_size 0',
+              '-f hls'
+            ])
+            .output(`${outputFolder}/stream.m3u8`)
+            .on('start', (commandLine) => {
+              console.log('Spawned ffmpeg with command: ' + commandLine);
+            })
+            .on('end', () => resolve())
+            .on('error', (err) => {
+              console.error('Error during convertToHls:', err);
+              reject(err);
+            })
+            .run();
+        });
+      };
+  
+      const collectOutputFiles = async () => {
+        try {
+          const files = await fs.promises.readdir(outputFolder);
+          for (const file of files) {
+            const filePath = path.join(outputFolder, file);
+            const stats = await fs.promises.stat(filePath);
+            if (stats.isFile()) {
+              outputFiles.push({ path: filePath, name: file });
             }
-            for (const file of files) {
-              const filePath = path.join(outputFolder, file);
-              const stats = await fs.promises.stat(filePath);
-              if (stats.isFile()) {
-                outputFiles.push({ path: filePath, name: file });
-              }
-            }
-            resolve(outputFiles);
-          });
-        })
-        .on('error', (err) => {
+          }
+          resolve(outputFiles);
+        } catch (err) {
           reject(err);
-        })
-        .run();
+        }
+      };
+  
+      (async () => {
+        try {
+          if (ext !== '.mp4') {
+            await convertToMp4(inputFilePath, tempFilePath);
+            await convertToHls(tempFilePath);
+            await fs.promises.unlink(tempFilePath); // Delete the temporary .mp4 file
+          } else {
+            await convertToHls(inputFilePath);
+          }
+          await collectOutputFiles();
+        } catch (err) {
+          reject(err);
+        }
+      })();
     });
   },
 
