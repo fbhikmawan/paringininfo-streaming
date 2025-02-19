@@ -155,7 +155,7 @@ export const getQualityBySlug = async (slug: string) => {
 // APIs for Series type
 // ***
 export const getVideoSeasons = async (videoId: number): Promise<{ seriesSeasons: Season[] }> => {
-  const data = await fetchData(`api/series-seasons?filters[video][id][$eq]=${videoId}&populate=*`);
+  const data = await fetchData(`api/series-seasons?filters[video][id][$eq]=${videoId}&populate[series_episodes][populate][0]=video_source`);
   if (data.data) {
     return {
       seriesSeasons: data.data

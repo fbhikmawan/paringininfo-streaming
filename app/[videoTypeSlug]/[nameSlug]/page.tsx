@@ -82,7 +82,7 @@ export default async function MovieDetails({
       {video && (
         <MovieDetailsArea video={video} />
       )}
-      {videoTypeSlug === 'series' && <EpisodeArea />}
+      {videoTypeSlug === 'series' && <EpisodeArea video={video} />}
     </>
   );
 }
