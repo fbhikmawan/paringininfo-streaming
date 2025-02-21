@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Box, Button, Typography, LinkButton, Flex } from '@strapi/design-system';
 import { Upload, Check } from '@strapi/icons';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 type ActionButtonProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,10 +18,24 @@ const smBtn = {
   width: '50px',
 };
 
+const MAX_CHUNK_SIZE = 50 * 1024 * 1024; // 50MB
+
 const ActionButton = ({ videoSource, attributes }: ActionButtonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<string>('Upload Media');
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Function to split the file into chunks
+  const splitFile = (file: File) => {
+    const chunks = [];
+    let start = 0;
+    while (start < file.size) {
+      const end = Math.min(start + MAX_CHUNK_SIZE, file.size);
+      chunks.push(file.slice(start, end));
+      start = end;
+    }
+    return chunks;
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const processUpload = async (event: any) => {
@@ -30,27 +45,42 @@ const ActionButton = ({ videoSource, attributes }: ActionButtonProps) => {
     setLoading(true);
     setStatus('Uploading..');
 
-    const formData = new FormData();
-    formData.append('file', file);
+    const chunks = splitFile(file);
+    const uploadId = uuidv4();
+    const fileExtension = file.name.split('.').pop();
 
     try {
-      const uploadResponse = await axios.post('/asaid-strapi-plugin/upload', formData);
-      if (uploadResponse.data.success) {
-        setStatus('Processing..');
-        const processResponse = await axios.post('/asaid-strapi-plugin/process-media', {
-          videoSource,
-          attributes,
-          tempFolder: uploadResponse.data.tempFolder,
-          tempSourcePath: uploadResponse.data.tempSourcePath,
-        });
-        if (processResponse.data.success) {
-          alert('File processed and uploaded successfully');
-          window.location.reload();
-        } else {
-          alert(`Error processing file: ${processResponse.data.error}`);
+      let uploadResponse;
+      for (let i = 0; i < chunks.length; i++) {
+        const chunk = chunks[i];
+        const formData = new FormData();
+        formData.append('file', chunk);
+        formData.append('uploadId', uploadId);
+        formData.append('chunkIndex', i.toString());
+        formData.append('totalChunks', chunks.length.toString());
+        formData.append('fileExtension', fileExtension);
+
+        uploadResponse = await axios.post('/asaid-strapi-plugin/upload', formData);
+        
+        if (!uploadResponse.data.success) {
+          alert(`Error uploading file chunk: ${uploadResponse.data.error}`);
+          throw new Error(`Error uploading file chunk: ${uploadResponse.data.error}`);
         }
+      }
+  
+      setStatus('Processing..');
+      const processResponse = await axios.post('/asaid-strapi-plugin/process-media', {
+        videoSource,
+        attributes,
+        tempFolder: uploadResponse?.data?.tempFolder,
+        tempSourcePath: uploadResponse?.data?.tempSourcePath,
+      });
+      
+      if (processResponse.data.success) {
+        alert('File processed and uploaded successfully');
+        window.location.reload();
       } else {
-        alert(`Error uploading file: ${uploadResponse.data.error}`);
+        alert(`Error processing file: ${processResponse.data.error}`);
       }
     } catch (error) {
       console.error('Error uploading or processing file:', error);

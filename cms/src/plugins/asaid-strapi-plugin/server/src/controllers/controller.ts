@@ -29,10 +29,11 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
   async uploadMedia(ctx: any) {
     try {
       const { file } = ctx.request.files;
+      const { uploadId, chunkIndex, totalChunks, fileExtension } = ctx.request.body;
       const result = await strapi
         .plugin('asaid-strapi-plugin')
         .service('service')
-        .uploadMedia(file);
+        .uploadMedia(file, uploadId, parseInt(chunkIndex, 10), parseInt(totalChunks, 10), fileExtension);
       ctx.body = result;
     } catch (error) {
       ctx.throw(400, error.message);
@@ -46,7 +47,7 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
       const result = await strapi
         .plugin('asaid-strapi-plugin')
         .service('service')
-        .processMedia(videoSource, attributes, tempFolder, tempSourcePath);
+        .processMedia(videoSource, attributes, tempFolder, tempSourcePath );
       ctx.body = result;
     } catch (error) {
       ctx.throw(400, error.message);

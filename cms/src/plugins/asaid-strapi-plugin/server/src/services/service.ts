@@ -3,7 +3,6 @@ import { Client } from 'minio';
 import * as fs from 'fs';
 import * as path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
-import { v4 as uuidv4 } from 'uuid';
 
 const postPerPage = 10;
 
@@ -30,17 +29,34 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
    * Upload Media to Temporary Folder
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async uploadMedia(file: any) {
-    const tempFolder = `/tmp/${uuidv4()}`;
+  async uploadMedia(file: any, uploadId: string, chunkIndex: number, totalChunks: number, fileExtension: string) {
+    const tempFolder = `/tmp/${uploadId}`;
     const tempSourceFolder = `${tempFolder}/source`;
-    const sourceFileName = file.originalFilename;
-    const tempSourcePath = `${tempSourceFolder}/${sourceFileName}`;
+    const chunkFileName = `chunk_${chunkIndex}`;
+    const tempChunkPath = `${tempSourceFolder}/${chunkFileName}`;
 
     try {
       await fs.promises.mkdir(tempFolder, { recursive: true });
       await fs.promises.mkdir(tempSourceFolder, { recursive: true });
-      await fs.promises.rename(file.filepath, tempSourcePath);
-      return { success: true, tempFolder, tempSourcePath };
+      await fs.promises.rename(file.filepath, tempChunkPath);
+  
+      if (chunkIndex === totalChunks - 1) {
+        // Combine chunks into a single file
+        const combinedFilePath = `${tempSourceFolder}/combined.${fileExtension}`;
+        const writeStream = fs.createWriteStream(combinedFilePath);
+  
+        for (let i = 0; i < totalChunks; i++) {
+          const chunkPath = `${tempSourceFolder}/chunk_${i}`;
+          const data = fs.readFileSync(chunkPath);
+          writeStream.write(data);
+          fs.unlinkSync(chunkPath); // Delete chunk after writing
+        }
+  
+        writeStream.end();
+        return { success: true, tempFolder, tempSourcePath: combinedFilePath };
+      }
+  
+      return { success: true };
     } catch (error) {
       console.error('Error during upload media:', error);
       throw error;
