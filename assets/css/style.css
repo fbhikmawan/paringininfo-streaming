@@ -2115,10 +2115,14 @@ label {
     color: #e4d804;
     margin-right: 7px;
 }
-.episode-watch-wrap .card-body ul li a {
+.episode-watch-wrap .card-body ul li a,
+.episode-watch-wrap .card-body ul li span {
     font-size: 16px;
     font-weight: 600;
     color: #c8c8c8;
+}
+.episode-watch-wrap .card-body ul li a {
+    cursor: pointer;
 }
 .episode-watch-wrap .card-body ul li a i {
     font-size: 12px;
