@@ -20,7 +20,6 @@ export default function EpisodeArea({ video }: Props) {
   useEffect(() => {
     async function fetchSeasons() {
       const seasonsData = await getVideoSeasons(video.id);
-      console.log('Seasons:', seasonsData);
       setSeasons(seasonsData.seriesSeasons);
     }
     fetchSeasons();
