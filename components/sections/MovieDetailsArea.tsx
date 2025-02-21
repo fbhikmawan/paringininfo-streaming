@@ -30,26 +30,20 @@ export default function MovieDetailsArea({ video }: Props) {
 
   return (
     <>
-      {video.video_source?.trailerObject ? (
-        <VideoPlayerModal
-          modalId="trailerModal"
-          videoObject={video.video_source.trailerObject}
-          posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
-        >
-        </VideoPlayerModal>
-      ) : (
-        <></>
-      )}
-      {video.video_source?.videoObject ? (
-        <VideoPlayerModal
-          modalId="videoModal"
-          videoObject={video.video_source.videoObject}
-          posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
-        >
-        </VideoPlayerModal>
-      ) : (
-        <></>
-      )}
+      {['trailerObject', 'videoObject'].map((key, index) => {
+        const videoObject = key === 'trailerObject' ? video.video_source?.trailerObject : video.video_source?.videoObject;
+        if (!videoObject) return null;
+
+        const modalId = key === 'trailerObject' ? 'trailerModal' : 'videoModal';
+        return (
+          <VideoPlayerModal
+            key={index}
+            modalId={modalId}
+            videoObject={videoObject}
+            posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
+          />
+        );
+      })}
       <section className="movie-details-area">
         <Image src="/assets/img/bg/movie_details_bg.jpg" alt="Movie Details Background" fill style={{ objectFit: 'cover' }} />
         <div className="container">
@@ -62,11 +56,11 @@ export default function MovieDetailsArea({ video }: Props) {
           <div className="row align-items-center position-relative">
             <div className="col-xl-3 col-lg-4 align-self-start">
               <div className="movie-details-img">
-                <Image 
+                <Image
                   src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
-                  alt={video.name} 
-                  width={video.poster?.width} 
-                  height={video.poster?.height} 
+                  alt={video.name}
+                  width={video.poster?.width}
+                  height={video.poster?.height}
                 />
                 <a
                   className="popup-video"
@@ -74,14 +68,14 @@ export default function MovieDetailsArea({ video }: Props) {
                   data-target="#videoPlayerModal"
                   data-disabled={!video.video_source?.videoLink}
                 >
-                  <Image src={imgPlayIcon} alt={ video.name } />
+                  <Image src={imgPlayIcon} alt={video.name} />
                 </a>
               </div>
             </div>
             <div className="col-xl-6 col-lg-8">
               <div className="movie-details-content">
                 {label && <h5>{label}</h5>}
-                <h2>{ video.name }</h2>
+                <h2>{video.name}</h2>
                 <div className="banner-meta">
                   <ul>
                     <li className="quality">
@@ -95,8 +89,8 @@ export default function MovieDetailsArea({ video }: Props) {
                       ))}
                     </li>
                     <li className="release-time">
-                      <span><FontAwesomeIcon icon={faCalendarAlt} /> { video.releaseYear }</span>
-                      <span><FontAwesomeIcon icon={faClock} /> { video.duration } minutes</span>
+                      <span><FontAwesomeIcon icon={faCalendarAlt} /> {video.releaseYear}</span>
+                      <span><FontAwesomeIcon icon={faClock} /> {video.duration} minutes</span>
                     </li>
                   </ul>
                 </div>
@@ -126,7 +120,7 @@ export default function MovieDetailsArea({ video }: Props) {
                       ) : (
                         <></>
                       )}
-                        {video.video_source?.videoLink ? (
+                      {video.video_source?.videoLink ? (
                         <a
                           className="btn"
                           data-toggle="modal"
@@ -134,17 +128,17 @@ export default function MovieDetailsArea({ video }: Props) {
                         >
                           <FontAwesomeIcon icon={faPlay} /> Watch Now
                         </a>
-                        ) : (
+                      ) : (
                         <>
                           {video.video_type?.nameSlug !== 'series' ? (
-                          <a className="btn disabled" href='#'>
-                            <FontAwesomeIcon icon={faPlay} /> Available Soon
-                          </a>
+                            <a className="btn disabled" href='#'>
+                              <FontAwesomeIcon icon={faPlay} /> Available Soon
+                            </a>
                           ) : (
-                          <></>
+                            <></>
                           )}
                         </>
-                        )}
+                      )}
                     </li>
                   </ul>
                 </div>
