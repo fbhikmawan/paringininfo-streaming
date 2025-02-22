@@ -60,8 +60,7 @@ export const getTotalViewCount = async (): Promise<number> => {
         page++;
       }
     }
-
-    console.log(`Total view count: ${totalViewCount}`);
+    
     return totalViewCount;
   } catch (error) {
     console.error('Error fetching total view count:', error);
