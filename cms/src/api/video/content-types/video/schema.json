@@ -45,12 +45,6 @@
       "target": "api::video-type.video-type",
       "inversedBy": "videos"
     },
-    "video_ratings": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::video-rating.video-rating",
-      "mappedBy": "video"
-    },
     "video_categories": {
       "type": "relation",
       "relation": "manyToMany",

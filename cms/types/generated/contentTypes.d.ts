@@ -430,42 +430,6 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiMemberMember extends Struct.CollectionTypeSchema {
-  collectionName: 'members';
-  info: {
-    displayName: 'Member';
-    pluralName: 'members';
-    singularName: 'member';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    email: Schema.Attribute.Email &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::member.member'
-    > &
-      Schema.Attribute.Private;
-    provider: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    username: Schema.Attribute.String & Schema.Attribute.Required;
-    video_ratings: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::video-rating.video-rating'
-    >;
-  };
-}
-
 export interface ApiSeriesEpisodeSeriesEpisode
   extends Struct.CollectionTypeSchema {
   collectionName: 'series_episodes';
@@ -610,37 +574,6 @@ export interface ApiVideoQualityVideoQuality
   };
 }
 
-export interface ApiVideoRatingVideoRating extends Struct.CollectionTypeSchema {
-  collectionName: 'video_ratings';
-  info: {
-    description: '';
-    displayName: 'Video Rating';
-    pluralName: 'video-ratings';
-    singularName: 'video-rating';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::video-rating.video-rating'
-    > &
-      Schema.Attribute.Private;
-    member: Schema.Attribute.Relation<'manyToOne', 'api::member.member'>;
-    publishedAt: Schema.Attribute.DateTime;
-    score: Schema.Attribute.Integer & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    video: Schema.Attribute.Relation<'manyToOne', 'api::video.video'>;
-  };
-}
-
 export interface ApiVideoSourceVideoSource extends Struct.CollectionTypeSchema {
   collectionName: 'video_sources';
   info: {
@@ -759,10 +692,6 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     video_quality: Schema.Attribute.Relation<
       'manyToOne',
       'api::video-quality.video-quality'
-    >;
-    video_ratings: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::video-rating.video-rating'
     >;
     video_source: Schema.Attribute.Relation<
       'oneToOne',
@@ -1294,12 +1223,10 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
       'api::global.global': ApiGlobalGlobal;
-      'api::member.member': ApiMemberMember;
       'api::series-episode.series-episode': ApiSeriesEpisodeSeriesEpisode;
       'api::series-season.series-season': ApiSeriesSeasonSeriesSeason;
       'api::video-category.video-category': ApiVideoCategoryVideoCategory;
       'api::video-quality.video-quality': ApiVideoQualityVideoQuality;
-      'api::video-rating.video-rating': ApiVideoRatingVideoRating;
       'api::video-source.video-source': ApiVideoSourceVideoSource;
       'api::video-type.video-type': ApiVideoTypeVideoType;
       'api::video.video': ApiVideoVideo;
