@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 type ActionButtonProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   videoSource: any;
-  attributes: string[];
+  type: 'video' | 'trailer';
 };
 
 const bigBtn = {
@@ -20,7 +20,7 @@ const smBtn = {
 
 const MAX_CHUNK_SIZE = 50 * 1024 * 1024; // 50MB
 
-const ActionButton = ({ videoSource, attributes }: ActionButtonProps) => {
+const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<string>('Upload Media');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -71,7 +71,7 @@ const ActionButton = ({ videoSource, attributes }: ActionButtonProps) => {
       setStatus('Processing..');
       const processResponse = await axios.post('/asaid-strapi-plugin/process-media', {
         videoSource,
-        attributes,
+        attributes: [type === 'video' ? 'videoObject' : 'trailerObject'],
         tempFolder: uploadResponse?.data?.tempFolder,
         tempSourcePath: uploadResponse?.data?.tempSourcePath,
       });
@@ -97,7 +97,8 @@ const ActionButton = ({ videoSource, attributes }: ActionButtonProps) => {
     }
   };
 
-  const uploadedAttribute = attributes.find(attr => videoSource[attr]);
+  const uploadedAttribute = videoSource[type === 'video' ? 'videoObject' : 'trailerObject'];
+  const link = videoSource[type === 'video' ? 'videoLink' : 'trailerLink'];
 
   return (
     <Box>
@@ -121,15 +122,6 @@ const ActionButton = ({ videoSource, attributes }: ActionButtonProps) => {
           >
             <Typography variant="pi">Uploaded</Typography>
           </Button>
-
-          <LinkButton
-            href={videoSource[uploadedAttribute]}
-            isexternal="true"
-            style={smBtn}
-            variant="secondary"
-          >
-            Visit
-          </LinkButton>
         </Flex>
       ) : loading ? 
         (
@@ -150,7 +142,7 @@ const ActionButton = ({ videoSource, attributes }: ActionButtonProps) => {
           >
             <Button
               startIcon={<Upload />}
-              variant="secondary"
+              variant={link ? "danger-light" : null}
               disabled={loading}
               onClick={handleUpload}
             >
@@ -163,8 +155,19 @@ const ActionButton = ({ videoSource, attributes }: ActionButtonProps) => {
               ref={inputRef}
               style={{ display: 'none' }}
             />
+            {link && (
+              <LinkButton
+                href={link}
+                isexternal="true"
+                style={smBtn}
+                variant="secondary"
+              >
+                Visit
+              </LinkButton>
+            )}
           </Flex>
-        )}
+        )
+      }
     </Box>
   );
 };

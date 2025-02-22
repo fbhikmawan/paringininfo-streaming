@@ -85,17 +85,9 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
 
       await Promise.all(uploadPromises);
 
-      const fileUrl = `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${objectFolder}/stream.m3u8`;
-
-      const updateData = attributes.reduce((acc, attr) => {
-        if (attr.includes('Link')) {
-          acc[attr] = fileUrl;
-        } else if (attr.includes('Object')) {
-          acc[attr] = `${objectFolder}/stream.m3u8`;
-        }
-        return acc;
-      }, {});
-
+      const updateData = {
+        [attributes[0]]: `${objectFolder}/stream.m3u8`
+      };
       const updatedVideoSource = await strapi.query('api::video-source.video-source').update({
         where: { documentId: videoSource.documentId },
         data: updateData,
