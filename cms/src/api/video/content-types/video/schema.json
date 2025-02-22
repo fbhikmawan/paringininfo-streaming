@@ -80,6 +80,11 @@
       "relation": "oneToMany",
       "target": "api::series-episode.series-episode",
       "mappedBy": "video"
+    },
+    "viewCount": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
     }
   }
 }

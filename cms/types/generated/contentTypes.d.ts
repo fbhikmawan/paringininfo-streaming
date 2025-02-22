@@ -772,6 +772,14 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::video-type.video-type'
     >;
+    viewCount: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
   };
 }
 
