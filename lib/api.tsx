@@ -21,6 +21,54 @@ const fetchData = async (url: string) => {
   return response.json();
 };
 
+// New function to increment view count
+export const incrementViewCount = async (videoId: string, currentViewCount: number) => {
+  try {
+    await fetch(`${baseURL}/api/videos/${videoId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+      body: JSON.stringify({
+        data: {
+          viewCount: currentViewCount + 1,
+        },
+      }),
+    });
+  } catch (error) {
+    console.error('Error incrementing view count:', error);
+  }
+};
+
+// New function to get the total count of all videos
+export const getTotalViewCount = async (): Promise<number> => {
+  try {
+    let totalViewCount = 0;
+    let page = 1;
+    const pageSize = 25;
+    let hasMore = true;
+
+    while (hasMore) {
+      const data = await fetchData(`api/videos?pagination[page]=${page}&pagination[pageSize]=${pageSize}`);
+      const videos = data.data as PopulatedVideo[];
+      totalViewCount += videos.reduce((sum, video) => sum + (video.viewCount || 0), 0);
+
+      if (videos.length < pageSize) {
+        hasMore = false;
+      } else {
+        page++;
+      }
+    }
+
+    console.log(`Total view count: ${totalViewCount}`);
+    return totalViewCount;
+  } catch (error) {
+    console.error('Error fetching total view count:', error);
+    return 0;
+  }
+};
+
 // ***
 // APIs for Videos
 // ***

@@ -55,6 +55,7 @@ export interface Video extends BaseFields {
   duration: number;
   nameSlug: string;
   description: DescriptionElement[];
+  viewCount?: number;
 }
 
 export interface PopulatedVideo extends Video {

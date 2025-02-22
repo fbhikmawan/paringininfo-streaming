@@ -1,7 +1,11 @@
+'use client'
+
+import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import VideoPlayerModal from '@/components/modals/VideoPlayerModal';
+import { incrementViewCount } from '@/lib/api';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faClock } from '@fortawesome/free-regular-svg-icons';
@@ -16,6 +20,10 @@ interface Props {
 }
 
 export default function MovieDetailsArea({ video }: Props) {
+  useEffect(() => {
+    incrementViewCount(video.documentId, video.viewCount || 0);
+  }, [video.documentId, video.viewCount]);
+
   const getLabel = (video: PopulatedVideo) => {
     const labelsMap: Record<string, { text: string }> = {
       movies: { text: 'Must Watch' },

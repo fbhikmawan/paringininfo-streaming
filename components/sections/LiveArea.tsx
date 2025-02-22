@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
+import { getTotalViewCount } from '@/lib/api';
+
 import imgLive from '../../assets/img/images/live_img.png'
 
 interface OdometerProps {
@@ -69,10 +71,31 @@ const Odometer: React.FC<OdometerProps> = ({ count, duration = 1000 }) => {
     };
   }, [count, duration, hasAnimated]);
 
-  return <span ref={ref}>{currentCount}</span>;
+  const formatCount = (value: number) => {
+    if (value >= 1000000) {
+      return (value / 1000000).toFixed(1) + 'M+';
+    } else if (value >= 1000) {
+      return (value / 1000).toFixed(1) + 'K+';
+    } else {
+      return value.toString();
+    }
+  };
+
+  return <span ref={ref}>{formatCount(currentCount)}</span>;
 };
 
 export default function LiveArea() {
+  const [totalVideoCount, setTotalVideoCount] = useState(0);
+
+  useEffect(() => {
+    const fetchTotalVideoCount = async () => {
+      const count = await getTotalViewCount();
+      setTotalVideoCount(count);
+    };
+
+    fetchTotalVideoCount();
+  }, []);
+
   return (
     <section className="live-area live-bg fix">
       <Image src="/assets/img/bg/live_bg.jpg" alt="live" fill={true} style={{ objectFit: 'cover' }} />
@@ -90,8 +113,8 @@ export default function LiveArea() {
                   <h2>HD</h2>
                 </div>
                 <div className="active-customer">
-                  <h4><Odometer count={50} duration={3000} />+</h4>
-                  <p>Active Customer</p>
+                  <h4><Odometer count={totalVideoCount} duration={3000} />+</h4>
+                  <p>Audience views!</p>
                 </div>
               </div>
               <Link href="/movies" className="btn"><FontAwesomeIcon icon={faPlay} /> Watch Now</Link>
