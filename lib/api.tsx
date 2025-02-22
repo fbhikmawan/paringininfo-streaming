@@ -89,6 +89,18 @@ export const getAllVideoByVideoLinkNull = async (): Promise<{ videos: PopulatedV
   };
 };
 
+export const getNewReleaseVideos = async (currentDate: string): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
+  const date = new Date(currentDate);
+  date.setDate(date.getDate() - 30);
+  const formattedDate = date.toISOString();
+
+  const data = await fetchData(`api/videos?filters[updatedAt][$gte]=${formattedDate}&populate=*`);
+  return {
+    videos: data.data,
+    pagination: data.meta.pagination,
+  };
+};
+
 // ***
 // APIs for Video Categories
 // ***

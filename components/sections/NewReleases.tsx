@@ -9,11 +9,11 @@ import CustomCarousel from '../scripts/CustomCarousel';
 import CarouselItemUpcoming from '../elements/CarouselItemUpcoming';
 
 import { PopulatedVideo, VideoType } from '@/types/videos';
-import { getAllVideoByVideoLinkNull } from '@/lib/api';
+import { getNewReleaseVideos } from '@/lib/api';
 
 const FADE_TIMEOUT = 300;
 
-export default function UpComing() {
+export default function NewReleases() {
   const [activeTab, setActiveTab] = useState<string>('');
   const [fadeState, setFadeState] = useState(true);
   const [videoDetails, setVideoDetails] = useState<PopulatedVideo[]>([]);
@@ -21,7 +21,8 @@ export default function UpComing() {
 
   useEffect(() => {
     async function fetchData() {
-      const { videos } = await getAllVideoByVideoLinkNull();
+      const currentDate = new Date().toISOString();
+      const { videos } = await getNewReleaseVideos(currentDate);
       setVideoDetails(videos);
       
       const filteredVideoTypes = videos.map(video => video.video_type).filter((type, index, self) => type && self.findIndex(t => t?.nameSlug === type?.nameSlug) === index) as VideoType[];
@@ -61,7 +62,7 @@ export default function UpComing() {
           <div className="col-lg-6">
             <div className="section-title text-center text-lg-left">
               <span className="sub-title">ONLINE STREAMING</span>
-              <h2 className="title">Upcoming Videos</h2>
+              <h2 className="title">New Releases</h2>
             </div>
           </div>
           <div className="col-lg-6">
