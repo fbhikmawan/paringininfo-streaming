@@ -29,8 +29,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const metadataBase = process.env.NEXT_PUBLIC_METADATA_BASE_URL || 'http://localhost:3000';
 
   return {
-    title: "ParinginInfo | Online Movies, Series, Sports & Live Streaming",
-    description: "Discover endless entertainment with ParinginInfo. Stream movies, series, and live events in high quality!",
+    title: "Sanggam Streaming | Online Movies, Series, Sports & Live Streaming",
+    description: "Discover endless entertainment with Sanggam Streaming. Stream movies, series, and live events in high quality!",
     metadataBase: new URL(metadataBase),
     alternates: {
       canonical: '/',
@@ -38,9 +38,6 @@ export async function generateMetadata(): Promise<Metadata> {
         'en-US': '/',
         'id-ID': '/id',
       },
-    },
-    openGraph: {
-      images: '/og-image.png',
     },
   };
 }

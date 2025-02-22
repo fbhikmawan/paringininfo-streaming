@@ -45,11 +45,11 @@ export async function generateMetadata({
     const ogImage = video.poster ? (process.env.NEXT_PUBLIC_STRAPI_URL || '') + video.poster.url : '';
 
     return {
-      title: `${video.name} (${video.releaseYear}) | ${videoType.name} | ParinginInfo`,
+      title: `${video.name} (${video.releaseYear}) | ${videoType.name} | Sanggam Streaming`,
       description: truncatedDescription,
       keywords: `${video.name}, ${videoType.name}, ParinginInfo, Online Movies, Online Series, Online Sports, Live Streaming`,
       openGraph: {
-        title: `${video.name} (${video.releaseYear}) | ${videoType.name} | ParinginInfo`,
+        title: `${video.name} (${video.releaseYear}) | ${videoType.name} | Sanggam Streaming`,
         description: truncatedDescription,
         images: [
           {

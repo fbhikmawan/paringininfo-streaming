@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link'
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,7 +9,7 @@ import { faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faTwitter, faPinterestP, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
 // Template Elements
-import ImageLogo from '../elements/ImageLogo';
+import ImageLogo from '@/components/elements/ImageLogo';
 
 export default function Header() {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
