@@ -21,7 +21,7 @@ const fetchData = async (url: string) => {
   return response.json();
 };
 
-// New function to increment view count
+// Increment view count
 export const incrementViewCount = async (videoId: string, currentViewCount: number) => {
   try {
     await fetch(`${baseURL}/api/videos/${videoId}`, {
@@ -41,7 +41,7 @@ export const incrementViewCount = async (videoId: string, currentViewCount: numb
   }
 };
 
-// New function to get the total count of all videos
+// Get the total count of all videos
 export const getTotalViewCount = async (): Promise<number> => {
   try {
     let totalViewCount = 0;
@@ -67,6 +67,14 @@ export const getTotalViewCount = async (): Promise<number> => {
     console.error('Error fetching total view count:', error);
     return 0;
   }
+};
+
+// Get the top 10 most viewed videos
+export const getTopViewedVideos = async (): Promise<{ videos: PopulatedVideo[] }> => {
+  const data = await fetchData(`api/videos?sort=viewCount:desc&pagination[pageSize]=10&populate=*`);
+  return {
+    videos: data.data as PopulatedVideo[],
+  };
 };
 
 // ***

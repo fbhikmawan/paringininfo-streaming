@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 import { PopulatedVideo } from '@/types/videos';
@@ -29,7 +28,6 @@ export default function CustomCarouselItem({ item }: CustomCarouselProps) {
             <li><span className="quality">{item.video_quality?.name}</span></li>
             <li>
               <span className="duration"><FontAwesomeIcon icon={faClock} /> {item.duration} min</span>
-              <span className="rating"><FontAwesomeIcon icon={faThumbsUp} /> {item.video_ratings[0]?.score || 0}</span>
             </li>
           </ul>
         </div>

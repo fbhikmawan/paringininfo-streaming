@@ -4,32 +4,23 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { PopulatedVideo, VideoType } from '@/types/videos';
-import { getAllVideo } from '@/lib/api';
+import { getTopViewedVideos } from '@/lib/api';
 
-interface PopulatedVideoWithRating extends PopulatedVideo {
-  averageRating: number;
-}
-
-export default function TopRatedMovie() {
+export default function MostViewedVideos() {
   const [activeTab, setActiveTab] = useState<string>('*');
-  const [filteredVideos, setFilteredVideos] = useState<PopulatedVideoWithRating[]>([]);
+  const [initialVideos, setInitialVideos] = useState<PopulatedVideo[]>([]);
+  const [filteredVideos, setFilteredVideos] = useState<PopulatedVideo[]>([]);
   const [videoTypes, setVideoTypes] = useState<VideoType[]>([]);
 
   const fetchData = useCallback(async () => {
     try {
-      const { videos } = await getAllVideo();
-      const filteredVideos = videos
-        .map(video => {
-          const averageRating = video.video_ratings.reduce((acc, rating) => acc + rating.score, 0) / video.video_ratings.length;
-          return { ...video, averageRating };
-        })
-        .filter(video => video.averageRating > 3 && video.video_source?.videoLink !== null);
-      setFilteredVideos(filteredVideos);
+      const { videos } = await getTopViewedVideos();
+      setInitialVideos(videos);
+      setFilteredVideos(videos);
 
-      const uniqueVideoTypes = filteredVideos
+      const uniqueVideoTypes = videos
         .map(video => video.video_type)
         .filter((type, index, self) => type && self.findIndex(t => t?.nameSlug === type?.nameSlug) === index) as VideoType[];
       setVideoTypes(uniqueVideoTypes);
@@ -45,9 +36,9 @@ export default function TopRatedMovie() {
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
     if (tab === '*') {
-      setFilteredVideos(filteredVideos);
+      setFilteredVideos(initialVideos);
     } else {
-      const filtered = filteredVideos.filter(video => video.video_type?.nameSlug === tab);
+      const filtered = initialVideos.filter(video => video.video_type?.nameSlug === tab);
       setFilteredVideos(filtered);
     }
   };
@@ -64,7 +55,7 @@ export default function TopRatedMovie() {
           <div className="col-lg-8">
             <div className="section-title text-center mb-50">
               <span className="sub-title">ONLINE STREAMING</span>
-              <h2 className="title">Top Rated Movies</h2>
+              <h2 className="title">Most Viewed Videos</h2>
             </div>
           </div>
         </div>
@@ -104,7 +95,6 @@ export default function TopRatedMovie() {
                     <li><span className={`quality ${video.video_quality?.nameSlug}`}>{video.video_quality?.name.toUpperCase()}</span></li>
                     <li>
                       <span className="duration"><FontAwesomeIcon icon={faClock} /> {video.duration} min</span>
-                      <span className="rating"><FontAwesomeIcon icon={faThumbsUp} /> {video.averageRating}</span>
                     </li>
                   </ul>
                 </div>

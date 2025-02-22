@@ -1,9 +1,5 @@
 import { BaseFields, DescriptionElement, Image, PaginationMeta } from './bases'
 
-export interface VideoRating extends BaseFields {
-  score: number;
-}
-
 export interface VideoSource extends BaseFields {
   name: string;
   video?: Video;
@@ -61,7 +57,6 @@ export interface Video extends BaseFields {
 export interface PopulatedVideo extends Video {
   poster?: Image;
   video_type?: VideoType;
-  video_ratings: VideoRating[];
   video_categories: VideoCategory[];
   video_quality?: VideoQuality;
   video_source?: VideoSource;

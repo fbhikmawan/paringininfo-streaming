@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { PopulatedVideo } from "@/types/videos";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 interface VideoItemProps {
@@ -24,11 +23,6 @@ export default function VideoItem({ video }: VideoItemProps) {
             />
           )}
           <ul className="overlay-btn">
-            <li className="rating">
-              {[...Array(Math.floor(video.video_ratings[0]?.score || 0)).keys()].map(() => (
-                <i key={Math.random()} className="fas fa-star"></i>
-              ))}
-            </li>
             <li><Link href={`/${video.video_type?.nameSlug}/${video.nameSlug}`} className="btn">Details</Link></li>
           </ul>
         </div>
@@ -42,7 +36,6 @@ export default function VideoItem({ video }: VideoItemProps) {
               <li><span className={`quality ${video.video_quality?.name.toLowerCase()}`}>{video.video_quality?.name.toUpperCase()}</span></li>
               <li>
                 <span className="duration"><FontAwesomeIcon icon={faClock} /> {video.duration} min</span>
-                <span className="rating"><FontAwesomeIcon icon={faThumbsUp} /> {(video.video_ratings[0]?.score || 0).toFixed(1)}</span>
               </li>
             </ul>
           </div>
