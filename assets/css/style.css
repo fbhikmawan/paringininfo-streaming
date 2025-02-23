@@ -1169,9 +1169,6 @@ label {
     justify-content: flex-end;
     flex-wrap: wrap;
 }
-.movie-item {
-    height: 572px;
-}
 .movie-bg {
     position: relative;
     z-index: 1;
