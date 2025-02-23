@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import VideoPlayerModal from '@/components/modals/VideoPlayerModal';
+import YouTubeEmbedModal from '@/components/modals/YouTubeEmbedModal';
 import { incrementViewCount } from '@/lib/api';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,21 +37,46 @@ export default function MovieDetailsArea({ video }: Props) {
   };
   const label = getLabel(video);
 
+  const extractYouTubeId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  };
+
   return (
     <>
       {['trailerObject', 'videoObject'].map((key, index) => {
         const videoObject = key === 'trailerObject' ? video.video_source?.trailerObject : video.video_source?.videoObject;
-        if (!videoObject) return null;
-
+        const videoLink = key === 'trailerObject' ? video.video_source?.trailerLink : video.video_source?.videoLink;
         const modalId = key === 'trailerObject' ? 'trailerModal' : 'videoModal';
-        return (
-          <VideoPlayerModal
-            key={index}
-            modalId={modalId}
-            videoObject={videoObject}
-            posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
-          />
-        );
+
+        if (videoObject) {
+          return (
+            <VideoPlayerModal
+              key={index}
+              modalId={modalId}
+              videoObject={videoObject}
+              posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
+            />
+          );
+        } else if (videoLink) {
+          const videoId = extractYouTubeId(videoLink);
+          return (
+            <YouTubeEmbedModal
+              key={index}
+              modalId={modalId}
+              videoId={videoId || ''}
+            />
+          );
+        } else if (key === 'videoObject') {
+          return (
+            <div key={index} className="available-soon">
+              Available Soon
+            </div>
+          );
+        } else {
+          return null;
+        }
       })}
       <section className="movie-details-area">
         <Image src="/assets/img/bg/movie_details_bg.jpg" alt="Movie Details Background" fill style={{ objectFit: 'cover' }} />
