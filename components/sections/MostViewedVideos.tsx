@@ -2,11 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { PopulatedVideo, VideoType } from '@/types/videos';
 import { getTopViewedVideos } from '@/lib/api';
+import VideoItem from '@/components/elements/VideoItem';
 
 export default function MostViewedVideos() {
   const [activeTab, setActiveTab] = useState<string>('*');
@@ -71,34 +69,8 @@ export default function MostViewedVideos() {
         </div>
         <div className="row tr-movie-active justify-content-center">
           {filteredVideos.map((video, index) => (
-            <div key={index} className="col-xl-3 col-lg-4 col-sm-6 movie-item mb-60 d-flex flex-column">
-              <div className="movie-poster">
-                <Link href={`/${video.video_type?.nameSlug}/${video.nameSlug}`}>
-                  <Image 
-                  src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
-                  alt={video.name} 
-                  width={video.poster?.width} 
-                  height={video.poster?.height} />
-                </Link>
-              </div>
-              <div className="movie-content">
-                <div className="top">
-                  <h5 className="title">
-                    <Link href={`/${video.video_type?.nameSlug}/${video.nameSlug}`}>
-                      {video.name}
-                    </Link> 
-                  </h5>
-                  <span className="date">{video.releaseYear}</span>
-                </div>
-                <div className="bottom">
-                  <ul>
-                    <li><span className={`quality ${video.video_quality?.nameSlug}`}>{video.video_quality?.name.toUpperCase()}</span></li>
-                    <li>
-                      <span className="duration"><FontAwesomeIcon icon={faClock} /> {video.duration} min</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            <div key={index} className="col-xl-3 col-lg-4 col-sm-6 movie-item movie-item-three mb-50">
+              <VideoItem video={video} />
             </div>
           ))}
           {filteredVideos.length === 0 && (

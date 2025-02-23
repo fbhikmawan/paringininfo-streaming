@@ -6,7 +6,7 @@ import Image from 'next/image';
 // Template Scripts
 import Fade from '../scripts/Fade';
 import CustomCarousel from '../scripts/CustomCarousel';
-import CarouselItemUpcoming from '../elements/CarouselItemUpcoming';
+import VideoItem from '@/components/elements/VideoItem';
 
 import { PopulatedVideo, VideoType } from '@/types/videos';
 import { getNewReleaseVideos } from '@/lib/api';
@@ -93,7 +93,7 @@ export default function NewReleases() {
           <div className="tab-pane fade show active" id="activeTab" role="tabpanel" aria-labelledby="activeTab-tab">
             <Fade in={fadeState} timeout={FADE_TIMEOUT}>
               <CustomCarousel items={getActiveItems()}>
-                {(item, index) => <CarouselItemUpcoming key={index} item={item} />}
+                {(item, index) => <VideoItem key={index} video={item} />}
               </CustomCarousel>
             </Fade>
           </div>

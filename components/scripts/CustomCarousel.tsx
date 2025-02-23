@@ -51,7 +51,7 @@ export default function CustomCarousel({ items, children }: CustomCarouselProps)
       customTransition="transform 300ms ease-in-out"
       transitionDuration={300}
       containerClass="ucm-active"
-      itemClass="movie-item mr-3 mb-50 d-flex flex-column"
+      itemClass="movie-item movie-item-three px-15 mb-50"
       arrows={true}
     >
       {items.map((item, index) => children(item, index))}

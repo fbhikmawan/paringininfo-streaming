@@ -63,7 +63,9 @@ export default function ContentsArea({
         </div>
         <div className="row tr-movie-active">
           {filteredVideos.map((video) => (
-            <VideoItem key={video.nameSlug} video={video} />
+            <div key={video.nameSlug} className='col-xl-3 col-lg-4 col-sm-6 movie-item movie-item-three mb-50' >
+              <VideoItem video={video} />
+            </div>
           ))}
           {filteredVideos.length === 0 && (
             <div className="col-12">

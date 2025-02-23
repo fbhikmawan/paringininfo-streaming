@@ -638,6 +638,13 @@
 	padding-right: 100px;
 }
 
+
+/*-- Padding Horizontal --*/
+.px-15 {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
 /* font weight */
 .f-700{font-weight: 700;}
 .f-600{font-weight: 600;}
