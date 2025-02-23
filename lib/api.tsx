@@ -70,7 +70,7 @@ export const getTotalViewCount = async (): Promise<number> => {
 
 // Get the top 10 most viewed videos
 export const getTopViewedVideos = async (): Promise<{ videos: PopulatedVideo[] }> => {
-  const data = await fetchData(`api/videos?sort=viewCount:desc&pagination[pageSize]=10&populate=*`);
+  const data = await fetchData(`api/videos?sort=viewCount:desc&pagination[pageSize]=8&populate=*`);
   return {
     videos: data.data as PopulatedVideo[],
   };
