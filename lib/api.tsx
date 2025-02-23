@@ -1,5 +1,6 @@
 import { PaginationMeta } from "@/types/bases";
 import { PopulatedVideo, VideoType, Season, Episode } from "@/types/videos";
+import { AdBanner } from "@/types/ads";
 
 export interface VideoFilters {
   [key: string]: string | number | boolean | { [subKey: string]: string | number | boolean };
@@ -166,6 +167,16 @@ export const getNewReleaseVideos = async (currentDate: string): Promise<{ videos
   return {
     videos: data.data,
     pagination: data.meta.pagination,
+  };
+};
+
+// ***
+// APIs for Advertisement Banners
+// ***
+export const getAdBanners = async (): Promise<{ adBanners: AdBanner[] }> => {
+  const data = await fetchData(`api/ad-banners?populate=*`);
+  return {
+    adBanners: data.data as AdBanner[],
   };
 };
 

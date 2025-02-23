@@ -29,6 +29,7 @@
 18. Contact
 19. Footer
 20. Preloader
+21. Advertisements
 
 */
 
@@ -3006,4 +3007,14 @@ label {
 }
 .payment-method-img img {
     max-width: 100%;
+}
+
+
+/* 21. Advertisements */
+.banner728x90 {
+    min-height: 90px;
+}
+.banner320x50 {
+    width: auto;
+    min-height: 50px;
 }

@@ -1,18 +1,19 @@
 'use client'
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import VideoPlayerModal from '@/components/modals/VideoPlayerModal';
 import YouTubeEmbedModal from '@/components/modals/YouTubeEmbedModal';
-import { incrementViewCount } from '@/lib/api';
+import { incrementViewCount, getAdBanners } from '@/lib/api';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faClock } from '@fortawesome/free-regular-svg-icons';
 import { faPlay, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { PopulatedVideo } from '@/types/videos';
+import { AdBanner } from '@/types/ads';
 
 import imgPlayIcon from '@/assets/img/images/play_icon.png'
 
@@ -21,8 +22,20 @@ interface Props {
 }
 
 export default function MovieDetailsArea({ video }: Props) {
+  const [randomAdBanner, setRandomAdBanner] = useState<AdBanner | null>(null);
+
   useEffect(() => {
     incrementViewCount(video.documentId, video.viewCount || 0);
+
+    async function fetchAdBanners() {
+      const { adBanners } = await getAdBanners();
+      if (adBanners.length > 0) {
+        const randomBanner = adBanners[Math.floor(Math.random() * adBanners.length)];
+        setRandomAdBanner(randomBanner);
+      }
+    }
+
+    fetchAdBanners();
   }, [video.documentId, video.viewCount]);
 
   const getLabel = (video: PopulatedVideo) => {
@@ -68,17 +81,11 @@ export default function MovieDetailsArea({ video }: Props) {
               videoId={videoId || ''}
             />
           );
-        } else if (key === 'videoObject') {
-          return (
-            <div key={index} className="available-soon">
-              Available Soon
-            </div>
-          );
         } else {
           return null;
         }
       })}
-      <section className="movie-details-area">
+      <section className="movie-details-area pb-4">
         <Image src="/assets/img/bg/movie_details_bg.jpg" alt="Movie Details Background" fill style={{ objectFit: 'cover' }} />
         <div className="container">
           <nav aria-label="breadcrumb">
@@ -179,6 +186,40 @@ export default function MovieDetailsArea({ video }: Props) {
               </div>
             </div>
           </div>
+          {randomAdBanner && (
+            <div className="ad-banner position-relative mt-4">
+              <div className="banner728x90 d-none d-sm-block">
+                <a href={randomAdBanner.destinationLink} target="_blank">
+                  <Image
+                    className="img-banner"
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner728x90?.url}`}
+                    alt={randomAdBanner.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    style={{
+                      objectFit: 'contain',
+                      objectPosition: 'left',
+                    }}
+                  />
+                </a>
+              </div>
+              <div className="banner320x50 d-block d-sm-none">
+                <a href={randomAdBanner.destinationLink} target="_blank">
+                  <Image
+                    className="img-banner"
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner320x50?.url}`}
+                    alt={randomAdBanner.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    style={{
+                      objectFit: 'contain',
+                      objectPosition: 'left',
+                    }}
+                  />
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </>

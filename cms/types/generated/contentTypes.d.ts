@@ -369,6 +369,41 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAdBannerAdBanner extends Struct.CollectionTypeSchema {
+  collectionName: 'ad_banners';
+  info: {
+    description: '';
+    displayName: 'Ad Banner';
+    pluralName: 'ad-banners';
+    singularName: 'ad-banner';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    banner160x300: Schema.Attribute.Media<'images'>;
+    banner300x250: Schema.Attribute.Media<'images'>;
+    banner320x50: Schema.Attribute.Media<'images'>;
+    banner728x90: Schema.Attribute.Media<'images'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    destinationLink: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ad-banner.ad-banner'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    nameSlug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSeriesEpisodeSeriesEpisode
   extends Struct.CollectionTypeSchema {
   collectionName: 'series_episodes';
@@ -1160,6 +1195,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::ad-banner.ad-banner': ApiAdBannerAdBanner;
       'api::series-episode.series-episode': ApiSeriesEpisodeSeriesEpisode;
       'api::series-season.series-season': ApiSeriesSeasonSeriesSeason;
       'api::video-category.video-category': ApiVideoCategoryVideoCategory;
