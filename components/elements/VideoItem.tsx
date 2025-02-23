@@ -1,6 +1,10 @@
+'use client'
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { PopulatedVideo } from "@/types/videos";
+import { getSeriesVideoWithEpisodes } from "@/lib/api";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
@@ -9,7 +13,31 @@ interface VideoItemProps {
   video: PopulatedVideo;
 }
 
+
 export default function VideoItem({ video }: VideoItemProps) {
+  const [durationText, setDurationText] = useState<string>('');
+
+  useEffect(() => {
+    const fetchVideoSeries = async () => {
+      try {
+        const { videoData } = await getSeriesVideoWithEpisodes(video.documentId);
+        const seasonCount = videoData.series_seasons?.length || 0;
+        const episodeCount = videoData.series_seasons?.reduce((acc: number, season: { series_episodes: { length: number }[] }) => acc + season.series_episodes.length, 0) || 0;
+        setDurationText(`${seasonCount}S, ${episodeCount}E`);
+      } catch (error) {
+        console.error("Error fetching videos:", error);
+      }
+    };
+
+    if (video.video_type?.nameSlug === 'series') {
+      fetchVideoSeries();
+    } else if (video.video_type?.nameSlug === 'live') {
+      setDurationText('Live Now');
+    } else {
+      setDurationText(`${video.duration} min`);
+    }
+  }, [video]);
+
   return (
     <div className={`col-xl-3 col-lg-4 col-sm-6 movie-item movie-item-three mb-50 ${video.video_categories.map(cat => cat.nameSlug).join(' ')}`}>
       <Link href={`/${video.video_type?.nameSlug}/${video.nameSlug}`}>
@@ -36,7 +64,7 @@ export default function VideoItem({ video }: VideoItemProps) {
               <ul>
                 <li><span className={`quality ${video.video_quality?.name.toLowerCase()}`}>{video.video_quality?.name.toUpperCase()}</span></li>
                 <li>
-                  <span className="duration"><FontAwesomeIcon icon={faClock} /> {video.duration} min</span>
+                  <span className="duration"><FontAwesomeIcon icon={faClock} /> {durationText}</span>
                 </li>
               </ul>
             </div>

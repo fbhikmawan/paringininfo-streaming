@@ -136,6 +136,19 @@ export const getAllVideoByTypeAndCategory = async (
   };
 };
 
+export const getSeriesVideoWithEpisodes = async (
+  videoDocumentId: string,
+) => {
+  const baseUrl = `api/videos/${videoDocumentId}?`;
+  const populateParam = '&populate[series_seasons][populate]=*';
+  
+  const data = await fetchData(`${baseUrl}${populateParam}`);
+  
+  return {
+    videoData: data.data,
+  };
+};
+
 export const getAllVideoByVideoLinkNull = async (): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
   const data = await fetchData(`api/videos?filters[video_source][videoLink][$null]=true&populate=*`);
   return {
