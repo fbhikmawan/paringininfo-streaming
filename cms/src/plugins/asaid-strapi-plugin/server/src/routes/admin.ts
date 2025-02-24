@@ -62,6 +62,15 @@ const routes = [
       auth: false,
     },
   },
+  {
+    method: 'GET',
+    path: '/bucket-storage-info',
+    handler: 'controller.getBucketStorageInfo',
+    config: {
+      policies: [],
+      auth: false,
+    },
+  },
 ];
 
 export default routes;

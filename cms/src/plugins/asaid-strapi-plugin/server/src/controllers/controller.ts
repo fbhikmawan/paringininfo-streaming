@@ -69,6 +69,19 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
       .service('service')
       .deleteVideoSource(ctx.request.query);
   },
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async getBucketStorageInfo(ctx: any) {
+    try {
+      const storageInfo = await strapi
+        .plugin('asaid-strapi-plugin')
+        .service('service')
+        .getBucketStorageInfo();
+      ctx.body = storageInfo;
+    } catch (error) {
+      ctx.throw(400, error.message);
+    }
+  },
 });
 
 export default controller;

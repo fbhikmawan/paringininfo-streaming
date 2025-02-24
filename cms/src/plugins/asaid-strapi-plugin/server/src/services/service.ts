@@ -270,6 +270,40 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       throw error;
     }
   },
+  
+  /**
+  * Get MinIO Bucket Storage Info
+  */
+  async getBucketStorageInfo() {
+    try {
+      const bucketName = process.env.MINIO_BUCKET_NAME;
+      const bucketInfo = await minioClient.bucketExists(bucketName);
+      if (!bucketInfo) {
+        throw new Error(`Bucket ${bucketName} does not exist`);
+      }
+
+      const objectsStream = minioClient.listObjectsV2(bucketName, '', true);
+      const serverStorageCapacity = parseInt(process.env.SERVER_STORAGE_CAPACITY, 10) || 40;
+      let totalSize = 0;
+
+      for await (const obj of objectsStream) {
+        totalSize += obj.size;
+      }
+
+      // Assuming you know the total capacity of your MinIO server
+      const totalCapacity = serverStorageCapacity * 1024 * 1024 * 1024; // 50 GB for example
+      const remainingSpace = totalCapacity - totalSize;
+
+      return {
+        bucketName,
+        totalSize,
+        remainingSpace,
+      };
+    } catch (error) {
+      console.error('Error getting bucket storage info:', error);
+      throw error;
+    }
+  },
 });
 
 export default service;
