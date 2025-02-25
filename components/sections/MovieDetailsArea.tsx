@@ -183,43 +183,28 @@ export default function MovieDetailsArea({ video }: Props) {
                     </li>
                   </ul>
                 </div>
+                {randomAdBanner && (
+                  <div className="ad-banner position-relative mt-4">
+                    <div className="banner728x90">
+                      <a href={randomAdBanner.destinationLink} target="_blank">
+                        <Image
+                          className="img-banner"
+                          src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner728x90?.url}`}
+                          alt={randomAdBanner.name}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          style={{
+                            objectFit: 'contain',
+                            objectPosition: 'left',
+                          }}
+                        />
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
-          {randomAdBanner && (
-            <div className="ad-banner position-relative mt-4">
-              <div className="banner728x90 d-none d-sm-block">
-                <a href={randomAdBanner.destinationLink} target="_blank">
-                  <Image
-                    className="img-banner"
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner728x90?.url}`}
-                    alt={randomAdBanner.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    style={{
-                      objectFit: 'contain',
-                      objectPosition: 'left',
-                    }}
-                  />
-                </a>
-              </div>
-              <div className="banner320x50 d-block d-sm-none">
-                <a href={randomAdBanner.destinationLink} target="_blank">
-                  <Image
-                    className="img-banner"
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner320x50?.url}`}
-                    alt={randomAdBanner.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    style={{
-                      objectFit: 'contain',
-                      objectPosition: 'left',
-                    }}
-                  />
-                </a>
-              </div>
-            </div>
-          )}
         </div>
       </section>
     </>
