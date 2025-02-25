@@ -8,4 +8,5 @@ export interface AdBanner extends BaseFields {
   banner320x50?: Image;
   banner300x250?: Image;
   banner160x300?: Image;
+  banner160x600?: Image;
 }

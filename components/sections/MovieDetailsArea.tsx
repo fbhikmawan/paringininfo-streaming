@@ -183,7 +183,7 @@ export default function MovieDetailsArea({ video }: Props) {
                     </li>
                   </ul>
                 </div>
-                {randomAdBanner && (
+                {randomAdBanner && randomAdBanner.banner728x90 && (
                   <div className="ad-banner position-relative mt-4">
                     <div className="banner728x90">
                       <a href={randomAdBanner.destinationLink} target="_blank">

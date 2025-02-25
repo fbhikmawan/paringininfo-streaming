@@ -3014,7 +3014,6 @@ label {
 .banner728x90 {
     min-height: 90px;
 }
-.banner320x50 {
-    width: auto;
-    min-height: 50px;
+.banner160x600 {
+    min-height: 600px;
 }

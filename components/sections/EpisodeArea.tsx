@@ -7,8 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faClock } from '@fortawesome/free-solid-svg-icons';
 
 import { PopulatedVideo, Season } from '@/types/videos';
-import { getVideoSeasons } from '@/lib/api';
+import { getVideoSeasons, getAdBanners } from '@/lib/api';
 import VideoPlayerModal from '@/components/modals/VideoPlayerModal';
+import { AdBanner } from '@/types/ads';
 
 interface Props {
   video: PopulatedVideo;
@@ -16,6 +17,7 @@ interface Props {
 
 export default function EpisodeArea({ video }: Props) {
   const [seasons, setSeasons] = useState<Season[]>([]);
+  const [randomAdBanner, setRandomAdBanner] = useState<AdBanner | null>(null);
 
   useEffect(() => {
     async function fetchSeasons() {
@@ -24,6 +26,17 @@ export default function EpisodeArea({ video }: Props) {
     }
     fetchSeasons();
   }, [video.id]);
+
+  useEffect(() => {
+    async function fetchAdBanners() {
+      const { adBanners } = await getAdBanners();
+      if (adBanners.length > 0) {
+        const randomBanner = adBanners[Math.floor(Math.random() * adBanners.length)];
+        setRandomAdBanner(randomBanner);
+      }
+    }
+    fetchAdBanners();
+  }, []);
 
   return (
     <>
@@ -57,7 +70,7 @@ export default function EpisodeArea({ video }: Props) {
                 </div>
                 <div className="episode-watch-wrap">
                   <div className="accordion" id="accordionExample">
-                    {seasons.map((season) => (
+                    {seasons.map((season, seasonIndex) => (
                       <div className="card" key={season.id}>
                         <div className="card-header" id={`heading${season.id}`}>
                           <button className="btn-block text-left" type="button" data-toggle="collapse" data-target={`#collapse${season.id}`} aria-expanded="true" aria-controls={`collapse${season.id}`}>
@@ -93,21 +106,70 @@ export default function EpisodeArea({ video }: Props) {
                             </ul>
                           </div>
                         </div>
+                        {randomAdBanner && randomAdBanner.banner728x90 && seasonIndex < seasons.length - 1 && (
+                          <div className="ad-banner position-relative mt-4">
+                            <div className="banner728x90">
+                              <a href={randomAdBanner.destinationLink} target="_blank">
+                                <Image
+                                  className="img-banner"
+                                  src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner728x90?.url}`}
+                                  alt={randomAdBanner.name}
+                                  fill
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  style={{
+                                    objectFit: 'contain',
+                                    objectPosition: 'left',
+                                  }}
+                                />
+                              </a>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
+                  {randomAdBanner && randomAdBanner.banner728x90 && seasons.length < 2 && (
+                    <div className="ad-banner d-block d-lg-none position-relative mt-4">
+                      <div className="banner728x90">
+                        <a href={randomAdBanner.destinationLink} target="_blank">
+                          <Image
+                            className="img-banner"
+                            src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner728x90?.url}`}
+                            alt={randomAdBanner.name}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            style={{
+                              objectFit: 'contain',
+                              objectPosition: 'left',
+                            }}
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-            <div className="col-lg-4">
-              <div className="episode-img">
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
-                  alt={video.name}
-                  width={video.poster?.width}
-                  height={video.poster?.height}
-                />
-              </div>
+            <div className="col-lg-4 d-none d-lg-block">
+              {randomAdBanner && randomAdBanner.banner160x600 && (
+                <div className="ad-banner position-relative mt-4">
+                  <div className="banner160x600">
+                    <a href={randomAdBanner.destinationLink} target="_blank">
+                      <Image
+                        className="img-banner"
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner160x600?.url}`}
+                        alt={randomAdBanner.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        style={{
+                          objectFit: 'contain',
+                          objectPosition: 'left',
+                        }}
+                      />
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
