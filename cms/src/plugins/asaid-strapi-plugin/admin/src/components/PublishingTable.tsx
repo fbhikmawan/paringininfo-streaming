@@ -152,9 +152,13 @@ const PublishingTable = () => {
                   <Td>
                     <ActionButton videoSource={videoSource} type="video" />
                   </Td>
-                  <Td>
-                    <ActionButton videoSource={videoSource} type="trailer" />
-                  </Td>
+                    <Td>
+                    {videoSource.video?.video_type?.nameSlug == 'live' || videoSource.series_episode ? (
+                      <Typography textColor="neutral800">-</Typography>
+                    ) : (
+                      <ActionButton videoSource={videoSource} type="trailer" />
+                    )}
+                    </Td>
                   <Td>
                     <Trash
                       onClick={() => {
