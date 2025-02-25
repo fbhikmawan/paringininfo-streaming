@@ -40,13 +40,22 @@
       ]
     },
     "banner300x250": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "banner320x50": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "banner160x600": {
       "allowedTypes": [
         "images"
       ],

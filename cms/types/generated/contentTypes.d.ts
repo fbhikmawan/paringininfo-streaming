@@ -382,6 +382,7 @@ export interface ApiAdBannerAdBanner extends Struct.CollectionTypeSchema {
   };
   attributes: {
     banner160x300: Schema.Attribute.Media<'images'>;
+    banner160x600: Schema.Attribute.Media<'images'>;
     banner300x250: Schema.Attribute.Media<'images'>;
     banner320x50: Schema.Attribute.Media<'images'>;
     banner728x90: Schema.Attribute.Media<'images'>;
