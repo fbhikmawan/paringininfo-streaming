@@ -9,6 +9,7 @@ import { faPlay, faClock } from '@fortawesome/free-solid-svg-icons';
 import { PopulatedVideo, Season } from '@/types/videos';
 import { getVideoSeasons, getAdBanners } from '@/lib/api';
 import VideoPlayerModal from '@/components/modals/VideoPlayerModal';
+import YouTubeEmbedModal from '@/components/modals/YouTubeEmbedModal';
 import { AdBanner } from '@/types/ads';
 
 interface Props {
@@ -38,22 +39,41 @@ export default function EpisodeArea({ video }: Props) {
     fetchAdBanners();
   }, []);
 
+  const extractYouTubeId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  };
+
   return (
     <>
       {seasons.flatMap((season) =>
-        season.series_episodes.map((episode, index) => {
+        season.series_episodes.map((episode) => {
           const videoObject = episode.video_source?.videoObject || episode.video_source?.trailerObject;
-          if (!videoObject) return null;
-
+          const videoLink = episode.video_source?.videoLink || episode.video_source?.trailerLink;
           const modalId = `videoModal${episode.id}`;
-          return (
-            <VideoPlayerModal
-              key={index}
-              modalId={modalId}
-              videoObject={videoObject}
-              posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
-            />
-          );
+
+          if (videoObject) {
+            return (
+              <VideoPlayerModal
+                key={episode.id}
+                modalId={modalId}
+                videoObject={videoObject}
+                posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
+              />
+            );
+          } else if (videoLink) {
+            const videoId = extractYouTubeId(videoLink);
+            return (
+              <YouTubeEmbedModal
+                key={episode.id}
+                modalId={modalId}
+                videoId={videoId || ''}
+              />
+            );
+          } else {
+            return null;
+          }
         })
       )}
       <section className="episode-area episode-bg">
@@ -83,10 +103,20 @@ export default function EpisodeArea({ video }: Props) {
                             <ul>
                               {season.series_episodes.map((episode) => {
                                 const videoObject = episode.video_source?.videoObject || episode.video_source?.trailerObject;
+                                const videoLink = episode.video_source?.videoLink || episode.video_source?.trailerLink;
                                 const modalId = `videoModal${episode.id}`;
+
                                 return (
                                   <li key={episode.id}>
                                     {videoObject ? (
+                                      <a
+                                        className="popup-video"
+                                        data-toggle="modal"
+                                        data-target={`#${modalId}`}
+                                      >
+                                        <FontAwesomeIcon icon={faPlay} /> Episode {episode.episodeNumber} - {episode.name}
+                                      </a>
+                                    ) : videoLink ? (
                                       <a
                                         className="popup-video"
                                         data-toggle="modal"
