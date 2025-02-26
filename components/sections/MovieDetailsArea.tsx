@@ -10,7 +10,7 @@ import { incrementViewCount, getAdBanners } from '@/lib/api';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faClock } from '@fortawesome/free-regular-svg-icons';
-import { faPlay, faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import { PopulatedVideo } from '@/types/videos';
 import { AdBanner } from '@/types/ads';
@@ -142,47 +142,48 @@ export default function MovieDetailsArea({ video }: Props) {
                     ))}
                   </p>
                 ))}
-                <div className="movie-details-prime">
+                {video.video_type?.nameSlug !== 'series' && video.video_type?.nameSlug !== 'live' && (
+                  <div className="movie-details-prime">
                   <ul>
-                    <li className="share"><Link href="#"><FontAwesomeIcon icon={faShareAlt} /> Share</Link></li>
                     <li className="streaming">
-                      <h6>Prime Video</h6>
-                      <span>Streaming Channels</span>
+                    <h6>Prime Video</h6>
+                    <span>Streaming Channels</span>
                     </li>
                     <li className="watch d-flex">
-                      {video.video_source?.trailerLink ? (
-                        <a
-                          className="btn"
-                          data-toggle="modal"
-                          data-target="#trailerModal"
-                        >
-                          <FontAwesomeIcon icon={faPlay} /> Watch Trailer
+                    {video.video_source?.trailerLink ? (
+                      <a
+                      className="btn"
+                      data-toggle="modal"
+                      data-target="#trailerModal"
+                      >
+                      <FontAwesomeIcon icon={faPlay} /> Watch Trailer
+                      </a>
+                    ) : (
+                      <></>
+                    )}
+                    {video.video_source?.videoLink ? (
+                      <a
+                      className="btn"
+                      data-toggle="modal"
+                      data-target="#videoModal"
+                      >
+                      <FontAwesomeIcon icon={faPlay} /> Watch Now
+                      </a>
+                    ) : (
+                      <>
+                      {video.video_type?.nameSlug !== 'series' ? (
+                        <a className="btn disabled" href='#'>
+                        <FontAwesomeIcon icon={faPlay} /> Available Soon
                         </a>
                       ) : (
                         <></>
                       )}
-                      {video.video_source?.videoLink ? (
-                        <a
-                          className="btn"
-                          data-toggle="modal"
-                          data-target="#videoModal"
-                        >
-                          <FontAwesomeIcon icon={faPlay} /> Watch Now
-                        </a>
-                      ) : (
-                        <>
-                          {video.video_type?.nameSlug !== 'series' ? (
-                            <a className="btn disabled" href='#'>
-                              <FontAwesomeIcon icon={faPlay} /> Available Soon
-                            </a>
-                          ) : (
-                            <></>
-                          )}
-                        </>
-                      )}
+                      </>
+                    )}
                     </li>
                   </ul>
-                </div>
+                  </div>
+                )}
                 {randomAdBanner && randomAdBanner.banner728x90 && (
                   <div className="ad-banner position-relative mt-4">
                     <div className="banner728x90">
