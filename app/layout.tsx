@@ -1,12 +1,46 @@
+import { Poppins } from 'next/font/google'
 import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
 
-// Template layout
-import TemplateLayout from './TemplateLayout'
+// Template Sections
+import Header from '../components/sections/Header';
+import Footer from '../components/sections/Footer';
 
-export const metadata: Metadata = {
-  title: "ParinginInfo | Online Movies, Series & Live",
-  description: "Description for ParinginInfo | Online Movies, Series & Live",
-};
+// Template Elements
+import ButtonScrollToTop from '../components/elements/ButtonScrollToTop';
+import Preloader from '../components/elements/Preloader';
+
+// Template Scripts
+import TemplateScripts from './TemplateScripts';
+
+// FontAwesome
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
+
+const poppins = Poppins({
+  weight: ['400', '500', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  subsets: ['latin', 'latin-ext']
+});
+
+export async function generateMetadata(): Promise<Metadata> {
+  const metadataBase = process.env.NEXT_PUBLIC_METADATA_BASE_URL || 'http://localhost:3000';
+
+  return {
+    title: "Sanggam Streaming | Online Movies, Series, Sports & Live Streaming",
+    description: "Discover endless entertainment with Sanggam Streaming. Stream movies, series, and live events in high quality!",
+    metadataBase: new URL(metadataBase),
+    alternates: {
+      canonical: '/',
+      languages: {
+        'en-US': '/',
+        'id-ID': '/id',
+      },
+    },
+  };
+}
 
 export default function RootLayout({
   children,
@@ -14,11 +48,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={poppins.className}>
       <body>
-        <TemplateLayout>
+        <Preloader />
+        <ButtonScrollToTop />
+        <Header/>
+
+        <main>
           {children}
-        </TemplateLayout>
+        </main>
+
+        <Footer />
+        <TemplateScripts />
+        <Toaster />
       </body>
     </html>
   );

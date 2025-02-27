@@ -1,11 +1,15 @@
 'use client'
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link'
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faFacebookSquare, faTwitter, faPinterestP, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
+
 // Template Elements
-import ImageLogo from '../elements/ImageLogo';
+import ImageLogo from '@/components/elements/ImageLogo';
 
 export default function Header() {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -69,7 +73,10 @@ export default function Header() {
   }, []);
   
   const isActiveRoute = (path: string): boolean => {
-    return pathname === path;
+    if (path === '/') {
+      return pathname === path;
+    }
+    return pathname.startsWith(path);
   };
 
   return (
@@ -78,7 +85,7 @@ export default function Header() {
         <div className="container custom-container">
           <div className="row">
             <div className="col-12">
-              <div className="mobile-nav-toggler"><i className="fas fa-bars"></i></div>
+              <div className="mobile-nav-toggler"><FontAwesomeIcon icon={faBars} /></div>
               <div className="menu-wrap">
                 <nav className="menu-nav show">
                   <div className="logo">
@@ -91,12 +98,7 @@ export default function Header() {
                       <li className={isActiveRoute('/series') ? 'active' : ''}><Link href="/series">Series</Link></li>
                       <li className={isActiveRoute('/sports') ? 'active' : ''}><Link href="/sports">Sports</Link></li>
                       <li className={isActiveRoute('/live') ? 'active' : ''}><Link href="/live">Live</Link></li>
-                      <li className={isActiveRoute('/contactus') ? 'active' : ''}><Link href="https://paringininfo.com/contactus">Contacts</Link></li>
-                    </ul>
-                  </div>
-                  <div className="header-action d-none d-md-block">
-                    <ul>
-                      <li className="header-btn"><Link href="#" className="btn">Sign In</Link></li>
+                        <li><Link href="https://paringininfo.com/contactus" target='_blank' onClick={(e) => { e.preventDefault(); const newWindow = window.open('https://paringininfo.com/contactus', '_blank'); if (newWindow) newWindow.focus(); }}>Contacts</Link></li>
                     </ul>
                   </div>
                 </nav>
@@ -104,7 +106,7 @@ export default function Header() {
 
               {/* Mobile Menu */}
               <div ref={mobileMenuRef} className="mobile-menu">
-                <div className="close-btn"><i className="fas fa-times"></i></div>
+                <div className="close-btn"><FontAwesomeIcon icon={faTimes} /></div>
 
                 <nav className="menu-box">
                   <div className="nav-logo">
@@ -115,11 +117,11 @@ export default function Header() {
                   </div>
                   <div className="social-links">
                     <ul className="clearfix">
-                      <li><Link href="#"><span className="fab fa-twitter"></span></Link></li>
-                      <li><Link href="#"><span className="fab fa-facebook-square"></span></Link></li>
-                      <li><Link href="#"><span className="fab fa-pinterest-p"></span></Link></li>
-                      <li><Link href="#"><span className="fab fa-instagram"></span></Link></li>
-                      <li><Link href="#"><span className="fab fa-youtube"></span></Link></li>
+                      <li><Link href="#"><span><FontAwesomeIcon icon={faTwitter} /></span></Link></li>
+                      <li><Link href="#"><span><FontAwesomeIcon icon={faFacebookSquare} /></span></Link></li>
+                      <li><Link href="#"><span><FontAwesomeIcon icon={faPinterestP} /></span></Link></li>
+                      <li><Link href="#"><span><FontAwesomeIcon icon={faInstagram} /></span></Link></li>
+                      <li><Link href="#"><span><FontAwesomeIcon icon={faYoutube} /></span></Link></li>
                     </ul>
                   </div>
                 </nav>
@@ -133,7 +135,7 @@ export default function Header() {
                   <div className="modal-content">
                     <form>
                       <input type="text" placeholder="Search here..." />
-                      <button><i className="fas fa-search"></i></button>
+                      <button><FontAwesomeIcon icon={faSearch} /></button>
                     </form>
                   </div>
                 </div>

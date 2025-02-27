@@ -62,9 +62,6 @@
 .custom-container {
     max-width: 960px;
 }
-.header-action > ul > li.header-btn {
-	display: none;
-}
 .navbar-wrap > ul {
     margin-right: 0;
 }
@@ -635,7 +632,7 @@
     font-size: 46px;
 }
 .movie-details-prime ul li.watch {
-    margin-left: auto;
+    /* margin-left: auto; */
 }
 .episode-watch-wrap .card-body ul li a {
     font-size: 14px;
@@ -656,4 +653,8 @@
 
 }
 
-
+@media only screen and (max-width: 412px) {
+    .movie-details-prime ul li.watch {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "video_sources",
+  "info": {
+    "singularName": "video-source",
+    "pluralName": "video-sources",
+    "displayName": "Video Source",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "video": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::video.video",
+      "inversedBy": "video_source"
+    },
+    "videoLink": {
+      "type": "string"
+    },
+    "trailerLink": {
+      "type": "string"
+    },
+    "videoObject": {
+      "type": "string"
+    },
+    "trailerObject": {
+      "type": "string"
+    },
+    "series_episode": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::series-episode.series-episode",
+      "mappedBy": "video_source"
+    }
+  }
+}

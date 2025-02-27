@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ad_banners",
+  "info": {
+    "singularName": "ad-banner",
+    "pluralName": "ad-banners",
+    "displayName": "Ad Banner",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "nameSlug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "destinationLink": {
+      "type": "string"
+    },
+    "banner728x90": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "banner160x300": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "banner300x250": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "banner320x50": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "banner160x600": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

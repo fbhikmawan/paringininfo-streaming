@@ -1,15 +1,15 @@
 // Template Sections
 import Banner from '../components/sections/Banner';
-import UpComing from '../components/sections/UpComing';
-import TopRatedMovie from '../components/sections/TopRatedMovie';
+import NewReleases from '../components/sections/NewReleases';
+import MostViewedVideos from '../components/sections/MostViewedVideos';
 import LiveArea from '../components/sections/LiveArea';
 
 export default function Home() {
   return (
     <>
       <Banner />
-      <UpComing />
-      <TopRatedMovie />
+      <NewReleases />
+      <MostViewedVideos />
       <LiveArea />
     </>
   );
