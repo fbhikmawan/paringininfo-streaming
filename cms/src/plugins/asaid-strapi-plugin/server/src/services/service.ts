@@ -6,10 +6,12 @@ import ffmpeg from 'fluent-ffmpeg';
 
 const postPerPage = 10;
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const minioClient = new Client({
   endPoint: process.env.MINIO_ENDPOINT,
   port: parseInt(process.env.MINIO_PORT, 10),
-  useSSL: false,
+  useSSL: isProduction,
   accessKey: process.env.MINIO_ACCESS_KEY,
   secretKey: process.env.MINIO_SECRET_KEY,
 });
