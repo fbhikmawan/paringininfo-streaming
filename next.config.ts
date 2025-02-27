@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
       {
         hostname: 'localhost',
       },
+      {
+        hostname: 'dev-cms-streaming.paringininfo.com',
+      },
+      {
+        hostname: 'cms-streaming.paringininfo.com',
+      },
     ],
   },
 };
