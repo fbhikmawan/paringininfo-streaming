@@ -7,9 +7,9 @@ export interface VideoFilters {
 }
 
 const baseURL = process.env.NEXT_PUBLIC_STRAPI_URL;
-const headers = {
-  Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
-};
+const headers: HeadersInit = process.env.NEXT_PUBLIC_TOKEN
+  ? { Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` }
+  : {};
 
 // Helper function to handle fetch requests
 const fetchData = async (url: string) => {
