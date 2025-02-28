@@ -142,7 +142,7 @@ export default function MovieDetailsArea({ video }: Props) {
                     ))}
                   </p>
                 ))}
-                {video.video_type?.nameSlug !== 'series' && video.video_type?.nameSlug !== 'live' && (
+                {video.video_type?.nameSlug !== 'series' && (
                   <div className="movie-details-prime">
                   <ul>
                     <li className="streaming">
