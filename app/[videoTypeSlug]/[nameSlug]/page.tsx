@@ -3,29 +3,8 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next';
 import MovieDetailsArea from '@/components/sections/MovieDetailsArea';
 import EpisodeArea from '@/components/sections/EpisodeArea';
-import { getAllVideoByType, getVideoByTypeAndSlug } from "@/lib/api";
-import { PopulatedVideo } from "@/types/videos";
+import { getVideoByTypeAndSlug } from "@/lib/api";
 import { truncateText } from '@/lib/functions';
-
-// We'll prerender only the params from `generateStaticParams` at build time.
-// If a request comes in for a path that hasn't been generated,
-// Next.js will server-render the page on-demand.
-export const dynamicParams = true // or false, to 404 on unknown paths
-
-export async function generateStaticParams({
-  params,
-}: {
-  params: Promise<{ videoTypeSlug: string; nameSlug: string }>
-}) {
-  const { videoTypeSlug } = (await params);
-  const { videos } = await getAllVideoByType(videoTypeSlug);
-  if (!videos || videos.length === 0) {
-    return [];
-  }
-  return videos.map((video: PopulatedVideo) => ({
-    params: { videoTypeSlug: video.video_type?.nameSlug, nameSlug: video.nameSlug },
-  }));
-}
 
 export async function generateMetadata({
   params,
