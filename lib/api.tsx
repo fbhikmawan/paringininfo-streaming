@@ -80,6 +80,7 @@ export const getTopViewedVideos = async (): Promise<{ videos: PopulatedVideo[] }
 // ***
 // APIs for Videos
 // ***
+// Get all video with pagination
 export const getAllVideo = async (
   page: number = 1,
 ): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
@@ -91,7 +92,34 @@ export const getAllVideo = async (
     pagination: data.meta.pagination as PaginationMeta,
   };
 };
+// Get all video no pagination
+export const getAllVideoNoPagination = async (): Promise<{ videos: PopulatedVideo[]}> => {
+  try {
+    let videos: PopulatedVideo[] = [];
+    let page = 1;
+    const pageSize = 25;
+    let hasMore = true;
 
+    while (hasMore) {
+      const data = await fetchData(`api/videos?pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`);
+      const fetchedVideos = data.data as PopulatedVideo[];
+      videos = [...videos, ...fetchedVideos];
+      
+      if (fetchedVideos.length < pageSize) {
+        hasMore = false;
+      } else {
+        page++;
+      }
+    }
+    
+    return { videos };
+  } catch (error) {
+    console.error('Error fetching videos by video type slug:', error);
+    return { videos: [] };
+  }
+};
+
+// Get video by its nameSlug
 export const getVideoBySlug = async (slug: string): Promise<{ video: PopulatedVideo }> => {
   const data = await fetchData(`api/videos?filters[nameSlug]=${slug}&populate=*`);
   if (data.data.length > 0) {
