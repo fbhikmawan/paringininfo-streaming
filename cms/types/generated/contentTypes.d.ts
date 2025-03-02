@@ -491,7 +491,7 @@ export interface ApiVideoCategoryVideoCategory
     singularName: 'video-category';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -527,7 +527,7 @@ export interface ApiVideoQualityVideoQuality
     singularName: 'video-quality';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -596,7 +596,7 @@ export interface ApiVideoTypeVideoType extends Struct.CollectionTypeSchema {
     singularName: 'video-type';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     bannerPageTitle: Schema.Attribute.String & Schema.Attribute.Required;
