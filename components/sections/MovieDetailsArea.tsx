@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import VideoPlayerModal from '@/components/modals/VideoPlayerModal';
 import YouTubeEmbedModal from '@/components/modals/YouTubeEmbedModal';
-import { incrementViewCount, getAdBanners } from '@/lib/api';
+import { incrementViewCount, getAdBanners, getSeriesVideoWithEpisodes } from '@/lib/api';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faClock } from '@fortawesome/free-regular-svg-icons';
@@ -23,6 +23,7 @@ interface Props {
 
 export default function MovieDetailsArea({ video }: Props) {
   const [randomAdBanner, setRandomAdBanner] = useState<AdBanner | null>(null);
+  const [durationText, setDurationText] = useState<string>('');
 
   useEffect(() => {
     incrementViewCount(video.documentId, video.viewCount || 0);
@@ -37,6 +38,27 @@ export default function MovieDetailsArea({ video }: Props) {
 
     fetchAdBanners();
   }, [video.documentId, video.viewCount]);
+
+  useEffect(() => {
+      const fetchVideoSeries = async () => {
+        try {
+          const { videoData } = await getSeriesVideoWithEpisodes(video.documentId);
+          const seasonCount = videoData.series_seasons?.length || 0;
+          const episodeCount = videoData.series_seasons?.reduce((acc: number, season: { series_episodes: { length: number }[] }) => acc + season.series_episodes.length, 0) || 0;
+          setDurationText(`${seasonCount}S, ${episodeCount}E`);
+        } catch (error) {
+          console.error("Error fetching videos:", error);
+        }
+      };
+  
+      if (video.video_type?.nameSlug === 'series') {
+        fetchVideoSeries();
+      } else if (video.video_type?.nameSlug === 'live') {
+        setDurationText('Now');
+      } else {
+        setDurationText(`${video.duration} min`);
+      }
+    }, [video]);
 
   const getLabel = (video: PopulatedVideo) => {
     const labelsMap: Record<string, { text: string }> = {
@@ -129,8 +151,8 @@ export default function MovieDetailsArea({ video }: Props) {
                       ))}
                     </li>
                     <li className="release-time">
-                      <span><FontAwesomeIcon icon={faCalendarAlt} /> {video.releaseYear}</span>
-                      <span><FontAwesomeIcon icon={faClock} /> {video.duration} minutes</span>
+                      <span><FontAwesomeIcon icon={faCalendarAlt} /> {video.video_type?.nameSlug === 'live' ? 'Live Streaming' : video.releaseYear}</span>
+                      <span><FontAwesomeIcon icon={faClock} /> {durationText}</span>
                     </li>
                   </ul>
                 </div>
