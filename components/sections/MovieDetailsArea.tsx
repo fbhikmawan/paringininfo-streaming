@@ -58,22 +58,22 @@ export default function MovieDetailsArea({ video }: Props) {
 
   return (
     <>
-      {['trailerObject', 'videoObject'].map((key, index) => {
-        const videoObject = key === 'trailerObject' ? video.video_source?.trailerObject : video.video_source?.videoObject;
-        const videoLink = key === 'trailerObject' ? video.video_source?.trailerLink : video.video_source?.videoLink;
-        const modalId = key === 'trailerObject' ? 'trailerModal' : 'videoModal';
+      {['trailer', 'video'].map((key, index) => {
+        const theObject = key === 'trailer' ? video.video_source?.trailerObject : video.video_source?.videoObject;
+        const theLink = key === 'trailer' ? video.video_source?.trailerLink : video.video_source?.videoLink;
+        const modalId = key === 'trailer' ? 'trailerModal' : 'videoModal';
 
-        if (videoObject) {
+        if (theObject) {
           return (
             <VideoPlayerModal
               key={index}
               modalId={modalId}
-              videoObject={videoObject}
+              videoObject={theObject}
               posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
             />
           );
-        } else if (videoLink) {
-          const videoId = extractYouTubeId(videoLink);
+        } else if (theLink) {
+          const videoId = extractYouTubeId(theLink);
           return (
             <YouTubeEmbedModal
               key={index}
@@ -144,44 +144,45 @@ export default function MovieDetailsArea({ video }: Props) {
                 ))}
                 {video.video_type?.nameSlug !== 'series' && (
                   <div className="movie-details-prime">
-                  <ul>
-                    <li className="streaming">
-                    <h6>Prime Video</h6>
-                    <span>Streaming Channels</span>
-                    </li>
-                    <li className="watch d-flex">
-                    {video.video_source?.trailerLink ? (
-                      <a
-                      className="btn"
-                      data-toggle="modal"
-                      data-target="#trailerModal"
-                      >
-                      <FontAwesomeIcon icon={faPlay} /> Watch Trailer
-                      </a>
-                    ) : (
-                      <></>
-                    )}
-                    {video.video_source?.videoLink ? (
-                      <a
-                      className="btn"
-                      data-toggle="modal"
-                      data-target="#videoModal"
-                      >
-                      <FontAwesomeIcon icon={faPlay} /> Watch Now
-                      </a>
-                    ) : (
-                      <>
-                      {video.video_type?.nameSlug !== 'series' ? (
-                        <a className="btn disabled" href='#'>
-                        <FontAwesomeIcon icon={faPlay} /> Available Soon
-                        </a>
-                      ) : (
-                        <></>
-                      )}
-                      </>
-                    )}
-                    </li>
-                  </ul>
+                    <ul>
+                      <li className="streaming">
+                        <h6>Prime Video</h6>
+                        <span>Streaming Channels</span>
+                      </li>                      
+                      <li className="watch d-flex">
+                        {video.video_source?.trailerObject || video.video_source?.trailerLink ? (
+                          <a
+                            className="btn"
+                            data-toggle="modal"
+                            data-target="#trailerModal"
+                          >
+                            <FontAwesomeIcon icon={faPlay} /> Watch Trailer
+                          </a>
+                        ) : (
+                          <></>
+                        )}
+                        {video.video_source?.videoObject || video.video_source?.trailerLink ? (
+                          <a
+                            className="btn"
+                            data-toggle="modal"
+                            data-target="#videoModal"
+                          >
+                          <FontAwesomeIcon icon={faPlay} /> Watch Now
+                          </a>
+                        ) : (
+                          <>
+                            {video.video_type?.nameSlug !== 'series' ? 
+                            (
+                              <a className="btn disabled" href='#'>
+                              <FontAwesomeIcon icon={faPlay} /> Available Soon
+                              </a>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        )}
+                      </li>
+                    </ul>
                   </div>
                 )}
                 {randomAdBanner && randomAdBanner.banner728x90 && (
