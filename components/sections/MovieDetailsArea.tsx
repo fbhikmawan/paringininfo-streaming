@@ -161,7 +161,7 @@ export default function MovieDetailsArea({ video }: Props) {
                         ) : (
                           <></>
                         )}
-                        {video.video_source?.videoObject || video.video_source?.trailerLink ? (
+                        {video.video_source?.videoObject || video.video_source?.videoLink ? (
                           <a
                             className="btn"
                             data-toggle="modal"
