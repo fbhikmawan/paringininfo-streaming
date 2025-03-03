@@ -1,11 +1,13 @@
 import { Client } from 'minio';
 import { Parser as m3u8Parser } from 'm3u8-parser';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 // Initialize the Minio client
 const minioClient = new Client({
   endPoint: process.env.MINIO_ENDPOINT,
   port: parseInt(process.env.MINIO_PORT, 10),
-  useSSL: false,
+  useSSL: isProduction,
   accessKey: process.env.MINIO_ACCESS_KEY,
   secretKey: process.env.MINIO_SECRET_KEY,
 });
