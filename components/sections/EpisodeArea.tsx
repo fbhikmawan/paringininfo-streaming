@@ -59,7 +59,6 @@ export default function EpisodeArea({ video }: Props) {
                 key={episode.id}
                 modalId={modalId}
                 videoObject={videoObject}
-                posterSrc={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
               />
             );
           } else if (videoLink) {

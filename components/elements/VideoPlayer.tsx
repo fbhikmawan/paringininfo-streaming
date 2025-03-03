@@ -5,11 +5,10 @@ import Hls from 'hls.js';
 
 interface VideoPlayerProps {
   hlsManifest: string;
-  poster?: string;
   shouldPlay: boolean;
 }
 
-export default function VideoPlayer({ hlsManifest, poster, shouldPlay }: VideoPlayerProps) {
+export default function VideoPlayer({ hlsManifest, shouldPlay }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [videoUrl, setVideoUrl] = useState('');
@@ -58,7 +57,7 @@ export default function VideoPlayer({ hlsManifest, poster, shouldPlay }: VideoPl
   }, [shouldPlay]);
 
   return (
-    <video ref={videoRef} poster={poster} width={'100%'} height={'auto'} controls>
+    <video ref={videoRef} width={'100%'} height={'auto'} controls>
       Your browser does not support the video tag.
     </video>
   );

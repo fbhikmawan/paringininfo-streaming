@@ -6,10 +6,9 @@ import VideoPlayer from '../elements/VideoPlayer';
 interface VideoPlayerModalProps {
   modalId: string;
   videoObject: string;
-  posterSrc: string;
 }
 
-export default function VideoPlayerModal({ modalId, videoObject, posterSrc }: VideoPlayerModalProps) {
+export default function VideoPlayerModal({ modalId, videoObject }: VideoPlayerModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [shouldPlay, setShouldPlay] = useState(false);
 
@@ -51,7 +50,6 @@ export default function VideoPlayerModal({ modalId, videoObject, posterSrc }: Vi
           <div className="modal-body">
             <VideoPlayer 
               hlsManifest={videoObject} 
-              poster={posterSrc}
               shouldPlay={shouldPlay}
             />
           </div>
