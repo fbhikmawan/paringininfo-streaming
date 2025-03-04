@@ -51,7 +51,7 @@ export const getTotalViewCount = async (): Promise<number> => {
     let hasMore = true;
 
     while (hasMore) {
-      const data = await fetchData(`api/videos?pagination[page]=${page}&pagination[pageSize]=${pageSize}`);
+      const data = await fetchData(`api/videos?pagination[page]=${page}&pagination[pageSize]=${pageSize}&sort=updatedAt:desc`);
       const videos = data.data as PopulatedVideo[];
       totalViewCount += videos.reduce((sum, video) => sum + (video.viewCount || 0), 0);
 
@@ -71,7 +71,7 @@ export const getTotalViewCount = async (): Promise<number> => {
 
 // Get the top 10 most viewed videos
 export const getTopViewedVideos = async (): Promise<{ videos: PopulatedVideo[] }> => {
-  const data = await fetchData(`api/videos?sort=viewCount:desc&pagination[pageSize]=8&populate=*`);
+  const data = await fetchData(`api/videos?sort=viewCount:desc&pagination[pageSize]=8&sort=updatedAt:desc&populate=*`);
   return {
     videos: data.data as PopulatedVideo[],
   };
@@ -85,7 +85,7 @@ export const getAllVideo = async (
   page: number = 1,
 ): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
   const data = await fetchData(
-    `api/videos?pagination[page]=${page}&pagination[pageSize]=${process.env.NEXT_PUBLIC_PAGE_LIMIT}&populate=*`
+    `api/videos?pagination[page]=${page}&pagination[pageSize]=${process.env.NEXT_PUBLIC_PAGE_LIMIT}&sort=updatedAt:desc&populate=*`
   );
   return {
     videos: data.data as PopulatedVideo[],
@@ -101,7 +101,7 @@ export const getAllVideoNoPagination = async (): Promise<{ videos: PopulatedVide
     let hasMore = true;
 
     while (hasMore) {
-      const data = await fetchData(`api/videos?pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`);
+      const data = await fetchData(`api/videos?pagination[page]=${page}&pagination[pageSize]=${pageSize}&sort=updatedAt:desc&populate=*`);
       const fetchedVideos = data.data as PopulatedVideo[];
       videos = [...videos, ...fetchedVideos];
       
@@ -121,7 +121,7 @@ export const getAllVideoNoPagination = async (): Promise<{ videos: PopulatedVide
 
 // Get video by its nameSlug
 export const getVideoBySlug = async (slug: string): Promise<{ video: PopulatedVideo }> => {
-  const data = await fetchData(`api/videos?filters[nameSlug]=${slug}&populate=*`);
+  const data = await fetchData(`api/videos?filters[nameSlug]=${slug}&sort=updatedAt:desc&populate=*`);
   if (data.data.length > 0) {
     return {
       video: data.data[0] as PopulatedVideo,
@@ -132,7 +132,7 @@ export const getVideoBySlug = async (slug: string): Promise<{ video: PopulatedVi
 
 export const getVideoByTypeAndSlug = async (videoTypeNameSlug: string, nameSlug: string): Promise<{ video: PopulatedVideo }> => {
   const data = await fetchData(
-    `api/videos?filters[video_type][nameSlug][$eq]=${videoTypeNameSlug}&filters[nameSlug][$eq]=${nameSlug}&populate=*`
+    `api/videos?filters[video_type][nameSlug][$eq]=${videoTypeNameSlug}&filters[nameSlug][$eq]=${nameSlug}&sort=updatedAt:desc&populate=*`
   );
   if (data.data.length > 0) {
     return {
@@ -143,7 +143,7 @@ export const getVideoByTypeAndSlug = async (videoTypeNameSlug: string, nameSlug:
 };
 
 export const getAllVideoByType = async (videoTypeSlug: string) => {
-  const data = await fetchData(`api/videos?filters[video_type][nameSlug][$eq]=${videoTypeSlug}&populate=*`);
+  const data = await fetchData(`api/videos?filters[video_type][nameSlug][$eq]=${videoTypeSlug}&sort=updatedAt:desc&populate=*`);
   return {
     videos: data.data,
     pagination: data.meta.pagination,
@@ -157,7 +157,7 @@ export const getAllVideoByTypeAndCategory = async (
 ) => {
   const data = await fetchData(
     `api/videos?pagination[page]=${page}&pagination[pageSize]=${process.env.NEXT_PUBLIC_PAGE_LIMIT}&filters[video_type][nameSlug][$eq]=${videoType.nameSlug}${videoCategorySlug !== '*' ? `&filters[video_categories][nameSlug][$eq]=${videoCategorySlug}` : ''
-    }&populate=*`
+    }&sort=updatedAt:desc&populate=*`
   );
   return {
     videos: data.data,
@@ -179,7 +179,7 @@ export const getSeriesVideoWithEpisodes = async (
 };
 
 export const getAllVideoByVideoLinkNull = async (): Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }> => {
-  const data = await fetchData(`api/videos?filters[video_source][videoLink][$null]=true&populate=*`);
+  const data = await fetchData(`api/videos?filters[video_source][videoLink][$null]=true&sort=updatedAt:desc&populate=*`);
   return {
     videos: data.data,
     pagination: data.meta.pagination,
@@ -191,7 +191,7 @@ export const getNewReleaseVideos = async (currentDate: string): Promise<{ videos
   date.setDate(date.getDate() - 30);
   const formattedDate = date.toISOString();
 
-  const data = await fetchData(`api/videos?filters[updatedAt][$gte]=${formattedDate}&populate=*`);
+  const data = await fetchData(`api/videos?filters[updatedAt][$gte]=${formattedDate}&sort=updatedAt:desc&populate=*`);
   return {
     videos: data.data,
     pagination: data.meta.pagination,
