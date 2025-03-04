@@ -49,12 +49,26 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
   
         for (let i = 0; i < totalChunks; i++) {
           const chunkPath = `${tempSourceFolder}/chunk_${i}`;
+          if (!fs.existsSync(chunkPath)) {
+            throw new Error(`Chunk file ${chunkPath} does not exist`);
+          }
           const data = fs.readFileSync(chunkPath);
           writeStream.write(data);
           fs.unlinkSync(chunkPath); // Delete chunk after writing
         }
   
-        writeStream.end();
+        // Wait for the write stream to finish
+        await new Promise<void>((resolve, reject) => {
+          writeStream.on('finish', () => resolve());
+          writeStream.on('error', reject);
+          writeStream.end();
+        });
+        
+        // Check if the combined file exists
+        if (!fs.existsSync(combinedFilePath)) {
+          throw new Error(`Combined file ${combinedFilePath} does not exist`);
+        }
+
         return { success: true, tempFolder, tempSourcePath: combinedFilePath };
       }
   
@@ -77,6 +91,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
     } else {
       objectFolder = `${videoSource.video.video_type.nameSlug}/${videoSource.video.nameSlug}/${attributes[0]}`;
     }
+
     try {
       const processedFiles = await this.convertVideo(tempSourcePath, tempFolder);
 
