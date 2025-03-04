@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Image from 'next/image';
 import { VideoType, VideoCategory, PopulatedVideo } from "@/types/videos";
 import { PaginationMeta } from "@/types/bases";
@@ -11,23 +11,40 @@ import VideoItem from "@/components/elements/VideoItem";
 export default function ContentsArea({
   videoType,
   categories,
-  videos,
 }: {
   videoType: VideoType,
   categories: Promise<{ categories: VideoCategory[], pagination: PaginationMeta }>,
-  videos: Promise<{ videos: PopulatedVideo[], pagination: PaginationMeta }>,
 }) {
   const currentCategories = use(categories);
-  const currentVideos = use(videos);
 
   const [filter, setFilter] = useState<string>('*');
-  const [filteredVideos, setFilteredVideos] = useState<PopulatedVideo[]>(currentVideos.videos);
-  const [currentPagination, setPagination] = useState<PaginationMeta>(currentVideos.pagination);
+  const [filteredVideos, setFilteredVideos] = useState<PopulatedVideo[]>([]);
+  const [currentPagination, setPagination] = useState<PaginationMeta>();
+  const [screenWidth, setScreenWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    fetchVideos('*', 1)
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getPageSize = () => {
+    if (screenWidth >= 1200) {
+      return 8;
+    } else if (screenWidth >= 576) {
+      return 6;
+    } else {
+      return 3;
+    }
+  };
 
   const fetchVideos = async (filter: string, page: number) => {
     setFilter(filter);
     try {
-      const { videos, pagination } = await getAllVideoByTypeAndCategory(page, videoType, filter);
+      const pageSize = getPageSize();
+      const { videos, pagination } = await getAllVideoByTypeAndCategory(page, videoType, filter, pageSize);
       setFilteredVideos(videos);
       setPagination(pagination);
     } catch (error) {

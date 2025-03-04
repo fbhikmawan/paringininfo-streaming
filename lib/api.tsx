@@ -154,9 +154,10 @@ export const getAllVideoByTypeAndCategory = async (
   page: number = 1,
   videoType: VideoType,
   videoCategorySlug: string,
+  pageSize: number
 ) => {
   const data = await fetchData(
-    `api/videos?pagination[page]=${page}&pagination[pageSize]=${process.env.NEXT_PUBLIC_PAGE_LIMIT}&filters[video_type][nameSlug][$eq]=${videoType.nameSlug}${videoCategorySlug !== '*' ? `&filters[video_categories][nameSlug][$eq]=${videoCategorySlug}` : ''
+    `api/videos?pagination[page]=${page}&pagination[pageSize]=${pageSize}&filters[video_type][nameSlug][$eq]=${videoType.nameSlug}${videoCategorySlug !== '*' ? `&filters[video_categories][nameSlug][$eq]=${videoCategorySlug}` : ''
     }&sort=updatedAt:desc&populate=*`
   );
   return {

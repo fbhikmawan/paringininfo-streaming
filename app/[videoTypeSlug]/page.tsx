@@ -6,7 +6,7 @@ import BannerPage from '@/components/sections/BannerPage';
 import BannerPageSkeleton from '@/components/sections/BannerPageSkeleton';
 import ContentsAreaSkeleton from '@/components/sections/ContentsAreaSkeleton';
 import ContentsArea from '@/components/sections/ContentsArea';
-import { getVideoTypeBySlug, getAllCategoriesByVideoType, getAllVideoByTypeAndCategory } from "@/lib/api";
+import { getVideoTypeBySlug, getAllCategoriesByVideoType } from "@/lib/api";
 
 export default async function VideoTypePage({
   params,
@@ -21,7 +21,6 @@ export default async function VideoTypePage({
   }
 
   const categoriesPromise = getAllCategoriesByVideoType(videoType);
-  const videosPromise = getAllVideoByTypeAndCategory(1, videoType, '*');
 
   return (
     <>
@@ -29,7 +28,7 @@ export default async function VideoTypePage({
         <BannerPage videoType={videoType} />
       </Suspense>
       <Suspense fallback={<ContentsAreaSkeleton />}>
-        <ContentsArea videoType={videoType} categories={categoriesPromise} videos={videosPromise} />
+        <ContentsArea videoType={videoType} categories={categoriesPromise} />
       </Suspense>
     </>
   );
