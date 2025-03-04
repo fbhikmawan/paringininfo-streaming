@@ -132,6 +132,10 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
 
       console.log(`All files uploaded to MinIO`);
 
+      // Update video source with the new video source URL
+      console.log(`Updating video source with documentId: ${videoSource.documentId}`);
+      console.log(`Attributes: ${JSON.stringify(attributes)}`);
+      console.log(`content: ${objectFolder}/stream.m3u8`);
       const updateData = {
         [attributes[0]]: `${objectFolder}/stream.m3u8`
       };
