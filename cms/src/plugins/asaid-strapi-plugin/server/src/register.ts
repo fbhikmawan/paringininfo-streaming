@@ -48,7 +48,6 @@ const register = ({ strapi }: { strapi: Core.Strapi }) => {
 
       const newData = {
         name: seriesEpisodeData.name,
-        video: seriesEpisodeData.video.documentId,
         series_episode: seriesEpisodeData.documentId,
         videoLink: null,
         videoObject: null,
