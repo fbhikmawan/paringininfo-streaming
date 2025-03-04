@@ -118,20 +118,18 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       const processedFiles = await this.convertVideo(tempSourcePath, tempFolder);
       console.log(`Processed files: ${JSON.stringify(processedFiles)}`);
 
-      const uploadPromises = processedFiles.map(({ path, name }) => {
+      for (const { path, name } of processedFiles) {
         const fileStream = fs.createReadStream(path);
         console.log(`Uploading file to MinIO: ${path} as ${objectFolder}/${name}`);
-        return minioClient.putObject(bucketName, `${objectFolder}/${name}`, fileStream)
-          .then(() => {
-            console.log(`Successfully uploaded ${name} to MinIO`);
-          })
-          .catch((err) => {
-            console.error(`Error uploading ${name} to MinIO: ${err}`);
-            throw err;
-          });
-      });
+        try {
+          await minioClient.putObject(bucketName, `${objectFolder}/${name}`, fileStream);
+          console.log(`Successfully uploaded ${name} to MinIO`);
+        } catch (err) {
+          console.error(`Error uploading ${name} to MinIO: ${err}`);
+          throw err;
+        }
+      }
 
-      await Promise.all(uploadPromises);
       console.log(`All files uploaded to MinIO`);
 
       const updateData = {
