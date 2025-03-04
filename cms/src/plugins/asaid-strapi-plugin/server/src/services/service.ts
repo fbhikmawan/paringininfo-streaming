@@ -121,7 +121,14 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       const uploadPromises = processedFiles.map(({ path, name }) => {
         const fileStream = fs.createReadStream(path);
         console.log(`Uploading file to MinIO: ${path} as ${objectFolder}/${name}`);
-        return minioClient.putObject(bucketName, `${objectFolder}/${name}`, fileStream);
+        return minioClient.putObject(bucketName, `${objectFolder}/${name}`, fileStream)
+          .then(() => {
+            console.log(`Successfully uploaded ${name} to MinIO`);
+          })
+          .catch((err) => {
+            console.error(`Error uploading ${name} to MinIO: ${err}`);
+            throw err;
+          });
       });
 
       await Promise.all(uploadPromises);
