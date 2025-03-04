@@ -150,7 +150,7 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
             </Button>
             <input
               type="file"
-              accept="video/mp4"
+              accept="video/*"
               onChange={processUpload}
               ref={inputRef}
               style={{ display: 'none' }}
