@@ -55,13 +55,13 @@ export default function ContentsArea({
       <Image src="/assets/img/bg/movie_bg.jpg" alt="movie" fill style={{ objectFit: 'cover' }} />
       <div className="container">
         <div className="row align-items-end mb-60">
-          <div className="col-lg-6">
+          <div className="col-lg-6 align-self-start">
             <div className="section-title text-center text-lg-left">
               <span className="sub-title">ONLINE STREAMING</span>
               <h2 className="title">{videoType?.contentsAreaTitle}</h2>
             </div>
           </div>
-          <div className="col-lg-6">
+          <div className="col-lg-6 align-self-start">
             <div className="tr-movie-menu-active text-center">
               <button onClick={() => fetchVideos('*', 1)} className={`me-3 ${filter === '*' ? 'active' : ''}`}>All</button>
               {currentCategories.categories.map((category) => (
