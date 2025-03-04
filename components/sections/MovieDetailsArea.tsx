@@ -112,7 +112,9 @@ export default function MovieDetailsArea({ video }: Props) {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb" style={{ backgroundColor: 'transparent' }}>
               <li className="breadcrumb-item"><Link href={`/${video.video_type?.nameSlug}`}>{video.video_type?.name}</Link></li>
-              <li className="breadcrumb-item active" aria-current="page">{video.name} ({video.releaseYear})</li>
+                <li className="breadcrumb-item active" aria-current="page">
+                  {video.name} {video.video_type?.nameSlug !== 'live' && `(${video.releaseYear})`}
+                </li>
             </ol>
           </nav>
           <div className="row align-items-center position-relative">

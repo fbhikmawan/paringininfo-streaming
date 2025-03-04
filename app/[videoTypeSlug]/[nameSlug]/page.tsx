@@ -23,12 +23,16 @@ export async function generateMetadata({
     const truncatedDescription = truncateText(description, 150);
     const ogImage = video.poster ? (process.env.NEXT_PUBLIC_STRAPI_URL || '') + video.poster.url : '';
 
+    const title = video.video_type?.nameSlug === 'live'
+      ? `${video.name} | ${videoType.name} | Sanggam Streaming`
+      : `${video.name} (${video.releaseYear}) | ${videoType.name} | Sanggam Streaming`;
+
     return {
-      title: `${video.name} (${video.releaseYear}) | ${videoType.name} | Sanggam Streaming`,
+      title,
       description: truncatedDescription,
       keywords: `${video.name}, ${videoType.name}, ParinginInfo, Online Movies, Online Series, Online Sports, Live Streaming`,
       openGraph: {
-        title: `${video.name} (${video.releaseYear}) | ${videoType.name} | Sanggam Streaming`,
+        title,
         description: truncatedDescription,
         images: [
           {
