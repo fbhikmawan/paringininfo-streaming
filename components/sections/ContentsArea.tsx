@@ -23,10 +23,8 @@ export default function ContentsArea({
   const [screenWidth, setScreenWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
   useEffect(() => {
+    setScreenWidth(window.innerWidth);
     fetchVideos('*', 1)
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

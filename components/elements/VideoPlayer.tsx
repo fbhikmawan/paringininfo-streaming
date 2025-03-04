@@ -43,6 +43,7 @@ export default function VideoPlayer({ hlsManifest, shouldPlay }: VideoPlayerProp
       hls.loadSource(videoUrl);
       hls.attachMedia(videoRef.current!);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoUrl]);
 
   useEffect(() => {
