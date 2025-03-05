@@ -35,22 +35,12 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
     const chunkFileName = `chunk_${chunkIndex}`;
     const tempChunkPath = `${tempSourceFolder}/${chunkFileName}`;
 
-    console.log(`Starting uploadMedia with uploadId: ${uploadId}, chunkIndex: ${chunkIndex}, totalChunks: ${totalChunks}, fileExtension: ${fileExtension}`);
-    console.log(`Temporary folder: ${tempFolder}`);
-    console.log(`Temporary source folder: ${tempSourceFolder}`);
-    console.log(`Chunk file name: ${chunkFileName}`);
-    console.log(`Temporary chunk path: ${tempChunkPath}`);
-
     try {
       await fs.promises.mkdir(tempFolder, { recursive: true });
-      console.log(`Created temporary folder: ${tempFolder}`);
       await fs.promises.mkdir(tempSourceFolder, { recursive: true });
-      console.log(`Created temporary source folder: ${tempSourceFolder}`);
       await fs.promises.rename(file.filepath, tempChunkPath);
-      console.log(`Moved file to temporary chunk path: ${tempChunkPath}`);
   
       if (chunkIndex === totalChunks - 1) {
-        console.log(`All chunks uploaded, combining chunks into a single file`);
         // Combine chunks into a single file
         const combinedFilePath = `${tempSourceFolder}/combined.${fileExtension}`;
         const writeStream = fs.createWriteStream(combinedFilePath);
@@ -63,7 +53,6 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
           const data = fs.readFileSync(chunkPath);
           writeStream.write(data);
           fs.unlinkSync(chunkPath); // Delete chunk after writing
-          console.log(`Wrote chunk ${i} to combined file and deleted chunk file: ${chunkPath}`);
         }
   
         // Wait for the write stream to finish
@@ -108,13 +97,8 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       objectFolder = `${videoSource.video.video_type.nameSlug}/${videoSource.video.nameSlug}/${attributes[0]}`;
     }
 
-    console.log(`Starting processMedia with videoSource: ${JSON.stringify(videoSource)}, attributes: ${attributes}, tempFolder: ${tempFolder}, tempSourcePath: ${tempSourcePath}`);
-    console.log(`Bucket name: ${bucketName}`);
-    console.log(`Object folder: ${objectFolder}`);
-
     try {
       const processedFiles = await this.convertVideo(tempSourcePath, tempFolder);
-      console.log(`Processed files: ${JSON.stringify(processedFiles)}`);
 
       const uploadPromises = processedFiles.map(({ path, name }) => {
         const fileStream = fs.createReadStream(path);
@@ -133,9 +117,6 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       console.log(`All files uploaded to MinIO`);
 
       // Update video source with the new video source URL
-      console.log(`Updating video source with documentId: ${videoSource.documentId}`);
-      console.log(`Attributes: ${JSON.stringify(attributes)}`);
-      console.log(`content: ${objectFolder}/stream.m3u8`);
       const updateData = {
         [attributes[0]]: `${objectFolder}/stream.m3u8`
       };
