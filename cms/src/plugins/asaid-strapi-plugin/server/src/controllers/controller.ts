@@ -47,7 +47,7 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
       const result = await strapi
         .plugin('asaid-strapi-plugin')
         .service('service')
-        .processMedia(ctx, videoSource, attributes, tempFolder, tempSourcePath );
+        .processMedia(videoSource, attributes, tempFolder, tempSourcePath );
       ctx.body = result;
     } catch (error) {
       ctx.throw(400, error.message);
