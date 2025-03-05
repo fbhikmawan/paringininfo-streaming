@@ -101,7 +101,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
    * Process Media
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async processMedia(videoSource: any, attributes: string[], tempFolder: any, tempSourcePath: any) {
+  async processMedia(ctx: any, videoSource: any, attributes: string[], tempFolder: any, tempSourcePath: any) {
     const bucketName = process.env.MINIO_BUCKET_NAME;
     let objectFolder: string;
     if (videoSource.series_episode) {
@@ -110,32 +110,35 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       objectFolder = `${videoSource.video.video_type.nameSlug}/${videoSource.video.nameSlug}/${attributes[0]}`;
     }
 
-    console.log(`Starting processMedia with videoSource: ${JSON.stringify(videoSource)}, attributes: ${attributes}, tempFolder: ${tempFolder}, tempSourcePath: ${tempSourcePath}`);
-    console.log(`Bucket name: ${bucketName}`);
-    console.log(`Object folder: ${objectFolder}`);
+    ctx.set('Content-Type', 'text/plain');
+    ctx.set('Transfer-Encoding', 'chunked');
+
+    const sendUpdate = (message: string) => {
+      ctx.res.write(`${message}\n`);
+    };
+
+    sendUpdate(`Starting processMedia with videoSource: ${JSON.stringify(videoSource)}, attributes: ${attributes}, tempFolder: ${tempFolder}, tempSourcePath: ${tempSourcePath}`);
+    sendUpdate(`Bucket name: ${bucketName}`);
+    sendUpdate(`Object folder: ${objectFolder}`);
 
     try {
       const processedFiles = await this.convertVideo(tempSourcePath, tempFolder);
-      console.log(`Processed files: ${JSON.stringify(processedFiles)}`);
+      sendUpdate(`Processed files: ${JSON.stringify(processedFiles)}`);
 
       for (const { path, name } of processedFiles) {
         const fileStream = fs.createReadStream(path);
-        console.log(`Uploading file to MinIO: ${path} as ${objectFolder}/${name}`);
+        sendUpdate(`Uploading file to MinIO: ${path} as ${objectFolder}/${name}`);
         try {
           await minioClient.putObject(bucketName, `${objectFolder}/${name}`, fileStream);
-          console.log(`Successfully uploaded ${name} to MinIO`);
+          sendUpdate(`Successfully uploaded ${name} to MinIO`);
         } catch (err) {
-          console.error(`Error uploading ${name} to MinIO: ${err}`);
+          sendUpdate(`Error uploading ${name} to MinIO: ${err}`);
           throw err;
         }
       }
 
-      console.log(`All files uploaded to MinIO`);
+      sendUpdate(`All files uploaded to MinIO`);
 
-      // Update video source with the new video source URL
-      console.log(`Updating video source with documentId: ${videoSource.documentId}`);
-      console.log(`Attributes: ${JSON.stringify(attributes)}`);
-      console.log(`content: ${objectFolder}/stream.m3u8`);
       const updateData = {
         [attributes[0]]: `${objectFolder}/stream.m3u8`
       };
@@ -144,14 +147,17 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
         data: updateData,
       });
 
-      console.log(`Updated video source: ${JSON.stringify(updatedVideoSource)}`);
+      sendUpdate(`Updated video source: ${JSON.stringify(updatedVideoSource)}`);
+      sendUpdate('Process completed successfully');
+      ctx.res.end();
       return { success: true, data: updatedVideoSource };
     } catch (error) {
-      console.error('Error during process media:', error);
+      sendUpdate(`Error during process media: ${error.message}`);
+      ctx.res.end();
       throw error;
     } finally {
       await fs.promises.rm(tempFolder, { recursive: true, force: true });
-      console.log(`Deleted temporary folder: ${tempFolder}`);
+      sendUpdate(`Deleted temporary folder: ${tempFolder}`);
     }
   },
 

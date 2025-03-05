@@ -69,19 +69,30 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
       }
   
       setStatus('Processing..');
-      const processResponse = await axios.post('/asaid-strapi-plugin/process-media', {
-        videoSource,
-        attributes: [type === 'video' ? 'videoObject' : 'trailerObject'],
-        tempFolder: uploadResponse?.data?.tempFolder,
-        tempSourcePath: uploadResponse?.data?.tempSourcePath,
+      const response = await axios({
+        method: 'post',
+        url: '/asaid-strapi-plugin/process-media',
+        data: {
+          videoSource,
+          attributes: [type === 'video' ? 'videoObject' : 'trailerObject'],
+          tempFolder: uploadResponse?.data?.tempFolder,
+          tempSourcePath: uploadResponse?.data?.tempSourcePath,
+        },
+        responseType: 'stream',
       });
-      
-      if (processResponse.data.success) {
-        alert('File processed and uploaded successfully');
-        window.location.reload();
-      } else {
-        alert(`Error processing file: ${processResponse.data.error}`);
-      }
+
+      response.data.on('data', (chunk: Buffer) => {
+        const message = chunk.toString();
+        console.log(message);
+        if (message.includes('Process completed successfully')) {
+          alert('File processed and uploaded successfully');
+          window.location.reload();
+        } else if (message.includes('Error during process media')) {
+          alert(`Error processing file: ${message}`);
+        } else {
+          setStatus(message);
+        }
+      });
     } catch (error) {
       console.error('Error uploading or processing file:', error);
       alert('Error uploading or processing file');
