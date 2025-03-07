@@ -1,0 +1,84 @@
+{
+  "kind": "collectionType",
+  "collectionName": "videos",
+  "info": {
+    "singularName": "video",
+    "pluralName": "videos",
+    "displayName": "Video",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "releaseYear": {
+      "type": "integer",
+      "required": true
+    },
+    "duration": {
+      "type": "integer",
+      "required": true
+    },
+    "nameSlug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "poster": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "video_type": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::video-type.video-type",
+      "inversedBy": "videos"
+    },
+    "video_categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::video-category.video-category",
+      "mappedBy": "videos"
+    },
+    "video_quality": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::video-quality.video-quality",
+      "inversedBy": "videos"
+    },
+    "video_source": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::video-source.video-source",
+      "mappedBy": "video"
+    },
+    "series_seasons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::series-season.series-season",
+      "mappedBy": "video"
+    },
+    "series_episodes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::series-episode.series-episode",
+      "mappedBy": "video"
+    },
+    "viewCount": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    }
+  }
+}

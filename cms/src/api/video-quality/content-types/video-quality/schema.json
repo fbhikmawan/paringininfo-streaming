@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "video_qualities",
+  "info": {
+    "singularName": "video-quality",
+    "pluralName": "video-qualities",
+    "displayName": "Video Quality",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "nameSlug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "videos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::video.video",
+      "mappedBy": "video_quality"
+    }
+  }
+}

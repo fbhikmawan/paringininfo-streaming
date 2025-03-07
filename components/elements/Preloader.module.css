@@ -1,0 +1,40 @@
+@keyframes fadeOut {
+  from {
+    display: block;
+    opacity: 1;
+  }
+  to {
+    display: none;
+    opacity: 0;
+  }
+}
+
+.preloader {
+  background-color: #171d22;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 99;
+  margin-top: 0px;
+  top: 0px;
+  animation: fadeOut 1s ease-out 1s forwards;
+}
+
+.loadingCenter {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.loadingCenterAbsolute {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.fadeOut {
+  opacity: 0;
+  pointer-events: none;
+}

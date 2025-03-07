@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "video_categories",
+  "info": {
+    "singularName": "video-category",
+    "pluralName": "video-categories",
+    "displayName": "Video Category",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "nameSlug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "videos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::video.video",
+      "inversedBy": "video_categories"
+    },
+    "video_types": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::video-type.video-type",
+      "inversedBy": "video_categories"
+    }
+  }
+}
