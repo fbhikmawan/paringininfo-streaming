@@ -8,6 +8,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all video types
   const { videoTypes }: { videoTypes: VideoType[] } = await getAllVideoTypes();
 
+  // Check if videoTypes is empty
+  if (videoTypes.length === 0) {
+    return [
+      {
+        url: baseUrl,
+        lastModified: new Date().toISOString(),
+      },
+    ];
+  }
+
   // Generate video type sitemaps
   const videoTypeSitemaps = videoTypes.map(videoType => ({
     url: `${baseUrl}/${videoType.nameSlug}`,
