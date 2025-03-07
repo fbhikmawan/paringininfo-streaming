@@ -1,5 +1,6 @@
 import { Poppins } from 'next/font/google'
 import type { Metadata } from "next";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { Toaster } from "react-hot-toast";
 
 // Template Sections
@@ -34,10 +35,6 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(metadataBase),
     alternates: {
       canonical: '/',
-      languages: {
-        'en-US': '/',
-        'id-ID': '/id',
-      },
     },
   };
 }
@@ -61,6 +58,7 @@ export default function RootLayout({
         <Footer />
         <TemplateScripts />
         <Toaster />
+        <GoogleAnalytics gaId="G-9MGN8DZ64L" />
       </body>
     </html>
   );
