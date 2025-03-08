@@ -1,6 +1,6 @@
 import { Poppins } from 'next/font/google'
 import type { Metadata } from "next";
-import { Toaster } from "react-hot-toast";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 // Template Sections
 import Header from '../components/sections/Header';
@@ -34,10 +34,6 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(metadataBase),
     alternates: {
       canonical: '/',
-      languages: {
-        'en-US': '/',
-        'id-ID': '/id',
-      },
     },
   };
 }
@@ -47,6 +43,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isGAEnabled = process.env.GA_ENABLED === 'yes';
+  const gaId = process.env.GA_ID || 'DEFAULT_GA_ID';
+
   return (
     <html lang="en" className={poppins.className}>
       <body>
@@ -60,7 +59,7 @@ export default function RootLayout({
 
         <Footer />
         <TemplateScripts />
-        <Toaster />
+        {isGAEnabled && gaId !== 'DEFAULT_GA_ID' && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );

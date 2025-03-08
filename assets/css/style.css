@@ -914,7 +914,7 @@ label {
 .mobile-menu .social-links li a {
 	position: relative;
 	line-height: 32px;
-	font-size: 16px;
+	font-size: 24px;
 	color: #fff;
 	-webkit-transition: all 500ms ease;
 	-o-transition: all 500ms ease;
@@ -1331,6 +1331,9 @@ label {
 .title-style-three .sub-title {
     font-weight: 700;
     color: #bcbcbc;
+}
+.movie-item {
+    min-height: 312px;
 }
 .movie-item-two {
     text-align: center;
@@ -1890,6 +1893,7 @@ label {
 }
 .movie-details-img {
     position: relative;
+    min-height: 227px;
 }
 .movie-details-img .popup-video {
     position: absolute;
@@ -2989,7 +2993,7 @@ label {
     background-color: rgb(18, 21, 30);
     text-align: center;
     line-height: 36px;
-    font-size: 12px;
+    font-size: 20px;
     color: #bcbcbc;
 }
 .footer-quick-link-wrap {

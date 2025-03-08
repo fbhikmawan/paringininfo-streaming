@@ -21,6 +21,7 @@ export default function ContentsArea({
   const [filteredVideos, setFilteredVideos] = useState<PopulatedVideo[]>([]);
   const [currentPagination, setPagination] = useState<PaginationMeta>();
   const [screenWidth, setScreenWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setScreenWidth(window.innerWidth);
@@ -40,6 +41,7 @@ export default function ContentsArea({
 
   const fetchVideos = async (filter: string, page: number) => {
     setFilter(filter);
+    setLoading(true);
     try {
       const pageSize = getPageSize();
       const { videos, pagination } = await getAllVideoByTypeAndCategory(page, videoType, filter, pageSize);
@@ -47,6 +49,8 @@ export default function ContentsArea({
       setPagination(pagination);
     } catch (error) {
       console.error("Error fetching videos:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,12 +81,20 @@ export default function ContentsArea({
           </div>
         </div>
         <div className="row tr-movie-active">
-          {filteredVideos.map((video) => (
-            <div key={video.nameSlug} className='col-xl-3 col-lg-4 col-sm-6 movie-item movie-item-three mb-50' >
-              <VideoItem video={video} />
+          {loading ? (
+            <div className="col-12">
+              <div className="spinner-border" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
             </div>
-          ))}
-          {filteredVideos.length === 0 && (
+          ) : (
+            filteredVideos.map((video) => (
+              <div key={video.nameSlug} className='col-xl-3 col-lg-4 col-sm-6 movie-item movie-item-three mb-50' >
+                <VideoItem video={video} />
+              </div>
+            ))
+          )}
+          {filteredVideos.length === 0 && !loading && (
             <div className="col-12">
               <h5>Stay tuned! More exciting content is on the way.</h5>
             </div>
