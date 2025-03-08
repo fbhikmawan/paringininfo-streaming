@@ -22,6 +22,10 @@ const Odometer: React.FC<OdometerProps> = ({ count, duration = 1000 }) => {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    if (hasAnimated && currentCount === count) {
+      return;
+    }
+
     let observer: IntersectionObserver | null = null;
 
     const animate = () => {
@@ -37,11 +41,12 @@ const Odometer: React.FC<OdometerProps> = ({ count, duration = 1000 }) => {
 
         if (progress < 1) {
           requestAnimationFrame(animationFrame);
+        } else {
+          setHasAnimated(true);
         }
       };
 
       requestAnimationFrame(animationFrame);
-      setHasAnimated(true);
     };
 
     const checkVisibility = () => {
