@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { faFacebookSquare, faTwitter, faPinterestP, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { faInstagramSquare, faFacebookF, faWhatsapp, faTiktok, faYoutubeSquare } from '@fortawesome/free-brands-svg-icons';
 
 // Template Elements
 import ImageLogo from '@/components/elements/ImageLogo';
@@ -117,11 +117,11 @@ export default function Header() {
                   </div>
                   <div className="social-links">
                     <ul className="clearfix">
-                      <li><Link href="#"><span><FontAwesomeIcon icon={faTwitter} /></span></Link></li>
-                      <li><Link href="#"><span><FontAwesomeIcon icon={faFacebookSquare} /></span></Link></li>
-                      <li><Link href="#"><span><FontAwesomeIcon icon={faPinterestP} /></span></Link></li>
-                      <li><Link href="#"><span><FontAwesomeIcon icon={faInstagram} /></span></Link></li>
-                      <li><Link href="#"><span><FontAwesomeIcon icon={faYoutube} /></span></Link></li>
+                      <li><Link href="https://www.instagram.com/paringininfo" target="_blank"><FontAwesomeIcon icon={faInstagramSquare} /></Link></li>
+                      <li><Link href="https://www.facebook.com/paringininfo" target="_blank"><FontAwesomeIcon icon={faFacebookF} /></Link></li>
+                      <li><Link href="https://www.whatsapp.com/channel/0029VaeNMjd5EjxuHAaQYE1x" target="_blank"><FontAwesomeIcon icon={faWhatsapp} /></Link></li>
+                      <li><Link href="https://www.tiktok.com/@paringininfo" target="_blank"><FontAwesomeIcon icon={faTiktok} /></Link></li>
+                      <li><Link href="https://www.youtube.com/@paringininfo1050" target="_blank"><FontAwesomeIcon icon={faYoutubeSquare} /></Link></li>
                     </ul>
                   </div>
                 </nav>

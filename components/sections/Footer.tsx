@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import ImageLogo from '../elements/ImageLogo';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faTwitter, faPinterestP, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faSquareInstagram, faWhatsapp, faTiktok, faYoutubeSquare } from '@fortawesome/free-brands-svg-icons';
 
 export default function Footer() {
   const pathname = usePathname();
@@ -59,10 +59,11 @@ export default function Footer() {
               <div className="col-md-5">
                 <div className="footer-social">
                   <ul>
-                    <li><Link href="#" target="_blank"><FontAwesomeIcon icon={faFacebookF} /></Link></li>
-                    <li><Link href="#" target="_blank"><FontAwesomeIcon icon={faTwitter} /></Link></li>
-                    <li><Link href="#" target="_blank"><FontAwesomeIcon icon={faPinterestP} /></Link></li>
-                    <li><Link href="#" target="_blank"><FontAwesomeIcon icon={faLinkedinIn} /></Link></li>
+                    <li><Link href="https://www.instagram.com/paringininfo" target="_blank"><FontAwesomeIcon icon={faSquareInstagram} /></Link></li>
+                    <li><Link href="https://www.facebook.com/paringininfo" target="_blank"><FontAwesomeIcon icon={faFacebookF} /></Link></li>
+                    <li><Link href="https://www.whatsapp.com/channel/0029VaeNMjd5EjxuHAaQYE1x" target="_blank"><FontAwesomeIcon icon={faWhatsapp} /></Link></li>
+                    <li><Link href="https://www.tiktok.com/@paringininfo" target="_blank"><FontAwesomeIcon icon={faTiktok} /></Link></li>
+                    <li><Link href="https://www.youtube.com/@paringininfo1050" target="_blank"><FontAwesomeIcon icon={faYoutubeSquare} /></Link></li>
                   </ul>
                 </div>
               </div>
