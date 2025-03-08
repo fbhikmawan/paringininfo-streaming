@@ -1332,6 +1332,9 @@ label {
     font-weight: 700;
     color: #bcbcbc;
 }
+.movie-item {
+    min-height: 312px;
+}
 .movie-item-two {
     text-align: center;
     background: #1f1e24;
@@ -1890,6 +1893,7 @@ label {
 }
 .movie-details-img {
     position: relative;
+    min-height: 312px;
 }
 .movie-details-img .popup-video {
     position: absolute;
