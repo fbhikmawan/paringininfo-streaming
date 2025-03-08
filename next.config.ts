@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
         hostname: 'dev-cms-streaming.paringininfo.com',
       },
       {
-        hostname: 'cms-streaming.paringininfo.com',
+        hostname: 'cms.paringininfo.com',
       },
     ],
   },
