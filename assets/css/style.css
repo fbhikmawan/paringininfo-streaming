@@ -1893,7 +1893,7 @@ label {
 }
 .movie-details-img {
     position: relative;
-    min-height: 312px;
+    min-height: 227px;
 }
 .movie-details-img .popup-video {
     position: absolute;
