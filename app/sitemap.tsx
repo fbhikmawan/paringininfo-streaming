@@ -2,6 +2,8 @@ import { MetadataRoute } from 'next';
 import { getAllVideoTypes } from '@/lib/api';
 import { VideoType } from '@/types/videos';
 
+export const fetchCache = 'default-no-store'
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_METADATA_BASE_URL || 'http://localhost:3000';
 
