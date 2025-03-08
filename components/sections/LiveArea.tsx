@@ -20,9 +20,14 @@ const Odometer: React.FC<OdometerProps> = ({ count, duration = 1000 }) => {
   const [currentCount, setCurrentCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
+  const currentCountRef = useRef(currentCount);
 
   useEffect(() => {
-    if (hasAnimated && currentCount === count) {
+    currentCountRef.current = currentCount;
+  }, [currentCount]);
+
+  useEffect(() => {
+    if (hasAnimated && currentCountRef.current === count) {
       return;
     }
 
@@ -78,9 +83,9 @@ const Odometer: React.FC<OdometerProps> = ({ count, duration = 1000 }) => {
 
   const formatCount = (value: number) => {
     if (value >= 1000000) {
-      return (value / 1000000).toFixed(1) + 'M+';
+      return (value / 1000000).toFixed(2) + 'M+';
     } else if (value >= 1000) {
-      return (value / 1000).toFixed(1) + 'K+';
+      return (value / 1000).toFixed(2) + 'K+';
     } else {
       return value.toString();
     }
