@@ -6,14 +6,14 @@ import Link from 'next/link';
 
 import VideoPlayerModal from '@/components/modals/VideoPlayerModal';
 import YouTubeEmbedModal from '@/components/modals/YouTubeEmbedModal';
-import { incrementViewCount, getAdBanners, getSeriesVideoWithEpisodes } from '@/lib/api';
+import AdBannerContent from '@/components/elements/AdBannerContent';
+import { incrementViewCount, getSeriesVideoWithEpisodes } from '@/lib/api';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faClock } from '@fortawesome/free-regular-svg-icons';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import { PopulatedVideo } from '@/types/videos';
-import { AdBanner } from '@/types/ads';
 
 import imgPlayIcon from '@/assets/img/images/play_icon.png'
 
@@ -22,21 +22,11 @@ interface Props {
 }
 
 export default function MovieDetailsArea({ video }: Props) {
-  const [randomAdBanner, setRandomAdBanner] = useState<AdBanner | null>(null);
   const [durationText, setDurationText] = useState<string>('');
 
   useEffect(() => {
     incrementViewCount(video.documentId, video.viewCount || 0);
 
-    async function fetchAdBanners() {
-      const { adBanners } = await getAdBanners();
-      if (adBanners.length > 0) {
-        const randomBanner = adBanners[Math.floor(Math.random() * adBanners.length)];
-        setRandomAdBanner(randomBanner);
-      }
-    }
-
-    fetchAdBanners();
   }, [video.documentId, video.viewCount]);
 
   useEffect(() => {
@@ -106,7 +96,7 @@ export default function MovieDetailsArea({ video }: Props) {
           return null;
         }
       })}
-      <section className="movie-details-area pb-4">
+      <section className="movie-details-area pb-5">
         <Image src="/assets/img/bg/movie_details_bg.jpg" alt="Movie Details Background" fill style={{ objectFit: 'cover' }} />
         <div className="container">
           <nav aria-label="breadcrumb">
@@ -208,25 +198,7 @@ export default function MovieDetailsArea({ video }: Props) {
                     </ul>
                   </div>
                 )}
-                {randomAdBanner && randomAdBanner.banner728x90 && (
-                  <div className="ad-banner position-relative mt-4">
-                    <div className="banner728x90">
-                      <a href={randomAdBanner.destinationLink} target="_blank">
-                        <Image
-                          className="img-banner"
-                          src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner728x90?.url}`}
-                          alt={randomAdBanner.name}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          style={{
-                            objectFit: 'contain',
-                            objectPosition: 'left',
-                          }}
-                        />
-                      </a>
-                    </div>
-                  </div>
-                )}
+                <AdBannerContent type="leaderboard" dynamic={true} />
               </div>
             </div>
           </div>
