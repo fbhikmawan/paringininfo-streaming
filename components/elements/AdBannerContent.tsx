@@ -68,8 +68,8 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
                   </div>
                 </div>
               )}
-              {randomAdBanner.banner728x90 && (
-                <div className="ad-banner position-relative mt-4 d-none d-md-block">
+              {(randomAdBanner.banner728x90 || !randomAdBanner.banner320x50) && (
+                <div className={`ad-banner position-relative mt-4 ${!randomAdBanner.banner320x50 ? 'd-block' : 'd-none d-md-block'}`}>
                   <div className="banner728x90 text-center">
                     <a href={randomAdBanner.destinationLink} target="_blank">
                       <Image
