@@ -1,6 +1,6 @@
-// app/robots.ts
-
 import { MetadataRoute } from 'next';
+
+export const fetchCache = 'default-no-store'
 
 export default function robots(): MetadataRoute.Robots {
   const isDevServer = process.env.NEXT_PUBLIC_IS_DEV_SERVER;
