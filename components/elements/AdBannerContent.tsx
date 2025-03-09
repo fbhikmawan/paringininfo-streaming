@@ -55,7 +55,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
             <>
               {randomAdBanner.banner320x50 && (
                 <div className="ad-banner position-relative mt-4 d-block d-md-none">
-                  <div className="banner320x50">
+                  <div className="banner320x50 text-center">
                     <a href={randomAdBanner.destinationLink} target="_blank">
                       <Image
                         className="img-banner w-100"
@@ -70,7 +70,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
               )}
               {randomAdBanner.banner728x90 && (
                 <div className="ad-banner position-relative mt-4 d-none d-md-block">
-                  <div className="banner728x90">
+                  <div className="banner728x90 text-center">
                     <a href={randomAdBanner.destinationLink} target="_blank">
                       <Image
                         className="img-banner w-100"
@@ -89,7 +89,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
           if (size === '728x90' && randomAdBanner.banner728x90) {
             return (
               <div className="ad-banner position-relative mt-4">
-                <div className="banner728x90">
+                <div className="banner728x90 text-center">
                   <a href={randomAdBanner.destinationLink} target="_blank">
                     <Image
                       className="img-banner w-100"
@@ -105,7 +105,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
           } else if (size === '320x50' && randomAdBanner.banner320x50) {
             return (
               <div className="ad-banner position-relative mt-4">
-                <div className="banner320x50">
+                <div className="banner320x50 text-center">
                   <a href={randomAdBanner.destinationLink} target="_blank">
                     <Image
                       className="img-banner w-100"
@@ -125,7 +125,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
         if (size === '160x600' && randomAdBanner.banner160x600) {
           return (
             <div className="ad-banner position-relative mt-4">
-              <div className="banner160x600">
+              <div className="banner160x600 text-center">
                 <a href={randomAdBanner.destinationLink} target="_blank">
                   <Image
                     className="img-banner"
@@ -141,7 +141,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
         } else if (size === '160x300' && randomAdBanner.banner160x300) {
           return (
             <div className="ad-banner position-relative mt-4">
-              <div className="banner160x300">
+              <div className="banner160x300 text-center">
                 <a href={randomAdBanner.destinationLink} target="_blank">
                   <Image
                     className="img-banner"
@@ -160,7 +160,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
         if (randomAdBanner.banner300x250) {
           return (
             <div className="ad-banner position-relative mt-4">
-              <div className="banner300x250">
+              <div className="banner300x250 text-center">
                 <a href={randomAdBanner.destinationLink} target="_blank">
                   <Image
                     className="img-banner"
