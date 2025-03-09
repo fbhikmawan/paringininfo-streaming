@@ -3015,9 +3015,18 @@ label {
 
 
 /* 21. Advertisements */
-.banner728x90 {
-    min-height: 90px;
+.ad-banner .banner728x90 .img-banner {
+    max-width: 728px;
 }
-.banner160x600 {
-    min-height: 600px;
+.ad-banner .banner320x50 .img-banner {
+    max-width: 320px;
+}
+.ad-banner .banner300x250 .img-banner {
+    max-width: 300px;
+}
+.ad-banner .banner160x600 .img-banner {
+    max-width: 160px;
+}
+.ad-banner .banner160x600 .img-banner {
+    max-width: 160px;
 }
