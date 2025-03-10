@@ -202,12 +202,32 @@ export const getNewReleaseVideos = async (currentDate: string): Promise<{ videos
 // ***
 // APIs for Advertisement Banners
 // ***
+// Get all ad banners based on filters
 export const getAdBanners = async (filters: Record<string, string> = {}): Promise<{ adBanners: AdBanner[] }> => {
   const queryString = new URLSearchParams(filters).toString();
-  const data = await fetchData(`api/ad-banners?${queryString}&populate=*`);
+  const data = await fetchData(`api/ad-banners?${queryString}&sort=displayCount:asc&populate=*`);
   return {
     adBanners: data.data as AdBanner[],
   };
+};
+// Increment displayCount field value
+export const incrementDisplayCount = async (adBannerId: string, currentDisplayCount: number) => {
+  try {
+    await fetch(`${baseURL}/api/ad-banners/${adBannerId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+      body: JSON.stringify({
+        data: {
+          displayCount: currentDisplayCount + 1,
+        },
+      }),
+    });
+  } catch (error) {
+    console.error('Error incrementing display count:', error);
+  }
 };
 
 // ***
