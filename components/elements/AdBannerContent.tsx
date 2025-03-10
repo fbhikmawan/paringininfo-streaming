@@ -36,16 +36,18 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
   useEffect(() => {
     async function fetchAdBanners() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let filters: Record<string, any> = {};
+      let filters: Record<string, string> = {};
       switch (type) {
         case 'leaderboard':
-          filters = dynamic ? { $or: [{ banner728x90: { $ne: null } }, { banner320x50: { $ne: null } }] } : { [`banner${size}`]: { $ne: null } };
+          filters = dynamic 
+            ? { '$or[0][banner728x90][$ne]': 'null', '$or[1][banner320x50][$ne]': 'null' } 
+            : { [`banner${size}[$ne]`]: 'null' };
           break;
         case 'sidebar':
-          filters = { [`banner${size}`]: { $ne: null } };
+          filters = { [`banner${size}[$ne]`]: 'null' };
           break;
         case 'rectangle':
-          filters = { banner300x250: { $ne: null } };
+          filters = { 'banner300x250[$ne]': 'null' };
           break;
       }
 
