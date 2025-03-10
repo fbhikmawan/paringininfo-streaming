@@ -202,8 +202,10 @@ export const getNewReleaseVideos = async (currentDate: string): Promise<{ videos
 // ***
 // APIs for Advertisement Banners
 // ***
-export const getAdBanners = async (): Promise<{ adBanners: AdBanner[] }> => {
-  const data = await fetchData(`api/ad-banners?populate=*`);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getAdBanners = async (filters: Record<string, any> = {}): Promise<{ adBanners: AdBanner[] }> => {
+  const queryString = new URLSearchParams(filters).toString();
+  const data = await fetchData(`api/ad-banners?${queryString}&populate=*`);
   return {
     adBanners: data.data as AdBanner[],
   };

@@ -35,7 +35,21 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
 
   useEffect(() => {
     async function fetchAdBanners() {
-      const { adBanners } = await getAdBanners();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let filters: Record<string, any> = {};
+      switch (type) {
+        case 'leaderboard':
+          filters = dynamic ? { $or: [{ banner728x90: { $ne: null } }, { banner320x50: { $ne: null } }] } : { [`banner${size}`]: { $ne: null } };
+          break;
+        case 'sidebar':
+          filters = { [`banner${size}`]: { $ne: null } };
+          break;
+        case 'rectangle':
+          filters = { banner300x250: { $ne: null } };
+          break;
+      }
+
+      const { adBanners } = await getAdBanners(filters);
       if (adBanners.length > 0) {
         const randomBanner = adBanners[Math.floor(Math.random() * adBanners.length)];
         setRandomAdBanner(randomBanner);
@@ -43,7 +57,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
     }
 
     fetchAdBanners();
-  }, []);
+  }, [type, size, dynamic]);
 
   if (!randomAdBanner) return null;
 
