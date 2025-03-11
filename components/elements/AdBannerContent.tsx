@@ -40,14 +40,14 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
       switch (type) {
         case 'leaderboard':
           filters = dynamic 
-            ? { '$or[0][banner728x90][$ne]': 'null', '$or[1][banner320x50][$ne]': 'null' } 
-            : { [`banner${size}[$ne]`]: 'null' };
+            ? { 'filters[$or][0][banner728x90][$ne]': 'null', 'filters[$or][1][banner320x50][$ne]': 'null' } 
+            : { [`filters[banner${size}][$ne]`]: 'null' };
           break;
         case 'sidebar':
-          filters = { [`banner${size}[$ne]`]: 'null' };
+          filters = { [`filters[banner${size}][$ne]`]: 'null' };
           break;
         case 'rectangle':
-          filters = { 'banner300x250[$ne]': 'null' };
+          filters = { 'filters[banner300x250][$ne]': 'null' };
           break;
       }
 
