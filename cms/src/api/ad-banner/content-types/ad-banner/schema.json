@@ -56,11 +56,17 @@
       ]
     },
     "banner160x600": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "displayCount": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
     }
   }
 }

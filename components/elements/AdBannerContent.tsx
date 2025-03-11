@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { AdBanner } from '@/types/ads';
-import { getAdBanners } from '@/lib/api';
+import { getAdBanners, incrementDisplayCount } from '@/lib/api';
 
 type LeaderboardSize = '728x90' | '320x50';
 type SidebarSize = '160x600' | '160x300';
@@ -31,21 +31,40 @@ interface RectangleProps extends BaseProps {
 type AdBannerContentProps = LeaderboardProps | SidebarProps | RectangleProps;
 
 const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) => {
-  const [randomAdBanner, setRandomAdBanner] = useState<AdBanner | null>(null);
+  const [selectedAdBanner, setSelectedAdBanner] = useState<AdBanner | null>(null);
 
   useEffect(() => {
     async function fetchAdBanners() {
-      const { adBanners } = await getAdBanners();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let filters: Record<string, string> = {};
+      switch (type) {
+        case 'leaderboard':
+          filters = dynamic 
+            ? { '$or[0][banner728x90][$ne]': 'null', '$or[1][banner320x50][$ne]': 'null' } 
+            : { [`banner${size}[$ne]`]: 'null' };
+          break;
+        case 'sidebar':
+          filters = { [`banner${size}[$ne]`]: 'null' };
+          break;
+        case 'rectangle':
+          filters = { 'banner300x250[$ne]': 'null' };
+          break;
+      }
+
+      const { adBanners } = await getAdBanners(filters);
       if (adBanners.length > 0) {
-        const randomBanner = adBanners[Math.floor(Math.random() * adBanners.length)];
-        setRandomAdBanner(randomBanner);
+        const selectedBanner = adBanners[0]; // Select the banner with the lowest display count
+        setSelectedAdBanner(selectedBanner);
+
+        // Increment the display count
+        await incrementDisplayCount(selectedBanner.documentId, selectedBanner.displayCount);
       }
     }
 
     fetchAdBanners();
-  }, []);
+  }, [type, size, dynamic]);
 
-  if (!randomAdBanner) return null;
+  if (!selectedAdBanner) return null;
 
   const renderBanner = () => {
     switch (type) {
@@ -53,31 +72,31 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
         if (dynamic) {
           return (
             <>
-              {randomAdBanner.banner320x50 && (
+              {selectedAdBanner.banner320x50 && (
                 <div className="ad-banner position-relative mt-4 d-block d-md-none">
                   <div className="banner320x50 text-center">
-                    <a href={randomAdBanner.destinationLink} target="_blank">
+                    <a href={selectedAdBanner.destinationLink} target="_blank">
                       <Image
                         className="img-banner w-100"
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner320x50?.url}`}
-                        alt={randomAdBanner.name}
-                        width={randomAdBanner.banner320x50?.width}
-                        height={randomAdBanner.banner320x50?.height}
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner320x50?.url}`}
+                        alt={selectedAdBanner.name}
+                        width={selectedAdBanner.banner320x50?.width}
+                        height={selectedAdBanner.banner320x50?.height}
                       />
                     </a>
                   </div>
                 </div>
               )}
-              {(randomAdBanner.banner728x90 || !randomAdBanner.banner320x50) && (
-                <div className={`ad-banner position-relative mt-4 ${!randomAdBanner.banner320x50 ? 'd-block' : 'd-none d-md-block'}`}>
+              {(selectedAdBanner.banner728x90 || !selectedAdBanner.banner320x50) && (
+                <div className={`ad-banner position-relative mt-4 ${!selectedAdBanner.banner320x50 ? 'd-block' : 'd-none d-md-block'}`}>
                   <div className="banner728x90 text-center">
-                    <a href={randomAdBanner.destinationLink} target="_blank">
+                    <a href={selectedAdBanner.destinationLink} target="_blank">
                       <Image
                         className="img-banner w-100"
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner728x90?.url}`}
-                        alt={randomAdBanner.name}
-                        width={randomAdBanner.banner728x90?.width}
-                        height={randomAdBanner.banner728x90?.height}
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner728x90?.url}`}
+                        alt={selectedAdBanner.name}
+                        width={selectedAdBanner.banner728x90?.width}
+                        height={selectedAdBanner.banner728x90?.height}
                       />
                     </a>
                   </div>
@@ -86,33 +105,33 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
             </>
           );
         } else {
-          if (size === '728x90' && randomAdBanner.banner728x90) {
+          if (size === '728x90' && selectedAdBanner.banner728x90) {
             return (
               <div className="ad-banner position-relative mt-4">
                 <div className="banner728x90 text-center">
-                  <a href={randomAdBanner.destinationLink} target="_blank">
+                  <a href={selectedAdBanner.destinationLink} target="_blank">
                     <Image
                       className="img-banner w-100"
-                      src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner728x90?.url}`}
-                      alt={randomAdBanner.name}
-                      width={randomAdBanner.banner728x90?.width}
-                      height={randomAdBanner.banner728x90?.height}
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner728x90?.url}`}
+                      alt={selectedAdBanner.name}
+                      width={selectedAdBanner.banner728x90?.width}
+                      height={selectedAdBanner.banner728x90?.height}
                     />
                   </a>
                 </div>
               </div>
             );
-          } else if (size === '320x50' && randomAdBanner.banner320x50) {
+          } else if (size === '320x50' && selectedAdBanner.banner320x50) {
             return (
               <div className="ad-banner position-relative mt-4">
                 <div className="banner320x50 text-center">
-                  <a href={randomAdBanner.destinationLink} target="_blank">
+                  <a href={selectedAdBanner.destinationLink} target="_blank">
                     <Image
                       className="img-banner w-100"
-                      src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner320x50?.url}`}
-                      alt={randomAdBanner.name}
-                      width={randomAdBanner.banner320x50?.width}
-                      height={randomAdBanner.banner320x50?.height}
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner320x50?.url}`}
+                      alt={selectedAdBanner.name}
+                      width={selectedAdBanner.banner320x50?.width}
+                      height={selectedAdBanner.banner320x50?.height}
                     />
                   </a>
                 </div>
@@ -122,33 +141,33 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
         }
         break;
       case 'sidebar':
-        if (size === '160x600' && randomAdBanner.banner160x600) {
+        if (size === '160x600' && selectedAdBanner.banner160x600) {
           return (
             <div className="ad-banner position-relative mt-4">
               <div className="banner160x600 text-center">
-                <a href={randomAdBanner.destinationLink} target="_blank">
+                <a href={selectedAdBanner.destinationLink} target="_blank">
                   <Image
                     className="img-banner"
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner160x600?.url}`}
-                    alt={randomAdBanner.name}
-                    width={randomAdBanner.banner160x600?.width}
-                    height={randomAdBanner.banner160x600?.height}
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner160x600?.url}`}
+                    alt={selectedAdBanner.name}
+                    width={selectedAdBanner.banner160x600?.width}
+                    height={selectedAdBanner.banner160x600?.height}
                   />
                 </a>
               </div>
             </div>
           );
-        } else if (size === '160x300' && randomAdBanner.banner160x300) {
+        } else if (size === '160x300' && selectedAdBanner.banner160x300) {
           return (
             <div className="ad-banner position-relative mt-4">
               <div className="banner160x300 text-center">
-                <a href={randomAdBanner.destinationLink} target="_blank">
+                <a href={selectedAdBanner.destinationLink} target="_blank">
                   <Image
                     className="img-banner"
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner160x300?.url}`}
-                    alt={randomAdBanner.name}
-                    width={randomAdBanner.banner160x300?.width}
-                    height={randomAdBanner.banner160x300?.height}
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner160x300?.url}`}
+                    alt={selectedAdBanner.name}
+                    width={selectedAdBanner.banner160x300?.width}
+                    height={selectedAdBanner.banner160x300?.height}
                   />
                 </a>
               </div>
@@ -157,17 +176,17 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
         }
         break;
       case 'rectangle':
-        if (randomAdBanner.banner300x250) {
+        if (selectedAdBanner.banner300x250) {
           return (
             <div className="ad-banner position-relative mt-4">
               <div className="banner300x250 text-center">
-                <a href={randomAdBanner.destinationLink} target="_blank">
+                <a href={selectedAdBanner.destinationLink} target="_blank">
                   <Image
                     className="img-banner"
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${randomAdBanner.banner300x250?.url}`}
-                    alt={randomAdBanner.name}
-                    width={randomAdBanner.banner300x250?.width}
-                    height={randomAdBanner.banner300x250?.height}
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner300x250?.url}`}
+                    alt={selectedAdBanner.name}
+                    width={selectedAdBanner.banner300x250?.width}
+                    height={selectedAdBanner.banner300x250?.height}
                   />
                 </a>
               </div>
