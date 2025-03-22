@@ -92,15 +92,6 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
       .updateVideoObject(documentId, videoObject);
     ctx.send(updatedVideo);
   },
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async getMinioEndpoint(ctx: any) {
-    const minioEndpoint = await strapi
-      .plugin('asaid-strapi-plugin')
-      .service('service')
-      .getMinioEndpoint();
-    ctx.send(minioEndpoint);
-  },
 });
 
 export default controller;

@@ -72,15 +72,6 @@ const routes = [
     },
   },
   {
-    method: 'GET',
-    path: '/minio-endpoint',
-    handler: 'controller.getMinioEndpoint',
-    config: {
-      policies: [],
-      auth: false,
-    },
-  },
-  {
     method: 'POST',
     path: '/update-video-object',
     handler: 'controller.updateVideoObject',

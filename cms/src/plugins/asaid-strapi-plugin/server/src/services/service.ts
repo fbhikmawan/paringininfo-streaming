@@ -340,14 +340,6 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
   },
 
   /**
-  * Get MinIO Endpoint
-  */
-  async getMinioEndpoint() {
-    const minioEndpoint = process.env.MINIO_ENDPOINT;
-    return { minioEndpoint };
-  },
-
-  /**
   * Update Video Object
   */
   async updateVideoObject(documentId: string, videoObject: string) {
