@@ -82,6 +82,25 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
       ctx.throw(400, error.message);
     }
   },
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async updateVideoObject(ctx: any) {
+    const { documentId, videoObject } = ctx.request.body;
+    const updatedVideo = await strapi
+      .plugin('asaid-strapi-plugin')
+      .service('service')
+      .updateVideoObject(documentId, videoObject);
+    ctx.send(updatedVideo);
+  },
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async getMinioEndpoint(ctx: any) {
+    const minioEndpoint = await strapi
+      .plugin('asaid-strapi-plugin')
+      .service('service')
+      .getMinioEndpoint();
+    ctx.send(minioEndpoint);
+  },
 });
 
 export default controller;
