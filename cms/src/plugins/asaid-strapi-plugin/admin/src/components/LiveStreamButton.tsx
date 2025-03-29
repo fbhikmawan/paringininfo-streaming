@@ -16,7 +16,16 @@ const LiveStreamButton = ({ videoSource }: LiveStreamButtonProps) => {
           videoObject,
         });
       } else {
-        const baseUrl = 'rtmp://streaming.paringininfo.com';
+        const response = await axios.get('/asaid-strapi-plugin/minio-endpoint');
+        const minioEndpoint = response.data.minioEndpoint;
+        let baseUrl = 'rtmp://streaming.paringininfo.com';
+
+        if (minioEndpoint.includes('dev')) {
+          baseUrl = 'rtmp://dev-streaming.paringininfo.com';
+        } else if (process.env.NODE_ENV === 'development') {
+          baseUrl = `rtmp://${minioEndpoint}`;
+        }
+
         const rtmpUrl = `${baseUrl}/live/${videoSource.video?.nameSlug}`;
         navigator.clipboard.writeText(rtmpUrl);
         alert('RTMP URL has been copied to clipboard.');
