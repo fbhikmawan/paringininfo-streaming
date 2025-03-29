@@ -39,12 +39,12 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       await fs.promises.mkdir(tempFolder, { recursive: true });
       await fs.promises.mkdir(tempSourceFolder, { recursive: true });
       await fs.promises.rename(file.filepath, tempChunkPath);
-
+  
       if (chunkIndex === totalChunks - 1) {
         // Combine chunks into a single file
         const combinedFilePath = `${tempSourceFolder}/combined.${fileExtension}`;
         const writeStream = fs.createWriteStream(combinedFilePath);
-
+  
         for (let i = 0; i < totalChunks; i++) {
           const chunkPath = `${tempSourceFolder}/chunk_${i}`;
           if (!fs.existsSync(chunkPath)) {
@@ -54,7 +54,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
           writeStream.write(data);
           fs.unlinkSync(chunkPath); // Delete chunk after writing
         }
-
+  
         // Wait for the write stream to finish
         await new Promise<void>((resolve, reject) => {
           writeStream.on('finish', () => {
@@ -67,7 +67,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
           });
           writeStream.end();
         });
-
+        
         // Check if the combined file exists
         if (!fs.existsSync(combinedFilePath)) {
           throw new Error(`Combined file ${combinedFilePath} does not exist`);
@@ -76,7 +76,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
         console.log(`Combined file exists: ${combinedFilePath}`);
         return { success: true, tempFolder, tempSourcePath: combinedFilePath };
       }
-
+  
       return { success: true };
     } catch (error) {
       console.error('Error during upload media:', error);
@@ -144,7 +144,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       const outputFiles: { path: string, name: string }[] = [];
       const ext = path.extname(inputFilePath).toLowerCase();
       const tempFilePath = `${outputFolder}/temp.mp4`;
-
+  
       const convertToMp4 = (input: string, output: string) => {
         return new Promise<void>((resolve, reject) => {
           ffmpeg(input)
@@ -161,7 +161,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
             .run();
         });
       };
-
+  
       const convertToHls = (input: string) => {
         return new Promise<void>((resolve, reject) => {
           ffmpeg(input)
@@ -184,7 +184,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
             .run();
         });
       };
-
+  
       const collectOutputFiles = async () => {
         try {
           const files = await fs.promises.readdir(outputFolder);
@@ -200,7 +200,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
           reject(err);
         }
       };
-
+  
       (async () => {
         try {
           if (ext !== '.mp4') {
@@ -226,7 +226,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
     try {
       // get start from query params
       const { start } = query;
-
+        
       // get total video sources count
       const totalVideoSources = await strapi.documents('api::video-source.video-source').count({});
 
@@ -304,7 +304,7 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       throw error;
     }
   },
-
+  
   /**
   * Get MinIO Bucket Storage Info
   */
@@ -335,33 +335,6 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => ({
       };
     } catch (error) {
       console.error('Error getting bucket storage info:', error);
-      throw error;
-    }
-  },
-
-  /**
-  * Get MinIO Endpoint
-  */
-  async getMinioEndpoint() {
-    const minioEndpoint = process.env.MINIO_ENDPOINT;
-    return { minioEndpoint };
-  },
-
-  /**
-  * Update Video Object
-  */
-  async updateVideoObject(documentId: string, videoObject: string) {
-    const updateData = {
-      'videoObject': videoObject
-    };
-    try {
-      const updatedVideoSource = await strapi.query('api::video-source.video-source').update({
-        where: { documentId: documentId },
-        data: updateData,
-      });
-      return updatedVideoSource;
-    } catch (error) {
-      console.error(`Error updating video object for documentId: ${documentId}`, error);
       throw error;
     }
   },

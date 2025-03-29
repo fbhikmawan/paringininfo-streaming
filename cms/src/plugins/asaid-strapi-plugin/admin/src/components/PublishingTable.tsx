@@ -21,7 +21,6 @@ import axios from 'axios';
 import { useState, useEffect, FormEvent } from 'react';
 
 import ActionButton from './ActionButton';
-import LiveStreamButton from './LiveStreamButton';
 
 const PublishingTable = () => {
   const [pageCount, setPageCount] = useState(1);
@@ -53,7 +52,7 @@ const PublishingTable = () => {
     setCurrentPage(page);
     handleFetchPosts(page);
   };
-
+  
   const handleDeletePost = async (id: string) => {
     await axios.delete(`/asaid-strapi-plugin/delete-video-source?videoSourceDocumentId=${id}`, {});
     handleFetchPosts(1);
@@ -114,8 +113,8 @@ const PublishingTable = () => {
                 <Tr key={videoSource.id}>
                   <Td>
                     <Typography textColor="neutral800">
-                      {videoSource.series_episode ?
-                      `${videoSource.series_episode?.series_season?.video?.id}` :
+                      {videoSource.series_episode ? 
+                      `${videoSource.series_episode?.series_season?.video?.id}` : 
                       `${videoSource.video?.id}`}
                     </Typography>
                   </Td>
@@ -126,12 +125,12 @@ const PublishingTable = () => {
                   </Td>
                   <Td>
                     <Typography textColor="neutral800">
-                      {videoSource.series_episode ?
+                      {videoSource.series_episode ? 
                         <Link
                           href={`http://localhost:1337/admin/content-manager/collection-types/api::video.video/${videoSource.series_episode?.series_season?.video?.documentId}`}
                         >
                           { videoSource.series_episode?.series_season?.video?.name }
-                        </Link> :
+                        </Link> : 
                         <Link
                           href={`http://localhost:1337/admin/content-manager/collection-types/api::video.video/${videoSource.video?.documentId}`}
                         >
@@ -151,23 +150,15 @@ const PublishingTable = () => {
                     </Typography>
                   </Td>
                   <Td>
-                    {videoSource.video?.video_type?.nameSlug === 'live' ? (
-                      videoSource.videoLink ? (
-                      <ActionButton videoSource={videoSource} type="video" />
-                      ) : (
-                      <LiveStreamButton videoSource={videoSource} />
-                      )
-                    ) : (
-                      <ActionButton videoSource={videoSource} type="video" />
-                    )}
+                    <ActionButton videoSource={videoSource} type="video" />
                   </Td>
-                  <Td>
-                    { videoSource.series_episode ? (
+                    <Td>
+                    {videoSource.video?.video_type?.nameSlug == 'live' || videoSource.series_episode ? (
                       <Typography textColor="neutral800">-</Typography>
                     ) : (
                       <ActionButton videoSource={videoSource} type="trailer" />
                     )}
-                  </Td>
+                    </Td>
                   <Td>
                     <Trash
                       onClick={() => {
