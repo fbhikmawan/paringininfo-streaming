@@ -49,7 +49,21 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
     const uploadId = uuidv4();
     const fileExtension = file.name.split('.').pop();
 
+    // Prepare wakeLock
+    let wakeLock: WakeLockSentinel | null = null;
+
     try {
+      // Request a screen wake lock
+      wakeLock = await navigator.wakeLock.request('screen');
+      if (wakeLock) {
+        console.log('Screen Wake Lock requested');
+        wakeLock.addEventListener('release', () => {
+          if (wakeLock) {
+            console.log('Screen Wake Lock released:', wakeLock.released);
+          }
+        });
+      }
+
       let uploadResponse;
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
@@ -61,13 +75,13 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
         formData.append('fileExtension', fileExtension);
 
         uploadResponse = await axios.post('/asaid-strapi-plugin/upload', formData);
-        
+
         if (!uploadResponse.data.success) {
           alert(`Error uploading file chunk: ${uploadResponse.data.error}`);
           throw new Error(`Error uploading file chunk: ${uploadResponse.data.error}`);
         }
       }
-  
+
       setStatus('Processing..');
       const processResponse = await axios.post('/asaid-strapi-plugin/process-media', {
         videoSource,
@@ -75,7 +89,7 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
         tempFolder: uploadResponse?.data?.tempFolder,
         tempSourcePath: uploadResponse?.data?.tempSourcePath,
       });
-      
+
       if (processResponse.data.success) {
         alert('File processed and uploaded successfully');
         window.location.reload();
@@ -86,6 +100,11 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
       console.error('Error uploading or processing file:', error);
       alert('Error uploading or processing file');
     } finally {
+      // Release the wake lock
+      if (wakeLock) {
+        await wakeLock.release();
+      }
+
       setLoading(false);
       setStatus('Upload Media');
     }
@@ -123,9 +142,9 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
             <Typography variant="pi">Uploaded</Typography>
           </Button>
         </Flex>
-      ) : loading ? 
+      ) : loading ?
         (
-          <Button style={bigBtn} loading textColor="neutral800">
+          <Button style={bigBtn} loading>
             <Typography variant="pi">{status}</Typography>
           </Button>
         ) : (
