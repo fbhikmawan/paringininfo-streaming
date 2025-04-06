@@ -54,7 +54,7 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
 
     try {
       // Request a screen wake lock
-      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock = await navigator.wakeLock.request();
       if (wakeLock) {
         console.log('Screen Wake Lock requested');
         wakeLock.addEventListener('release', () => {
