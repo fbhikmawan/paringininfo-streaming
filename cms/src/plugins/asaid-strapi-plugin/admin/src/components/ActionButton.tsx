@@ -63,7 +63,11 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
           }
         });
       }
+    } catch (error) {
+      console.error('Error requesting wake lock:', error);
+    }
 
+    try {
       let uploadResponse;
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
