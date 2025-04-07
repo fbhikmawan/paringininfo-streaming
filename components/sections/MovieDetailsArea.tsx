@@ -58,7 +58,7 @@ export default function MovieDetailsArea({ video }: Props) {
       live: { text: 'Live Now' },
     };
     const config = labelsMap[video.video_type?.nameSlug || ''];
-    return video.video_source?.videoLink ? config.text : (video.video_type?.nameSlug !== 'series' ? 'Available Soon' : config.text);
+    return (video.video_source?.videoLink || video.video_source?.videoObject) ? config.text : (video.video_type?.nameSlug !== 'series' ? 'Available Soon' : config.text);
   };
   const label = getLabel(video);
 
