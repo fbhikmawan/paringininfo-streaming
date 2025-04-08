@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import OvenPlayerModal from '@/components/modals/OvenPlayerModal';
 import VideoPlayerModal from '@/components/modals/VideoPlayerModal';
 import YouTubeEmbedModal from '@/components/modals/YouTubeEmbedModal';
 import AdBannerContent from '@/components/elements/AdBannerContent';
@@ -84,14 +85,26 @@ export default function MovieDetailsArea({ video }: Props) {
             />
           );
         } else if (theLink) {
-          const videoId = extractYouTubeId(theLink);
-          return (
-            <YouTubeEmbedModal
-              key={index}
-              modalId={modalId}
-              videoId={videoId || ''}
-            />
-          );
+          if (theLink.startsWith('ws://') || theLink.startsWith('wss://')) {
+            if (key === 'video') {
+              return (
+                <OvenPlayerModal
+                  key={index}
+                  modalId={modalId}
+                  streamUrl={theLink}
+                />
+              );
+            }
+          } else {
+            const videoId = extractYouTubeId(theLink);
+            return (
+              <YouTubeEmbedModal
+                key={index}
+                modalId={modalId}
+                videoId={videoId || ''}
+              />
+            );
+          }
         } else {
           return null;
         }
