@@ -641,7 +641,7 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     singularName: 'video';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
