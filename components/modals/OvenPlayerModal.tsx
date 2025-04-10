@@ -53,10 +53,12 @@ export default function OvenPlayerModal({ modalId, streamUrl }: OvenPlayerModalP
       });
     }
 
-    if (shouldPlay && playerInstanceRef.current) {
-      playerInstanceRef.current.play();
-    } else {
-      playerInstanceRef.current.pause();
+    if (playerInstanceRef.current) {
+      if (shouldPlay) {
+        playerInstanceRef.current.play();
+      } else {
+        playerInstanceRef.current.pause();
+      }
     }
   }, [shouldPlay, streamUrl]);
 
@@ -75,7 +77,7 @@ export default function OvenPlayerModal({ modalId, streamUrl }: OvenPlayerModalP
       >
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
-            <div className="modal-body">
+            <div className="modal-body d-flex justify-content-center p-1 p-sm-2 p-lg-3">
               <div
                 ref={playerRef}
                 style={{ width: '100%', height: 'auto' }}
