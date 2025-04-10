@@ -192,7 +192,7 @@ export const getNewReleaseVideos = async (currentDate: string): Promise<{ videos
   date.setDate(date.getDate() - 30);
   const formattedDate = date.toISOString();
 
-  const data = await fetchData(`api/videos?filters[updatedAt][$gte]=${formattedDate}&sort=updatedAt:desc&populate=*`);
+  const data = await fetchData(`api/videos?filters[createdAt][$gte]=${formattedDate}&sort=createdAt:desc&populate=*`);
   return {
     videos: data.data,
     pagination: data.meta.pagination,
