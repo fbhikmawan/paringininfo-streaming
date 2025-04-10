@@ -13,9 +13,16 @@ import Preloader from '../components/elements/Preloader';
 // Template Scripts
 import TemplateScripts from './TemplateScripts';
 
+// Template Styles
+import "../assets/css/bootstrap.min.css";
+import "../assets/css/default.css";
+import "../assets/css/style.css";
+import "../assets/css/responsive.css";
+
 // FontAwesome
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
+import RuntimeScripts from './RuntimeScripts';
 config.autoAddCss = false
 
 const poppins = Poppins({
@@ -49,15 +56,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.className}>
       <body>
-        <Preloader />
-        <ButtonScrollToTop />
-        <Header/>
+        <RuntimeScripts>
+          <Preloader />
+          <ButtonScrollToTop />
+          <Header/>
 
-        <main>
-          {children}
-        </main>
+          <main>
+            {children}
+          </main>
 
-        <Footer />
+          <Footer />
+        </RuntimeScripts>
         <TemplateScripts />
         {isGAEnabled && gaId !== 'DEFAULT_GA_ID' && <GoogleAnalytics gaId={gaId} />}
       </body>
