@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
-import OvenPlayer from 'react-ovenplayer';
+import Script from 'next/script';
 
 interface OvenPlayerModalProps {
   modalId: string;
@@ -10,6 +10,9 @@ interface OvenPlayerModalProps {
 
 export default function OvenPlayerModal({ modalId, streamUrl }: OvenPlayerModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const playerInstanceRef = useRef<any>(null); // To store the OvenPlayer instance
   const [shouldPlay, setShouldPlay] = useState(false);
 
   useEffect(() => {
@@ -37,35 +40,50 @@ export default function OvenPlayerModal({ modalId, streamUrl }: OvenPlayerModalP
     };
   }, [modalId]);
 
+  useEffect(() => {
+    if (playerRef.current && window.OvenPlayer && !playerInstanceRef.current) {
+      playerInstanceRef.current = window.OvenPlayer.create(playerRef.current, {
+        sources: [
+          {
+            type: 'webrtc',
+            file: streamUrl,
+            label: 'WebRTC Stream',
+          },
+        ],
+      });
+    }
+
+    if (shouldPlay && playerInstanceRef.current) {
+      playerInstanceRef.current.play();
+    } else {
+      playerInstanceRef.current.pause();
+    }
+  }, [shouldPlay, streamUrl]);
+
   return (
-    <div
-      className="modal"
-      id={modalId}
-      tabIndex={-1}
-      aria-labelledby={`${modalId}Label`}
-      ref={modalRef}
-    >
-      <div className="modal-dialog modal-dialog-centered modal-lg">
-        <div className="modal-content">
-          <div className="modal-body">
-            {shouldPlay && (
-              <div style={{ width: '100%', height: 'auto' }}>
-                <OvenPlayer
-                  config={{
-                    sources: [
-                      {
-                        type: 'webrtc',
-                        file: streamUrl,
-                        label: "WebRTC Stream"
-                      },
-                    ]
-                  }}
-                />
-              </div>
-            )}
+    <>
+      <Script
+        src="https://cdn.jsdelivr.net/npm/ovenplayer@latest/dist/ovenplayer.js"
+        strategy="lazyOnload"
+      />
+      <div
+        className="modal"
+        id={modalId}
+        tabIndex={-1}
+        aria-labelledby={`${modalId}Label`}
+        ref={modalRef}
+      >
+        <div className="modal-dialog modal-dialog-centered modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div
+                ref={playerRef}
+                style={{ width: '100%', height: 'auto' }}
+              ></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
