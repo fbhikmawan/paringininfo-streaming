@@ -8,24 +8,26 @@ const register = ({ strapi }: { strapi: Core.Strapi }) => {
     async afterCreate(event) {
       const videoData = await strapi.documents('api::video.video').findOne({
         documentId: event.result.documentId,
-        populate: ['video_type'],
+        populate: ['video_type','video_source'],
       });
 
       // create new data
       if (videoData.video_type?.nameSlug !== 'series') {
-        const newData = {
-          name: event.result.name,
-          video: event.result.documentId,
-          videoLink: null,
-          videoObject: null,
-          trailerLink: null,
-          trailerObject: null,
-        };
-  
-        // create new video source
-        await strapi.documents('api::video-source.video-source').create({
-          data: newData,
-        });
+        if (!videoData.video_source) {
+          const newData = {
+            name: event.result.name,
+            video: event.result.documentId,
+            videoLink: null,
+            videoObject: null,
+            trailerLink: null,
+            trailerObject: null,
+          };
+
+          // create new video source
+          await strapi.documents('api::video-source.video-source').create({
+            data: newData,
+          });
+        }
       }
     },
   });
@@ -36,29 +38,24 @@ const register = ({ strapi }: { strapi: Core.Strapi }) => {
     async afterCreate(event) {
       const seriesEpisodeData = await strapi.documents('api::series-episode.series-episode').findOne({
         documentId: event.result.documentId,
-        populate: {
-          video: {
-            populate: '*',
-          },
-          series_season: {
-            populate: '*',
-          },
-        },
+        populate: ['video_source'],
       });
 
-      const newData = {
-        name: seriesEpisodeData.name,
-        series_episode: seriesEpisodeData.documentId,
-        videoLink: null,
-        videoObject: null,
-        trailerLink: null,
-        trailerObject: null,
-      };
+      if (!seriesEpisodeData.video_source) {
+        const newData = {
+          name: seriesEpisodeData.name,
+          series_episode: seriesEpisodeData.documentId,
+          videoLink: null,
+          videoObject: null,
+          trailerLink: null,
+          trailerObject: null,
+        };
 
-      // create new video source
-      await strapi.documents('api::video-source.video-source').create({
-        data: newData,
-      });
+        // create new video source
+        await strapi.documents('api::video-source.video-source').create({
+          data: newData,
+        });
+      }
     },
   });
 };
