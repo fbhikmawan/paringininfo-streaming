@@ -50,6 +50,9 @@ export default function OvenPlayerModal({ modalId, streamUrl }: OvenPlayerModalP
             label: 'WebRTC Stream',
           },
         ],
+        webrtcConfig: {
+          connectionTimeout: 2000,
+        }
       });
     }
 
