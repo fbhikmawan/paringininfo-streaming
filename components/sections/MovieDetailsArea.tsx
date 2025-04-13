@@ -211,7 +211,7 @@ export default function MovieDetailsArea({ video }: Props) {
                     </ul>
                   </div>
                 )}
-                <AdBannerContent type="leaderboard" dynamic={true} />
+                <AdBannerContent type="leaderboard" dynamic={true} className='mt-4' />
               </div>
             </div>
           </div>

@@ -8,6 +8,7 @@ type SidebarSize = '160x600' | '160x300';
 
 interface BaseProps {
   type: 'leaderboard' | 'sidebar' | 'rectangle';
+  className?: string;
 }
 
 interface LeaderboardProps extends BaseProps {
@@ -30,7 +31,7 @@ interface RectangleProps extends BaseProps {
 
 type AdBannerContentProps = LeaderboardProps | SidebarProps | RectangleProps;
 
-const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) => {
+const AdBannerContent = ({ type, size, dynamic = false, className = '' }: AdBannerContentProps) => {
   const [selectedAdBanner, setSelectedAdBanner] = useState<AdBanner | null>(null);
 
   useEffect(() => {
@@ -73,7 +74,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
           return (
             <>
               {selectedAdBanner.banner320x50 && (
-                <div className="ad-banner position-relative mt-4 d-block d-md-none">
+                <div className={`ad-banner position-relative d-block d-md-none ${className}`}>
                   <div className="banner320x50 text-center">
                     <a href={selectedAdBanner.destinationLink} target="_blank">
                       <Image
@@ -88,7 +89,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
                 </div>
               )}
               {(selectedAdBanner.banner728x90 || !selectedAdBanner.banner320x50) && (
-                <div className={`ad-banner position-relative mt-4 ${!selectedAdBanner.banner320x50 ? 'd-block' : 'd-none d-md-block'}`}>
+                <div className={`ad-banner position-relative ${!selectedAdBanner.banner320x50 ? 'd-block' : 'd-none d-md-block'} ${className}`}>
                   <div className="banner728x90 text-center">
                     <a href={selectedAdBanner.destinationLink} target="_blank">
                       <Image
@@ -107,7 +108,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
         } else {
           if (size === '728x90' && selectedAdBanner.banner728x90) {
             return (
-              <div className="ad-banner position-relative mt-4">
+              <div className={`ad-banner position-relative ${className}`}>
                 <div className="banner728x90 text-center">
                   <a href={selectedAdBanner.destinationLink} target="_blank">
                     <Image
@@ -123,7 +124,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
             );
           } else if (size === '320x50' && selectedAdBanner.banner320x50) {
             return (
-              <div className="ad-banner position-relative mt-4">
+              <div className={`ad-banner position-relative ${className}`}>
                 <div className="banner320x50 text-center">
                   <a href={selectedAdBanner.destinationLink} target="_blank">
                     <Image
@@ -143,7 +144,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
       case 'sidebar':
         if (size === '160x600' && selectedAdBanner.banner160x600) {
           return (
-            <div className="ad-banner position-relative mt-4">
+            <div className={`ad-banner position-relative ${className}`}>
               <div className="banner160x600 text-center">
                 <a href={selectedAdBanner.destinationLink} target="_blank">
                   <Image
@@ -159,7 +160,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
           );
         } else if (size === '160x300' && selectedAdBanner.banner160x300) {
           return (
-            <div className="ad-banner position-relative mt-4">
+            <div className={`ad-banner position-relative ${className}`}>
               <div className="banner160x300 text-center">
                 <a href={selectedAdBanner.destinationLink} target="_blank">
                   <Image
@@ -178,7 +179,7 @@ const AdBannerContent = ({ type, size, dynamic = false }: AdBannerContentProps) 
       case 'rectangle':
         if (selectedAdBanner.banner300x250) {
           return (
-            <div className="ad-banner position-relative mt-4">
+            <div className={`ad-banner position-relative ${className}`}>
               <div className="banner300x250 text-center">
                 <a href={selectedAdBanner.destinationLink} target="_blank">
                   <Image
