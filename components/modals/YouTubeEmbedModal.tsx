@@ -49,11 +49,13 @@ export default function YouTubeEmbedModal({ modalId, videoId }: YouTubeEmbedModa
         <div className="modal-content">
           <div className="modal-body d-flex justify-content-center p-1 p-sm-2 p-lg-3">
             {shouldPlay && (
-              <YouTubeEmbed
-                videoid={videoId}
-                params="autoplay=0&controls=1&modestbranding=1&rel=0"
-                style="width: 100%; height: auto; max-width: unset;"
-              />
+              <div style={{ width: '100%', height: 'auto' }}>
+                <YouTubeEmbed
+                  videoid={videoId}
+                  params="autoplay=0&controls=1&modestbranding=1&rel=0"
+                  style="width: 100%; height: auto; max-width: unset;"
+                />
+              </div>
             )}
           </div>
         </div>
