@@ -1,3 +1,5 @@
+'use server'
+
 import { PaginationMeta } from "@/types/bases";
 import { PopulatedVideo, VideoType, Season, Episode } from "@/types/videos";
 import { AdBanner } from "@/types/ads";
@@ -11,31 +13,58 @@ const headers: HeadersInit = process.env.NEXT_PUBLIC_TOKEN
   ? { Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` }
   : {};
 
-// Helper function to handle fetch requests
-const fetchData = async (url: string) => {
-  const response = await fetch(`${baseURL}/${url}`, {
-    headers,
-  });
+// Helper function to handle fetch requests with multiple method support
+const fetchData = async (url: string, options: {
+  method?: string;
+  body?: string | object | null;
+  contentType?: string;
+} = {}) => {
+  const { 
+    method = 'GET', 
+    body = null, 
+    contentType = 'application/json'
+  } = options;
+  
+  const requestHeaders: HeadersInit = {
+    ...headers,
+    ...(body && { 'Content-Type': contentType })
+  };
+  
+  const requestOptions: RequestInit = {
+    method,
+    headers: requestHeaders,
+    ...(body && { body: typeof body === 'string' ? body : JSON.stringify(body) })
+  };
+  
+  const response = await fetch(`${baseURL}/${url}`, requestOptions);
+  
   if (!response.ok) {
     throw new Error("Server error");
   }
-  return response.json();
+  
+  // For methods like DELETE that might not return content
+  if (response.status === 204) {
+    return null;
+  }
+  
+  // Try to parse as JSON, but handle empty responses
+  try {
+    return await response.json();
+  } catch (error) {
+    console.error('Error parsing data from fetcg response:', error);
+  }
 };
 
 // Increment view count
 export const incrementViewCount = async (videoId: string, currentViewCount: number) => {
   try {
-    await fetch(`${baseURL}/api/videos/${videoId}`, {
+    await fetchData(`api/videos/${videoId}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-      body: JSON.stringify({
+      body: {
         data: {
           viewCount: currentViewCount + 1,
         },
-      }),
+      }
     });
   } catch (error) {
     console.error('Error incrementing view count:', error);

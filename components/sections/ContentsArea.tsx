@@ -83,9 +83,7 @@ export default function ContentsArea({
         <div className="row tr-movie-active">
           {loading ? (
             <div className="col-12">
-              <div className="spinner-border" role="status">
-                <span className="sr-only">Loading...</span>
-              </div>
+              <div className="spinner-border" role="status"></div>
             </div>
           ) : (
             filteredVideos.map((video) => (
