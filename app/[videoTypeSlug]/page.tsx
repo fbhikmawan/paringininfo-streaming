@@ -3,7 +3,6 @@ import { Suspense } from 'react'
 
 // Template Sections
 import BannerPage from '@/components/sections/BannerPage';
-import BannerPageSkeleton from '@/components/sections/BannerPageSkeleton';
 import ContentsAreaSkeleton from '@/components/sections/ContentsAreaSkeleton';
 import ContentsArea from '@/components/sections/ContentsArea';
 import { getVideoTypeBySlug, getAllCategoriesByVideoType } from "@/lib/api";
@@ -24,9 +23,7 @@ export default async function VideoTypePage({
 
   return (
     <>
-      <Suspense fallback={<BannerPageSkeleton />}>
-        <BannerPage videoType={videoType} />
-      </Suspense>
+      <BannerPage params={params}/>
       <Suspense fallback={<ContentsAreaSkeleton />}>
         <ContentsArea videoType={videoType} categories={categoriesPromise} />
       </Suspense>
