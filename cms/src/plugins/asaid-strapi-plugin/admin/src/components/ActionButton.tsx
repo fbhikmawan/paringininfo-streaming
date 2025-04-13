@@ -121,7 +121,28 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
   };
 
   const uploadedAttribute = videoSource[type === 'video' ? 'videoObject' : 'trailerObject'];
-  const link = videoSource[type === 'video' ? 'videoLink' : 'trailerLink'];
+  const rawLink = videoSource[type === 'video' ? 'videoLink' : 'trailerLink'];
+  const link = rawLink?.startsWith('wss://')
+  ? `https://player.paringininfo.com/#${encodeURIComponent(
+      JSON.stringify({
+        playerOption: {
+          autoStart: true,
+          autoFallback: true,
+          mute: false,
+          sources: [
+            {
+              type: 'webrtc',
+              file: rawLink,
+            },
+          ],
+        },
+        demoOption: {
+          autoReload: true,
+          autoReloadInterval: 2000,
+        },
+      })
+    )}`
+  : rawLink;
 
   return (
     <Box>
@@ -180,6 +201,7 @@ const ActionButton = ({ videoSource, type }: ActionButtonProps) => {
             />
             {link && (
               <LinkButton
+                target="_blank"
                 href={link}
                 isexternal="true"
                 style={smBtn}

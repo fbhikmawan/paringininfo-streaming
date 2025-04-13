@@ -1,0 +1,27 @@
+services:
+  ome:
+    container_name: ome
+    image: airensoft/ovenmediaengine:latest
+    environment:
+      - OME_HOST_IP=103.150.190.239
+    ports:
+      - "1935:1935"
+      - "3333:3333"
+      - "3334:3334"
+      - "3478:3478"
+      - "9009:9000"
+      - "9999:9999/udp"
+      - "10000-10009:10000-10009/udp"
+    volumes:
+      - /opt/ovenmediaengine/logs:/var/log/ovenmediaengine
+      - /opt/ovenmediaengine/conf/Logger.xml:/opt/ovenmediaengine/bin/origin_conf/Logger.xml
+      - /opt/ovenmediaengine/conf/Server.id:/opt/ovenmediaengine/bin/origin_conf/Server.id
+      - /opt/ovenmediaengine/conf/Server.xml:/opt/ovenmediaengine/bin/origin_conf/Server.xml
+      - /etc/nginx/ssl/server.paringininfo.com_2048/fullchain.cer:/opt/ovenmediaengine/bin/origin_conf/fullchain.cer
+      - /etc/nginx/ssl/server.paringininfo.com_2048/private.key:/opt/ovenmediaengine/bin/origin_conf/private.key
+
+  ovenplayerdemo:
+    container_name: omeplayer
+    image: airensoft/ovenplayerdemo:latest
+    ports:
+      - "8090:80"
