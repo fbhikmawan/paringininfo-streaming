@@ -124,7 +124,7 @@ export default function EpisodeArea({ video }: Props) {
                             </ul>
                           </div>
                         </div>
-                        <AdBannerContent type="leaderboard" dynamic={true} />
+                        <AdBannerContent type="leaderboard" dynamic={true} className='mt-4' />
                       </div>
                     ))}
                   </div>
@@ -132,7 +132,7 @@ export default function EpisodeArea({ video }: Props) {
               </div>
             </div>
             <div className="col-lg-2 d-none d-lg-block">
-              <AdBannerContent type="sidebar" size="160x600" />
+              <AdBannerContent type="sidebar" size="160x600" className='mt-4' />
             </div>
           </div>
         </div>

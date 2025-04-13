@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
-import { YouTubeEmbed } from '@next/third-parties/google';
+import { useRef, useEffect, useState } from 'react';
+import AdBannerContent from '@/components/elements/AdBannerContent';
+import PlayerYoutubeEmbed from '../elements/PlayerYoutubeEmbed';
 
 interface YouTubeEmbedModalProps {
   modalId: string;
@@ -11,6 +12,19 @@ interface YouTubeEmbedModalProps {
 export default function YouTubeEmbedModal({ modalId, videoId }: YouTubeEmbedModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [shouldPlay, setShouldPlay] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    // Function to check viewport width
+    const checkViewportWidth = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobileView(window.innerWidth < 992);
+      }
+    };
+
+    // Initial check
+    checkViewportWidth();
+  }, []);
 
   useEffect(() => {
     if (!modalRef.current) return;
@@ -45,17 +59,40 @@ export default function YouTubeEmbedModal({ modalId, videoId }: YouTubeEmbedModa
       aria-labelledby={`${modalId}Label`}
       ref={modalRef}
     >
-      <div className="modal-dialog modal-dialog-centered modal-lg">
-        <div className="modal-content">
-          <div className="modal-body d-flex justify-content-center p-1 p-sm-2 p-lg-3">
-            {shouldPlay && (
-              <div style={{ width: '100%', height: 'auto' }}>
-                <YouTubeEmbed
-                  videoid={videoId}
-                  params="autoplay=0&controls=1&modestbranding=1&rel=0"
-                  style="width: 100%; height: auto; max-width: unset;"
-                />
-              </div>
+      <div className="modal-dialog justify-content-center modal-dialog-centered modal-xl flex-column flex-lg-row">
+        <div className="modal-content w-auto">
+            <div className="modal-body d-flex justify-content-center p-0">
+              {isMobileView ? (
+                <AdBannerContent 
+                type="leaderboard" 
+                dynamic={true} />
+              ) : (
+                <AdBannerContent
+                type="sidebar"
+                size="160x600"
+                dynamic={false} />
+              )}
+            </div>
+        </div>
+        <div className="modal-content col-lg-8 p-0">
+          <div className="modal-body d-flex justify-content-center">
+            <PlayerYoutubeEmbed
+              videoId={videoId}
+              shouldPlay={shouldPlay}
+            />
+          </div>
+        </div>
+        <div className="modal-content w-auto">
+          <div className="modal-body d-flex justify-content-center p-0">
+            {isMobileView ? (
+              <AdBannerContent 
+              type="leaderboard" 
+              dynamic={true} />
+            ) : (
+              <AdBannerContent
+              type="sidebar"
+              size="160x600"
+              dynamic={false} />
             )}
           </div>
         </div>
