@@ -69,7 +69,7 @@ export default function YouTubeEmbedModal({ modalId, videoId }: YouTubeEmbedModa
               ) : (
                 <AdBannerContent
                 type="sidebar"
-                size="160x300"
+                size="160x600"
                 dynamic={false} />
               )}
             </div>
@@ -91,7 +91,7 @@ export default function YouTubeEmbedModal({ modalId, videoId }: YouTubeEmbedModa
             ) : (
               <AdBannerContent
               type="sidebar"
-              size="160x300"
+              size="160x600"
               dynamic={false} />
             )}
           </div>
