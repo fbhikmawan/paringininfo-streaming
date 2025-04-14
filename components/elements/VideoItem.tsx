@@ -44,7 +44,7 @@ export default function VideoItem({ video }: VideoItemProps) {
         <div className="movie-poster">
           {video.poster && (
             <Image
-              src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster.url}`}
+              src={`${process.env.STRAPI_URL}${video.poster.url}`}
               alt={video.name}
               width={video.poster?.width}
               height={video.poster?.height}
