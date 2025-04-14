@@ -8,7 +8,7 @@ export interface VideoFilters {
   [key: string]: string | number | boolean | { [subKey: string]: string | number | boolean };
 }
 
-const baseURL = process.env.NEXT_PUBLIC_STRAPI_URL;
+const baseURL = 'http://localhost:1337';
 const headers: HeadersInit = process.env.NEXT_PUBLIC_TOKEN
   ? { Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` }
   : {};
