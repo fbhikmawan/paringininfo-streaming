@@ -76,7 +76,7 @@ export default function YouTubeEmbedModal({ modalId, videoId }: YouTubeEmbedModa
             </div>
         </div>
         <div className="modal-content col-lg-8 p-0">
-          <div className="modal-body d-flex justify-content-center">
+          <div className="modal-body d-flex justify-content-center p-1 p-sm-2 p-lg-3">
             <PlayerYoutubeEmbed
               videoId={videoId}
               shouldPlay={shouldPlay}
