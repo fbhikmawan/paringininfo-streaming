@@ -151,7 +151,7 @@
                         <!-- Settings for applications -->
                         <Applications>
                                 <Application>
-                                        <Name>paringininfo</Name>
+                                        <Name>feed</Name>
                                         <!-- Application type (live/vod) -->
                                         <Type>live</Type>
                                         <OutputProfiles>
