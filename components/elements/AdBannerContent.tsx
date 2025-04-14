@@ -79,7 +79,7 @@ const AdBannerContent = ({ type, size, dynamic = false, className = '' }: AdBann
                     <a href={selectedAdBanner.destinationLink} target="_blank">
                       <Image
                         className="img-banner w-100"
-                        src={`${process.env.STRAPI_URL}${selectedAdBanner.banner320x50?.url}`}
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner320x50?.url}`}
                         alt={selectedAdBanner.name}
                         width={selectedAdBanner.banner320x50?.width}
                         height={selectedAdBanner.banner320x50?.height}
@@ -94,7 +94,7 @@ const AdBannerContent = ({ type, size, dynamic = false, className = '' }: AdBann
                     <a href={selectedAdBanner.destinationLink} target="_blank">
                       <Image
                         className="img-banner w-100"
-                        src={`${process.env.STRAPI_URL}${selectedAdBanner.banner728x90?.url}`}
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner728x90?.url}`}
                         alt={selectedAdBanner.name}
                         width={selectedAdBanner.banner728x90?.width}
                         height={selectedAdBanner.banner728x90?.height}
@@ -113,7 +113,7 @@ const AdBannerContent = ({ type, size, dynamic = false, className = '' }: AdBann
                   <a href={selectedAdBanner.destinationLink} target="_blank">
                     <Image
                       className="img-banner w-100"
-                      src={`${process.env.STRAPI_URL}${selectedAdBanner.banner728x90?.url}`}
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner728x90?.url}`}
                       alt={selectedAdBanner.name}
                       width={selectedAdBanner.banner728x90?.width}
                       height={selectedAdBanner.banner728x90?.height}
@@ -129,7 +129,7 @@ const AdBannerContent = ({ type, size, dynamic = false, className = '' }: AdBann
                   <a href={selectedAdBanner.destinationLink} target="_blank">
                     <Image
                       className="img-banner w-100"
-                      src={`${process.env.STRAPI_URL}${selectedAdBanner.banner320x50?.url}`}
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner320x50?.url}`}
                       alt={selectedAdBanner.name}
                       width={selectedAdBanner.banner320x50?.width}
                       height={selectedAdBanner.banner320x50?.height}
@@ -149,7 +149,7 @@ const AdBannerContent = ({ type, size, dynamic = false, className = '' }: AdBann
                 <a href={selectedAdBanner.destinationLink} target="_blank">
                   <Image
                     className="img-banner"
-                    src={`${process.env.STRAPI_URL}${selectedAdBanner.banner160x600?.url}`}
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner160x600?.url}`}
                     alt={selectedAdBanner.name}
                     width={selectedAdBanner.banner160x600?.width}
                     height={selectedAdBanner.banner160x600?.height}
@@ -165,7 +165,7 @@ const AdBannerContent = ({ type, size, dynamic = false, className = '' }: AdBann
                 <a href={selectedAdBanner.destinationLink} target="_blank">
                   <Image
                     className="img-banner"
-                    src={`${process.env.STRAPI_URL}${selectedAdBanner.banner160x300?.url}`}
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner160x300?.url}`}
                     alt={selectedAdBanner.name}
                     width={selectedAdBanner.banner160x300?.width}
                     height={selectedAdBanner.banner160x300?.height}
@@ -184,7 +184,7 @@ const AdBannerContent = ({ type, size, dynamic = false, className = '' }: AdBann
                 <a href={selectedAdBanner.destinationLink} target="_blank">
                   <Image
                     className="img-banner"
-                    src={`${process.env.STRAPI_URL}${selectedAdBanner.banner300x250?.url}`}
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${selectedAdBanner.banner300x250?.url}`}
                     alt={selectedAdBanner.name}
                     width={selectedAdBanner.banner300x250?.width}
                     height={selectedAdBanner.banner300x250?.height}

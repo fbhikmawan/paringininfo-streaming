@@ -124,7 +124,7 @@ export default function MovieDetailsArea({ video }: Props) {
             <div className="col-xl-3 col-lg-4 align-self-start">
               <div className="movie-details-img">
                 <Image
-                  src={`${process.env.STRAPI_URL}${video.poster?.url}`}
+                  src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${video.poster?.url}`}
                   alt={video.name}
                   width={video.poster?.width}
                   height={video.poster?.height}
