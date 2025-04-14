@@ -60,12 +60,13 @@ export default function YouTubeEmbedModal({ modalId, videoId }: YouTubeEmbedModa
       ref={modalRef}
     >
       <div className="modal-dialog justify-content-center modal-dialog-centered modal-xl flex-column flex-lg-row">
-        <div className="modal-content w-auto">
+        <div className="modal-content w-100 w-lg-auto">
             <div className="modal-body d-flex justify-content-center p-0">
               {isMobileView ? (
                 <AdBannerContent 
                 type="leaderboard" 
-                dynamic={true} />
+                dynamic={true}
+                className='w-100' />
               ) : (
                 <AdBannerContent
                 type="sidebar"
@@ -82,12 +83,13 @@ export default function YouTubeEmbedModal({ modalId, videoId }: YouTubeEmbedModa
             />
           </div>
         </div>
-        <div className="modal-content w-auto">
+        <div className="modal-content w-100 w-lg-auto">
           <div className="modal-body d-flex justify-content-center p-0">
             {isMobileView ? (
               <AdBannerContent 
               type="leaderboard" 
-              dynamic={true} />
+              dynamic={true}
+              className='w-100' />
             ) : (
               <AdBannerContent
               type="sidebar"

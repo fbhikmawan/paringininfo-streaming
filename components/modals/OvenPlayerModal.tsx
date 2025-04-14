@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from 'react';
 import AdBannerContent from '@/components/elements/AdBannerContent';
-import PlayerOvenPlayer from '@/components/elements/PlayerOvenPlayer';
+import Script from 'next/script';
 
 interface OvenPlayerModalProps {
   modalId: string;
@@ -11,6 +11,9 @@ interface OvenPlayerModalProps {
 
 export default function OvenPlayerModal({ modalId, streamUrl }: OvenPlayerModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const playerInstanceRef = useRef<any>(null); // To store the OvenPlayer instance
   const [shouldPlay, setShouldPlay] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
 
@@ -51,8 +54,37 @@ export default function OvenPlayerModal({ modalId, streamUrl }: OvenPlayerModalP
     };
   }, [modalId]);
 
+  useEffect(() => {
+    if (playerRef.current && window.OvenPlayer && !playerInstanceRef.current) {
+      playerInstanceRef.current = window.OvenPlayer.create(playerRef.current, {
+        sources: [
+          {
+            type: 'webrtc',
+            file: streamUrl,
+            label: 'WebRTC Stream',
+          },
+        ],
+        webrtcConfig: {
+          connectionTimeout: 2000,
+        }
+      });
+    }
+
+    if (playerInstanceRef.current) {
+      if (shouldPlay) {
+        playerInstanceRef.current.play();
+      } else {
+        playerInstanceRef.current.pause();
+      }
+    }
+  }, [shouldPlay, streamUrl]);
+
   return (
     <>
+      <Script
+        src="https://cdn.jsdelivr.net/npm/ovenplayer@latest/dist/ovenplayer.js"
+        strategy="lazyOnload"
+      />
       <div
         className="modal"
         id={modalId}
@@ -61,12 +93,14 @@ export default function OvenPlayerModal({ modalId, streamUrl }: OvenPlayerModalP
         ref={modalRef}
       >
         <div className="modal-dialog justify-content-center modal-dialog-centered modal-xl flex-column flex-lg-row">
-          <div className="modal-content w-auto">
+          <div className="modal-content w-100 w-lg-auto">
             <div className="modal-body d-flex justify-content-center p-0">
               {isMobileView ? (
                 <AdBannerContent
                   type="leaderboard"
-                  dynamic={true} />
+                  dynamic={true}
+                  className='w-100'
+                />
               ) : (
                 <AdBannerContent
                   type="sidebar"
@@ -77,18 +111,19 @@ export default function OvenPlayerModal({ modalId, streamUrl }: OvenPlayerModalP
           </div>
           <div className="modal-content col-lg-8 p-0">
             <div className="modal-body d-flex justify-content-center p-1 p-sm-2 p-lg-3">
-              <PlayerOvenPlayer
-                streamUrl={streamUrl}
-                shouldPlay={shouldPlay}
-              />
+              <div
+                ref={playerRef}
+                style={{ width: '100%', height: 'auto' }}
+              ></div>
             </div>
           </div>
-        <div className="modal-content w-auto">
+        <div className="modal-content w-100 w-lg-auto">
           <div className="modal-body d-flex justify-content-center p-0">
             {isMobileView ? (
               <AdBannerContent 
               type="leaderboard" 
-              dynamic={true} />
+              dynamic={true}
+              className='w-100' />
             ) : (
               <AdBannerContent
               type="sidebar"
